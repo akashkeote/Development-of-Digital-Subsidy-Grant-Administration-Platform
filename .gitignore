@@ -1,0 +1,67 @@
+# Global
+.env
+.DS_Store
+*.log
+
+# Java/Spring Boot (backend)
+backend/build/
+backend/.gradle/
+backend/out/
+backend/bin/
+backend/.idea/
+backend/*.iml
+backend/.project
+backend/.classpath
+backend/.settings/
+
+# Flutter (frontend)
+frontend/.dart_tool/
+frontend/build/
+frontend/.pub-cache/
+frontend/.packages
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/windows/flutter/ephemeral/
+frontend/linux/flutter/ephemeral/
+frontend/macos/Flutter/ephemeral/
+
+# Python (data_pipeline, etc)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.env/
+.venv/
+env.bak/
+venv.bak/
+
+# Node.js (whatsapp-bot)
+whatsapp-bot/node_modules/
+whatsapp-bot/dist/
+whatsapp-bot/build/
+whatsapp-bot/npm-debug.log*
+whatsapp-bot/yarn-debug.log*
+whatsapp-bot/yarn-error.log*
+whatsapp-bot/.pnpm-debug.log*
+
+# Keys and credentials
+*firebase-adminsdk*.json
+google-services.json

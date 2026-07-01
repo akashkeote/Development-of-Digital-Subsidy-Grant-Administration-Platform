@@ -1,0 +1,227 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GovScheme Admin Dashboard | Infosys Springboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    colors: {
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                        borderGlass: 'rgba(255, 255, 255, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+        
+        /* Custom Scrollbar for the table */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.5); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.8); 
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="glass-card p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 glow-text flex items-center gap-3">
+                    <i class="fa-solid fa-landmark-flag"></i> GovScheme Data Hub
+                </h1>
+                <p class="text-gray-400 mt-1">Deep Scraped Database Analytics • Infosys Springboard 7.0</p>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="fetchStats()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 transition-all rounded-xl font-semibold shadow-lg shadow-indigo-500/30 flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Refresh Data
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-6 flex items-center gap-5 transform hover:-translate-y-1 transition-transform">
+                <div class="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-2xl border border-blue-500/30">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider">Total Scraped Schemes</p>
+                    <h2 class="text-4xl font-bold mt-1" id="stat-total">...</h2>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 flex items-center gap-5 transform hover:-translate-y-1 transition-transform">
+                <div class="w-14 h-14 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl border border-emerald-500/30">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider">Ministries Covered</p>
+                    <h2 class="text-4xl font-bold mt-1" id="stat-ministries">...</h2>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 flex items-center gap-5 transform hover:-translate-y-1 transition-transform">
+                <div class="w-14 h-14 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 text-2xl border border-amber-500/30">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+                <div>
+                    <p class="text-gray-400 text-sm font-semibold uppercase tracking-wider">States & UTs</p>
+                    <h2 class="text-4xl font-bold mt-1" id="stat-states">...</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="glass-card p-6 flex flex-col h-[600px]">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-100"><i class="fa-solid fa-list-check mr-2"></i>Live Database Explorer</h3>
+                <div class="relative">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search schemes..." class="bg-gray-900/50 border border-gray-700 text-sm rounded-xl focus:ring-purple-500 focus:border-purple-500 block w-64 pl-10 p-2.5 text-white transition-all outline-none">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto overflow-y-auto flex-1 border border-borderGlass rounded-xl">
+                <table class="w-full text-sm text-left text-gray-300">
+                    <thead class="text-xs text-gray-400 uppercase bg-gray-900/60 sticky top-0 backdrop-blur-md z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 rounded-tl-xl">Scheme Title</th>
+                            <th scope="col" class="px-6 py-4">State</th>
+                            <th scope="col" class="px-6 py-4">Ministry</th>
+                            <th scope="col" class="px-6 py-4">Category</th>
+                            <th scope="col" class="px-6 py-4 rounded-tr-xl">Enriched Data</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="divide-y divide-gray-800">
+                        <tr>
+                            <td colspan="5" class="px-6 py-8 text-center text-gray-500">
+                                <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i><br>Loading from Spring Boot API...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4 text-xs text-gray-500 flex justify-between">
+                <span>Displaying max 100 results for performance.</span>
+                <span>Powered by Antigravity AI</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch stats from Spring Boot Backend
+        async function fetchStats() {
+            try {
+                const response = await fetch('/api/subsidies/stats');
+                const data = await response.json();
+                
+                document.getElementById('stat-total').innerText = data.totalSchemes || '0';
+                document.getElementById('stat-ministries').innerText = data.byMinistry ? Object.keys(data.byMinistry).length : '0';
+                document.getElementById('stat-states').innerText = data.byState ? Object.keys(data.byState).length : '0';
+                
+            } catch (error) {
+                console.error("Error fetching stats:", error);
+                document.getElementById('stat-total').innerText = 'Error';
+            }
+        }
+
+        // Fetch subsidies list
+        async function fetchSubsidies(query = "") {
+            const tableBody = document.getElementById('table-body');
+            
+            try {
+                let url = '/api/subsidies?limit=100';
+                if(query) url += `&search=${encodeURIComponent(query)}`;
+                
+                const response = await fetch(url);
+                const schemes = await response.json();
+                
+                tableBody.innerHTML = ''; // clear loading
+                
+                if(schemes.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No schemes found matching criteria.</td></tr>`;
+                    return;
+                }
+                
+                schemes.forEach(scheme => {
+                    const isEnriched = scheme.benefits && scheme.benefits.length > 50;
+                    const badge = isEnriched 
+                        ? `<span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-check mr-1"></i> Rich Data</span>`
+                        : `<span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30"><i class="fa-solid fa-clock mr-1"></i> Basic Data</span>`;
+                        
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-gray-800/50 transition-colors";
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 font-medium text-white max-w-xs truncate" title="${scheme.title}">${scheme.title}</td>
+                        <td class="px-6 py-4">${scheme.state || 'All States'}</td>
+                        <td class="px-6 py-4 max-w-xs truncate" title="${scheme.ministry}">${scheme.ministry || '-'}</td>
+                        <td class="px-6 py-4 max-w-xs truncate">${scheme.category || '-'}</td>
+                        <td class="px-6 py-4">${badge}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+                
+            } catch (error) {
+                console.error("Error fetching schemes:", error);
+                tableBody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-red-400">Failed to connect to Spring Boot backend. Is it running?</td></tr>`;
+            }
+        }
+
+        // Search debounce
+        let searchTimeout = null;
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                fetchSubsidies(e.target.value);
+            }, 500);
+        });
+
+        // Init
+        fetchStats();
+        fetchSubsidies();
+    </script>
+</body>
+</html>

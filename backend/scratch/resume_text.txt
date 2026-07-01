@@ -1,0 +1,69 @@
+Akash Keote
+Mowad, Tah-Narkhed, Dist-Nagpur
+♂phone+91-9307451323/envel⌢pekeoteakash@gmail.com/linkedinLinkedIn/githubGitHub/codeGFG/codeLeetCode☁GCS
+TECHNICAL SKILLS
+•Programming:Java, Python, C++, Dart
+•Backend & APIs:Spring Boot, Spring MVC, Spring
+Security, FastAPI, Flask, REST APIs
+•Microservices:Microservices Architecture, API Gateway,
+Service Communication
+•Authentication:JWT, OAuth2, Keycloak (Basics)
+•Persistence:JPA, Hibernate
+•Concepts:OOPs, Bean Lifecycle, Dependency Injection,AOP
+•Mobile Development:Flutter (Dart)
+•Databases:SQL, MySQL, Firebase, Supabase, MongoDB
+•Cloud:Google Cloud (Legend Tier), AWS Basics
+•Tools:Git, IntelliJ IDEA, Android Studio, Postman, Jupyter
+•Networking & OS:TCP/IP, HTTP/HTTPS, Linux,
+Windows
+EDUCATION
+G H Raisoni College of Engineering and Management, Nagpur (GHRCEMN)2022 – 2026
+B.Tech – Computer Science and Engineering —CGPA: 9.31 (till 7th Sem)Nagpur, Maharashtra
+TECHNICAL EXPERIENCE
+Maharashtra Remote Sensing Application Centre (MRSAC)Dec 2025 – June 2026
+Python Developer Intern – AI & Geospatial Analysis Hybrid
+–Built aFastAPIbackend processing17M+ NASA FIRMS satellite fire-detection records(MODIS/VIIRS); normalized
+heterogeneous confidence formats for unified spatial querying.
+–Developed adual-engine LULC classificationsystem using Google Earth Engine + custom1D-CNN (TensorFlow)trained on
+13,296 labeled pixels, achieving82.11% test accuracy.
+–Served 8+ REST API endpoints (NDVI/NDBI heatmaps, burn severity overlays) to a Next.js frontend; implementedActive
+Learningpipeline for continuous model retraining without manual labeling.
+Infosys Springboard Virtual Internship 6.0Aug 2025 – Nov 2025
+Software Developer Intern Remote
+–DevelopedEcoBazaarXusingJava Spring BootwithJWT authentication, RBAC, and RESTful APIs onMySQL; deployed
+backend onRenderand Flutter frontend onFirebase.
+–Prototype shortlisted by Infosys peers; API tested viaPostmanwith robust error handling and Agile workflow.
+Google Cloud Arcade Facilitator ProgramApr 2025 – Sep 2025
+Participant & Peer Mentor (Cohort I & II) Remote
+–AchievedLegend Tier(Champion Milestone) in both cohorts; mentored peers through advanced GCP labs on APIs, deployments,
+and cloud services.
+Coding Blocks – Campus Chapter Sep 2024 – Jan 2025
+Chapter Lead Nagpur
+–Led 10+ members; organized events increasing participation by40%; mentored peers in DSA and problem solving.
+PROJECTS
+Earth Watch – AI Geospatial Intelligence PlatformDec 2025 – June 2026
+Python, TensorFlow, Google Earth Engine, FastAPI, Next.js
+–End-to-end geospatial AI platform withLULC classification(8 classes), forest fire burn severity analysis, and interactive multi-layer
+map visualization served via REST APIs.
+–Processed 17M+ NASA FIRMS fire records; supports multi-year land change comparison and PDF report export. Research published
+atVNIT PCEMS 2025 International Conference.
+AI Flood Prediction System – Final Year ProjectAug 2025 – Nov 2025
+Python, FastAPI, XGBoost, Random Forest, Flutter
+–AI-based flood risk early warning system usingVoting Ensemble (XGBoost + Random Forest); integratedDijkstra’s
+algorithmfor evacuation routing andSMS/Email APIsfor real-time alerts.
+AI Chatbot with API Integration Feb 2025
+Flutter, Flask, OpenAI API, REST APIs
+–Cross-platform AI chatbot with Flask backend integrating OpenAI API; robust error handling achieving95%+ response accuracy;
+API tested via Postman.
+Meditation Wellness App – AI Odyssey Hackathon WinnerApr 2025
+Flutter, Firebase
+–AI-powered wellness app with personalized recommendations;Winner of AI Odyssey Hackathon(JARVIS GHRCE).ACHIEVEMENTS & CERTIFICATIONS
+•Hackathons (12+):Winner – AI Odyssey;National Rank 3 (Rs. 10,000 prize) – SITNovate 2.0(Tech Mahindra, 60+
+teams); Runner-up – Elecvate 2.0; Participant – SIH 2023, Flipkart Grid, Adobe Hackathon; Top-5 finishes in multiple events.
+•Problem Solving:GeeksforGeeksCampus Rank #1; 346+ DSA problems solved; 160-day streak;Naukri Campus
+Young TurksAptitude Round Qualified (99.97 percentile); Active LeetCode coder.
+•Research:Paper presented atVNIT PCEMS 2025 International Conferenceon AI-based geospatial analysis.
+•Cloud:Google Cloud Arcade –Legend Tier(2025); Gen AI Academy Certificate (Google Cloud, Jul 2025).
+•Certifications:NVIDIA – Deep Learning & Real-Time Video AI (Jan 2026); IBM – AI Fundamentals (Jun 2025); Oracle
+Cloud Infrastructure – AI Foundations Associate & DevOps Professional; AWS Solutions Architecture (Forage); Infosys
+Springboard – Java; Java DSA & Flutter Training (LinkedIn Learning).

@@ -1,0 +1,45 @@
+name: Backend Build & Test
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [ "main", "master" ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Create Service Account Key JSON
+      env:
+        # GCP_SERVICE_ACCOUNT_KEY must be added to your GitHub Secrets!
+        # It contains the exact JSON text of your serviceAccountKey.json file.
+        GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      run: |
+        echo "Injecting Service Account Key from GitHub Secrets..."
+        mkdir -p src/main/resources
+        echo "$GCP_SERVICE_ACCOUNT_KEY" > src/main/resources/serviceAccountKey.json
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build

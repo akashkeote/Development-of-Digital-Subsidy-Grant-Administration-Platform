@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"gov-subsidy-tracker","appId":"1:40070868511:android:891e2ef824b5dfd02eaf2a","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"gov-subsidy-tracker","configurations":{"android":"1:40070868511:android:891e2ef824b5dfd02eaf2a"}}}}}}

@@ -1,0 +1,49 @@
+name: Daily Multi-Source Scheme Aggregator
+
+on:
+  schedule:
+    # Runs at 00:00 UTC (5:30 AM IST) every day
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data_pipeline
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install firebase-admin
+
+    - name: Create Service Account Key
+      env:
+        GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      run: |
+        mkdir -p ../backend/src/main/resources
+        echo "$GCP_SERVICE_ACCOUNT_KEY" > ../backend/src/main/resources/serviceAccountKey.json
+
+    - name: Run Multi-Source Aggregator
+      env:
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      run: |
+        echo "==========================================="
+        echo "Starting Multi-Source Scheme Aggregator..."
+        echo "Sources: MyScheme + DataGov + IndiaGov + YouTube AI"
+        echo "==========================================="
+        python multi_source_fetcher.py
+        echo "==========================================="
+        echo "Daily aggregation complete!"
+        echo "==========================================="
