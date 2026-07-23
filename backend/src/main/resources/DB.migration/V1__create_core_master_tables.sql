@@ -1,0 +1,114 @@
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(15) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    last_login_at DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE roles (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    is_system BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_role_assignments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    assigned_by BIGINT NULL,
+    assigned_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_user_role UNIQUE (user_id, role_id),
+    CONSTRAINT fk_ura_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_ura_role FOREIGN KEY (role_id) REFERENCES roles(id),
+    CONSTRAINT fk_ura_assigned_by FOREIGN KEY (assigned_by) REFERENCES users(id)
+);
+
+CREATE TABLE departments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(150) NOT NULL UNIQUE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_departments (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    department_id BIGINT NOT NULL,
+    is_primary BOOLEAN NOT NULL DEFAULT FALSE,
+    assigned_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_user_department UNIQUE (user_id, department_id),
+    CONSTRAINT fk_ud_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_ud_department FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+CREATE TABLE citizen_profiles (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL UNIQUE,
+    full_name VARCHAR(150) NOT NULL,
+    dob DATE NOT NULL,
+    gender VARCHAR(20) NOT NULL,
+    aadhaar_no CHAR(12) NOT NULL UNIQUE,
+    pan_no VARCHAR(10) NULL UNIQUE,
+    email VARCHAR(150) NOT NULL,
+    mobile VARCHAR(15) NOT NULL,
+    address_line1 VARCHAR(255) NOT NULL,
+    address_line2 VARCHAR(255) NULL,
+    district VARCHAR(100) NOT NULL,
+    taluk VARCHAR(100) NULL,
+    village VARCHAR(100) NULL,
+    bank_account_no VARCHAR(34) NOT NULL,
+    ifsc_code VARCHAR(11) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_citizen_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE status_types (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE statuses (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    status_type_id BIGINT NOT NULL,
+    code VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    display_order INT NOT NULL DEFAULT 1,
+    is_terminal BOOLEAN NOT NULL DEFAULT FALSE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_status_type_code UNIQUE (status_type_id, code),
+    CONSTRAINT fk_statuses_type FOREIGN KEY (status_type_id) REFERENCES status_types(id)
+);
+
+CREATE TABLE schemes (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    department_id BIGINT NOT NULL,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    max_amount DECIMAL(15,2) NOT NULL,
+    installment_rule_json JSON NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_schemes_department FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+-- Helpful indexes
+CREATE INDEX idx_users_active ON users(is_active);
+CREATE INDEX idx_schemes_active_dates ON schemes(is_active, start_date, end_date);
+CREATE INDEX idx_statuses_type_order ON statuses(status_type_id, display_order);

@@ -1,0 +1,73 @@
+CREATE TABLE scheme_budget_allocations (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    scheme_id BIGINT NOT NULL,
+    financial_year VARCHAR(9) NOT NULL,
+    allocated_amount DECIMAL(15,2) NOT NULL,
+    revised_amount DECIMAL(15,2),
+    utilized_amount DECIMAL(15,2) DEFAULT 0.00,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_budget_scheme
+    FOREIGN KEY (scheme_id)
+    REFERENCES schemes(id)
+    ON DELETE CASCADE,
+    CONSTRAINT uk_scheme_financial_year
+    UNIQUE (scheme_id, financial_year)
+);
+
+CREATE TABLE eligibility_criteria_master (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    data_type VARCHAR(20) NOT NULL,
+    unit VARCHAR(30),
+    description VARCHAR(500),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_eligibility_code
+    UNIQUE(code)
+);
+
+CREATE TABLE scheme_eligibility_rules (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    scheme_id BIGINT NOT NULL,
+    criteria_id BIGINT NOT NULL,
+    operator VARCHAR(20) NOT NULL,
+    value_from VARCHAR(100),
+    value_to VARCHAR(100),
+    logical_group INT DEFAULT 1,
+    logical_join VARCHAR(10) DEFAULT 'AND',
+    is_mandatory BOOLEAN DEFAULT TRUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_rule_scheme
+    FOREIGN KEY (scheme_id)
+    REFERENCES schemes(id)
+    ON DELETE CASCADE,
+    CONSTRAINT fk_rule_criteria
+    FOREIGN KEY (criteria_id)
+    REFERENCES eligibility_criteria_master(id)
+    ON DELETE CASCADE
+);
+
+CREATE INDEX idx_budget_scheme
+    ON scheme_budget_allocations(scheme_id);
+
+CREATE INDEX idx_rule_scheme
+    ON scheme_eligibility_rules(scheme_id);
+
+CREATE INDEX idx_rule_criteria
+    ON scheme_eligibility_rules(criteria_id);
+
+
+INSERT INTO eligibility_criteria_master
+(code,name,data_type,unit,description)
+VALUES
+    ('AGE','Age','NUMBER','Years','Applicant age'),
+    ('INCOME','Annual Income','DECIMAL','INR','Annual family income'),
+    ('AADHAAR_VERIFIED','Aadhaar Verification','BOOLEAN',NULL,'Aadhaar verification status'),
+    ('PAN_VERIFIED','PAN Verification','BOOLEAN',NULL,'PAN verification status'),
+    ('GENDER','Gender','STRING',NULL,'Applicant gender'),
+    ('CASTE','Caste','STRING',NULL,'Social category'),
+    ('RESIDENCY','Residency','STRING',NULL,'State residency'),
+    ('LAND_HOLDING','Land Holding','DECIMAL','Acres','Agricultural land owned'),
+    ('BANK_ACCOUNT','Bank Account Linked','BOOLEAN',NULL,'Bank account verification'),
+    ('BUSINESS_REGISTERED','Business Registered','BOOLEAN',NULL,'Business registration status');
