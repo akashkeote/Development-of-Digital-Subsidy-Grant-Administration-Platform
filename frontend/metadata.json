@@ -1,0 +1,6 @@
+{
+  "name": "State Grant & Subsidy Portal",
+  "description": "A comprehensive government portal for citizens to discover, apply for, and track government subsidies and grant disbursements, with dashboard interfaces for citizens, verification officers, district officers, and system administrators.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
