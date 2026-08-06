@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Scheme } from '../types';
 import { DashboardLayout } from '../components/DashboardLayout';
-import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2 } from 'lucide-react';
+import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2, Download, FileSpreadsheet, Map, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
   const { schemes, installments, stats, addNewScheme, releaseInstallment } = useApp();
   
-  const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury' | 'compliance'>('analytics');
 
   // Scheme Form States
   const [title, setTitle] = useState('');
@@ -125,6 +125,16 @@ export const AdminDashboard: React.FC = () => {
               Treasury Desk
             </button>
             <button
+              onClick={() => setActiveTab('compliance')}
+              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+                activeTab === 'compliance' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+              }`}
+            >
+              Compliance Desk
+            </button>
+            <button
               onClick={() => setActiveTab('create_scheme')}
               className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
                 activeTab === 'create_scheme' 
@@ -141,6 +151,17 @@ export const AdminDashboard: React.FC = () => {
         {/* 1. SYSTEM ANALYTICS VIEW */}
         {activeTab === 'analytics' && (
           <div className="space-y-10">
+            <div className="flex justify-between items-end">
+              <h2 className="text-xl font-bold font-heading text-slate-800">Fund Utilization & Regional Analytics</h2>
+              <div className="flex gap-3">
+                <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 hover:text-blue-600 hover:border-blue-300 rounded-xl font-bold text-sm shadow-sm transition-all">
+                  <FileSpreadsheet size={16} className="text-emerald-500" /> Export Excel
+                </button>
+                <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 hover:text-blue-600 hover:border-blue-300 rounded-xl font-bold text-sm shadow-sm transition-all">
+                  <Download size={16} className="text-rose-500" /> Download PDF
+                </button>
+              </div>
+            </div>
             {/* Stats Metrics Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 relative overflow-hidden group">
@@ -191,10 +212,15 @@ export const AdminDashboard: React.FC = () => {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span>Agriculture & Farmers Welfare <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹15 Cr)</span></span>
-                      <span className="font-bold text-slate-800 bg-white/60 px-3 py-1 rounded-lg border border-white backdrop-blur-md shadow-sm">74.6%</span>
+                      <div className="flex items-center gap-2">
+                        <span className="flex items-center gap-1 text-[10px] font-bold text-rose-600 bg-rose-100/80 px-2 py-0.5 rounded uppercase tracking-wider border border-rose-200">
+                          <AlertTriangle size={12} /> 85% Exhausted
+                        </span>
+                        <span className="font-bold text-slate-800 bg-white/60 px-3 py-1 rounded-lg border border-white backdrop-blur-md shadow-sm">85.0%</span>
+                      </div>
                     </div>
                     <div className="w-full bg-slate-200/50 h-3 rounded-full overflow-hidden border border-white/60 shadow-inner">
-                      <div className="h-full bg-gradient-to-r from-green-500 to-[#138808] rounded-full shadow-[0_0_10px_rgba(19,136,8,0.5)]" style={{ width: '74.6%' }}></div>
+                      <div className="h-full bg-gradient-to-r from-rose-500 to-rose-600 rounded-full shadow-[0_0_10px_rgba(225,29,72,0.5)]" style={{ width: '85%' }}></div>
                     </div>
                   </div>
 
@@ -230,7 +256,37 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
+              {/* Region-wise Analytics */}
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8 col-span-1 lg:col-span-2">
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 flex items-center font-heading">
+                  <Map className="w-5 h-5 mr-3 text-blue-600" />
+                  Region-wise Disbursements
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="bg-white/60 p-5 rounded-2xl border border-white shadow-sm">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">North Region</p>
+                    <p className="font-heading text-2xl font-bold text-slate-800 mt-2">₹12.4 Cr</p>
+                    <div className="w-full bg-slate-200/50 h-1.5 rounded-full mt-3"><div className="h-full bg-blue-500 rounded-full" style={{ width: '45%' }}></div></div>
+                  </div>
+                  <div className="bg-white/60 p-5 rounded-2xl border border-white shadow-sm">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">South Region</p>
+                    <p className="font-heading text-2xl font-bold text-slate-800 mt-2">₹18.1 Cr</p>
+                    <div className="w-full bg-slate-200/50 h-1.5 rounded-full mt-3"><div className="h-full bg-emerald-500 rounded-full" style={{ width: '65%' }}></div></div>
+                  </div>
+                  <div className="bg-white/60 p-5 rounded-2xl border border-white shadow-sm">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">East Region</p>
+                    <p className="font-heading text-2xl font-bold text-slate-800 mt-2">₹8.9 Cr</p>
+                    <div className="w-full bg-slate-200/50 h-1.5 rounded-full mt-3"><div className="h-full bg-amber-500 rounded-full" style={{ width: '30%' }}></div></div>
+                  </div>
+                  <div className="bg-white/60 p-5 rounded-2xl border border-white shadow-sm">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">West Region</p>
+                    <p className="font-heading text-2xl font-bold text-slate-800 mt-2">₹15.2 Cr</p>
+                    <div className="w-full bg-slate-200/50 h-1.5 rounded-full mt-3"><div className="h-full bg-fuchsia-500 rounded-full" style={{ width: '55%' }}></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8 col-span-1 lg:col-span-2">
                 <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 flex items-center font-heading">
                   <ShieldCheck className="w-5 h-5 mr-3 text-blue-600" />
                   System Audit Logs
@@ -261,6 +317,52 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
+            </div>
+          </div>
+        )}
+
+        {/* COMPLIANCE DESK VIEW */}
+        {activeTab === 'compliance' && (
+          <div className="space-y-8">
+            <h2 className="text-xl font-bold font-heading text-slate-800 border-b border-slate-200/50 pb-4">Compliance Tracking & Scheduler</h2>
+            
+            <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+              <div className="relative z-10 flex gap-4">
+                <AlertTriangle className="text-rose-600 shrink-0" size={24} />
+                <div>
+                  <h3 className="font-bold text-rose-800 text-lg">Overdue Milestones Detected</h3>
+                  <p className="text-sm text-rose-600 mt-1">
+                    The daily overdue scheduler has flagged 3 pending disbursements that have crossed their SLA thresholds. These stages are currently blocked until admin overrides them.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-4 mb-6">Blocked Applications</h3>
+              
+              <div className="space-y-4">
+                {[1, 2, 3].map((item) => (
+                  <div key={item} className="flex flex-col md:flex-row items-center justify-between p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center font-bold">
+                        !
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-800">APP-2026-X{item}9{item}</h4>
+                        <p className="text-xs text-slate-500 mt-1">Pending Stage 2 Disbursement • Due: 7 days ago</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 md:mt-0 flex items-center gap-3">
+                      <span className="px-3 py-1 bg-slate-200 text-slate-600 rounded-lg text-xs font-bold uppercase tracking-widest">Under Audit</span>
+                      <button className="btn-3d px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-bold shadow-md shadow-emerald-500/20 flex items-center gap-2 transition-transform hover:scale-105 active:scale-95">
+                        <CheckCircle2 size={16} /> Admin Override
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}

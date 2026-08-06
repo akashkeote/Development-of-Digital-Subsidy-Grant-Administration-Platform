@@ -133,6 +133,42 @@ export const VerificationOfficerDashboard: React.FC = () => {
             {/* Right Column: Interactive Document Review Panel */}
             <div className="lg:col-span-8 space-y-10">
               
+              {/* How Eligibility Scoring Works Reference Table */}
+              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-6 backdrop-blur-xl">
+                <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase text-blue-700">
+                  <FileText className="w-5 h-5 mr-3 text-blue-600" />
+                  How Eligibility Scoring Works (Example)
+                </h3>
+                <div className="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                  <table className="w-full text-left text-sm font-medium">
+                    <thead className="bg-[#0f2136] text-white font-heading">
+                      <tr>
+                        <th className="p-4 border-r border-slate-700 font-bold">Criterion</th>
+                        <th className="p-4 border-r border-slate-700 font-bold">Max Points</th>
+                        <th className="p-4 font-bold">What It Checks</th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white">
+                      <tr className="border-b border-slate-200">
+                        <td className="p-4 border-r border-slate-200 text-slate-800 font-bold">Income Level</td>
+                        <td className="p-4 border-r border-slate-200 text-slate-800">30</td>
+                        <td className="p-4 text-slate-600">Does household income fall within the scheme's required range?</td>
+                      </tr>
+                      <tr className="border-b border-slate-200 bg-slate-50/80">
+                        <td className="p-4 border-r border-slate-200 text-slate-800 font-bold">Category Match</td>
+                        <td className="p-4 border-r border-slate-200 text-slate-800">40</td>
+                        <td className="p-4 text-slate-600">Does the applicant's category (Farmer, Student, etc.) match the scheme's eligible categories?</td>
+                      </tr>
+                      <tr>
+                        <td className="p-4 border-r border-slate-200 text-slate-800 font-bold">Documents Complete</td>
+                        <td className="p-4 border-r border-slate-200 text-slate-800">30</td>
+                        <td className="p-4 text-slate-600">Are all required documents uploaded and verified?</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
               {/* Applicant Demographic Specs */}
               <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
                 <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase">
