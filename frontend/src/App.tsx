@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AppProvider } from './context/AppContext';
+import { AppProvider, useApp } from './context/AppContext';
 import { AnimatePresence } from 'motion/react';
 import { PageTransition } from './components/PageTransition';
 
@@ -31,6 +31,25 @@ import { AdminDashboard } from './pages/AdminDashboard';
 
 import { ChatbotWidget } from './components/ChatbotWidget';
 
+const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles: ('citizen' | 'verifier' | 'district_officer' | 'admin')[] }) => {
+  const { currentRole } = useApp();
+  
+  // Admin has universal access
+  if (currentRole === 'admin') {
+    return <>{children}</>;
+  }
+  
+  if (!allowedRoles.includes(currentRole)) {
+    // Redirect unauthorized users to their respective dashboards
+    if (currentRole === 'citizen') return <Navigate to="/citizen/dashboard" replace />;
+    if (currentRole === 'verifier') return <Navigate to="/verification/dashboard" replace />;
+    if (currentRole === 'district_officer') return <Navigate to="/district/dashboard" replace />;
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -50,18 +69,18 @@ const AnimatedRoutes = () => {
         <Route path="/grievance" element={<PageTransition><GrievancePage /></PageTransition>} />
 
         {/* Citizen Routes */}
-        <Route path="/citizen/dashboard" element={<PageTransition><CitizenDashboard /></PageTransition>} />
-        <Route path="/schemes/:id/apply" element={<PageTransition><ApplicationForm /></PageTransition>} />
-        <Route path="/schemes/:id/upload" element={<PageTransition><UploadDocumentsPage /></PageTransition>} />
-        <Route path="/citizen/tracking" element={<PageTransition><ApplicationTrackingPage /></PageTransition>} />
-        <Route path="/citizen/installments" element={<PageTransition><InstallmentTrackingPage /></PageTransition>} />
-        <Route path="/profile" element={<PageTransition><ProfilePage /></PageTransition>} />
-        <Route path="/notifications" element={<PageTransition><NotificationsPage /></PageTransition>} />
+        <Route path="/citizen/dashboard" element={<ProtectedRoute allowedRoles={['citizen']}><PageTransition><CitizenDashboard /></PageTransition></ProtectedRoute>} />
+        <Route path="/schemes/:id/apply" element={<ProtectedRoute allowedRoles={['citizen']}><PageTransition><ApplicationForm /></PageTransition></ProtectedRoute>} />
+        <Route path="/schemes/:id/upload" element={<ProtectedRoute allowedRoles={['citizen']}><PageTransition><UploadDocumentsPage /></PageTransition></ProtectedRoute>} />
+        <Route path="/citizen/tracking" element={<ProtectedRoute allowedRoles={['citizen']}><PageTransition><ApplicationTrackingPage /></PageTransition></ProtectedRoute>} />
+        <Route path="/citizen/installments" element={<ProtectedRoute allowedRoles={['citizen']}><PageTransition><InstallmentTrackingPage /></PageTransition></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute allowedRoles={['citizen', 'verifier', 'district_officer', 'admin']}><PageTransition><ProfilePage /></PageTransition></ProtectedRoute>} />
+        <Route path="/notifications" element={<ProtectedRoute allowedRoles={['citizen', 'verifier', 'district_officer', 'admin']}><PageTransition><NotificationsPage /></PageTransition></ProtectedRoute>} />
 
         {/* Officer & Staff Routes */}
-        <Route path="/verification/dashboard" element={<PageTransition><VerificationOfficerDashboard /></PageTransition>} />
-        <Route path="/district/dashboard" element={<PageTransition><DistrictOfficerDashboard /></PageTransition>} />
-        <Route path="/admin/dashboard" element={<PageTransition><AdminDashboard /></PageTransition>} />
+        <Route path="/verification/dashboard" element={<ProtectedRoute allowedRoles={['verifier']}><PageTransition><VerificationOfficerDashboard /></PageTransition></ProtectedRoute>} />
+        <Route path="/district/dashboard" element={<ProtectedRoute allowedRoles={['district_officer']}><PageTransition><DistrictOfficerDashboard /></PageTransition></ProtectedRoute>} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin']}><PageTransition><AdminDashboard /></PageTransition></ProtectedRoute>} />
 
         {/* Fallback Route */}
         <Route path="*" element={<Navigate to="/" replace />} />
