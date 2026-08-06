@@ -173,11 +173,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             'success'
           );
         } else if (app && status === 'rejected_by_verifier') {
+          // Compile a detailed list of which specific documents failed and why
+          const rejectedDocs = docApprovals.filter(d => d.status === 'rejected');
+          let docMessage = '';
+          if (rejectedDocs.length > 0) {
+             const docNames = rejectedDocs.map(d => {
+                const actualDoc = app.documents.find(ad => ad.id === d.id);
+                const docName = actualDoc ? actualDoc.type : 'Document';
+                const reason = d.comment ? ` (Reason: ${d.comment})` : '';
+                return `${docName}${reason}`;
+             }).join(', ');
+             docMessage = ` Discrepancies found in: ${docNames}.`;
+          }
+
           triggerNotification(
             app.citizenId,
             'Verification Failed',
-            `Your application ${appId} has been rejected due to invalid documents.`,
-            'warning'
+            `Your application #${appId} has been rejected.${docMessage} Verifier Comment: ${comment}`,
+            'error'
           );
         }
       }
