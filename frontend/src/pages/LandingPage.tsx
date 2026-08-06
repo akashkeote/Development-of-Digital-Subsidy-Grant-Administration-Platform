@@ -2,20 +2,56 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Footer } from '../components/Footer';
-import { 
-  Search, 
-  ArrowRight, 
-  GraduationCap, 
-  Home as HomeIcon, 
-  Sun, 
-  HeartPulse, 
-  Sprout, 
-  ShieldCheck, 
-  FileText, 
-  Compass,
-  Landmark
-} from 'lucide-react';
+import { CheckCircle, Search, ArrowRight, GraduationCap, Home as HomeIcon, MapPin, Building2, Leaf, ShieldCheck, HeartPulse, FileText, ChevronRight, Activity, Users, Database, Compass, Sun, Sprout, Landmark } from 'lucide-react';
 import { motion } from 'motion/react';
+
+const ministers = [
+  { name: "Narendra Modi", role: "Prime Minister, Ministry of Personnel, Public Grievances and Pensions, Department of Atomic Energy, and Department of Space", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/The_official_portrait_of_Shri_Narendra_Modi%2C_the_Prime_Minister_of_the_Republic_of_India.jpg/330px-The_official_portrait_of_Shri_Narendra_Modi%2C_the_Prime_Minister_of_the_Republic_of_India.jpg" },
+  { name: "Rajnath Singh", role: "Minister of Defence", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Shri_Rajnath_Singh%2C_in_New_Delhi_on_May_09%2C_2023_%28cropped%29.jpg/330px-Shri_Rajnath_Singh%2C_in_New_Delhi_on_May_09%2C_2023_%28cropped%29.jpg" },
+  { name: "Amit Shah", role: "Minister of Home Affairs and Minister of Cooperation", image: "/src/assets/avatar_amit.jpg" },
+  { name: "Nitin Jairam Gadkari", role: "Minister of Road Transport and Highways", image: "/src/assets/avatar_nitin.jpg" },
+  { name: "Jagat Prakash Nadda", role: "Minister of Health and Family Welfare, and Minister of Chemicals and Fertilizers", image: "/src/assets/avatar_nadda.jpg" },
+  { name: "Shivraj Singh Chouhan", role: "Minister of Agriculture and Farmers Welfare, and Minister of Rural Development", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Shri_Shivraj_Singh_Chouhan.jpg/330px-Shri_Shivraj_Singh_Chouhan.jpg" },
+  { name: "Nirmala Sitharaman", role: "Minister of Finance and Minister of Corporate Affairs", image: "/src/assets/avatar_nirmala.jpg" },
+  { name: "S. Jaishankar", role: "Minister of External Affairs", image: "/src/assets/avatar_jaishankar.jpg" },
+  { name: "Manohar Lal", role: "Minister of Power and Minister of Housing and Urban Affairs", image: "/src/assets/avatar_manohar.jpg" },
+  { name: "Ashwini Vaishnaw", role: "Minister of Railways, Minister of Information and Broadcasting, and Minister of Electronics and Information Technology", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Ashwini_Vaishnaw_cropped.jpg/330px-Ashwini_Vaishnaw_cropped.jpg" },
+  { name: "Pralhad Joshi", role: "Minister of Education, Minister of New and Renewable Energy, and Minister of Consumer Affairs, Food and Public Distribution", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Prahlad_Joshi_%28cropped%29.jpg/330px-Prahlad_Joshi_%28cropped%29.jpg" }
+];
+
+const chiefMinisters = [
+  { state: "Andhra Pradesh", name: "N. Chandrababu Naidu" },
+  { state: "Arunachal Pradesh", name: "Pema Khandu" },
+  { state: "Assam", name: "Himanta Biswa Sarma" },
+  { state: "Bihar", name: "Nitish Kumar" },
+  { state: "Chhattisgarh", name: "Vishnu Deo Sai" },
+  { state: "Goa", name: "Pramod Sawant" },
+  { state: "Gujarat", name: "Bhupendrabhai Patel" },
+  { state: "Haryana", name: "Nayab Singh Saini" },
+  { state: "Himachal Pradesh", name: "Sukhvinder Singh Sukhu" },
+  { state: "Jharkhand", name: "Hemant Soren" },
+  { state: "Karnataka", name: "D.K. Shivakumar" },
+  { state: "Kerala", name: "Pinarayi Vijayan" },
+  { state: "Madhya Pradesh", name: "Mohan Yadav" },
+  { state: "Maharashtra", name: "Devendra Fadnavis" },
+  { state: "Manipur", name: "Yumnam Khemchand Singh" },
+  { state: "Meghalaya", name: "Conrad Kongkal Sangma" },
+  { state: "Mizoram", name: "PU Lalduhoma" },
+  { state: "Nagaland", name: "Neiphiu Rio" },
+  { state: "Odisha", name: "Mohan Charan Majhi" },
+  { state: "Punjab", name: "Bhagwant Singh Mann" },
+  { state: "Rajasthan", name: "Bhajan Lal Sharma" },
+  { state: "Sikkim", name: "Prem Singh Tamang (P. S. Golay)" },
+  { state: "Tamil Nadu", name: "C. Joseph Vijay" },
+  { state: "Telangana", name: "A. Revanth Reddy" },
+  { state: "Tripura", name: "Manik Saha" },
+  { state: "Uttar Pradesh", name: "Yogi Adityanath" },
+  { state: "Uttarakhand", name: "Pushkar Singh Dhami" },
+  { state: "West Bengal", name: "Mamata Banerjee" },
+  { state: "Delhi (NCT)", name: "Rekha Gupta" },
+  { state: "Jammu & Kashmir", name: "Omar Abdullah" },
+  { state: "Puducherry", name: "N. Rangaswamy" }
+];
 
 export const LandingPage: React.FC = () => {
   const { schemes, stats } = useApp();
@@ -208,6 +244,38 @@ export const LandingPage: React.FC = () => {
         .hologram-2 { animation-delay: 0.5s; color: #9333ea; border-color: rgba(147, 51, 234, 0.6); box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), inset 0 0 20px rgba(147, 51, 234, 0.4); }
         .hologram-3 { animation-delay: 1s; color: #ea580c; border-color: rgba(234, 88, 12, 0.6); box-shadow: 0 0 30px rgba(234, 88, 12, 0.6), inset 0 0 20px rgba(234, 88, 12, 0.4); }
         .hologram-4 { animation-delay: 1.5s; color: #2563eb; }
+        .pillar-5 { top: 50%; left: 50%; margin-top: -40px; margin-left: -40px; transform: translateZ(180px); }
+        .hologram-5 { animation-delay: 2s; color: #f59e0b; border-color: rgba(245, 158, 11, 0.6); box-shadow: 0 0 30px rgba(245, 158, 11, 0.6), inset 0 0 20px rgba(245, 158, 11, 0.4); }
+        
+        @keyframes scrollVertical {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(calc(-50% - 10px)); }
+        }
+        .marquee-vertical {
+          animation: scrollVertical 40s linear infinite;
+        }
+        .marquee-container:hover .marquee-vertical {
+          animation-play-state: paused;
+        }
+
+        @keyframes scrollHorizontal {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-50% - 10px)); }
+        }
+        @keyframes scrollHorizontalReverse {
+          0% { transform: translateX(calc(-50% - 10px)); }
+          100% { transform: translateX(0); }
+        }
+        .marquee-horizontal {
+          animation: scrollHorizontal 50s linear infinite;
+        }
+        .marquee-horizontal-reverse {
+          animation: scrollHorizontalReverse 50s linear infinite;
+        }
+        .marquee-container-h:hover .marquee-horizontal,
+        .marquee-container-h:hover .marquee-horizontal-reverse {
+          animation-play-state: paused;
+        }
         
         @keyframes floatBounce {
           0% { transform: translateY(-30px); }
@@ -245,10 +313,10 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-40 pb-28 lg:pt-52 lg:pb-36 px-6 mesh-bg min-h-screen flex items-center">
         {/* Massive 3D Background Flag */}
-        <div className="absolute right-0 top-1/3 -translate-y-1/3 opacity-25 pointer-events-none z-0 transform scale-[1.2] lg:scale-[1.5] -rotate-6 hidden md:block perspective-container">
-          <div className="flag-container" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
-            <div className="flag-pole" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
-            <div className="flag" style={{width: '600px', height: '400px', borderRadius: '0 8px 8px 0'}}>
+        <div className="absolute right-0 top-1/3 -translate-y-1/3 z-10 transform scale-[1.2] lg:scale-[1.3] -rotate-6 hidden md:block perspective-container pointer-events-none">
+          <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
+            <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
+            <div className="flag relative z-10" style={{width: '600px', height: '400px', borderRadius: '0 8px 8px 0'}}>
               <div className="flag-saffron"></div>
               <div className="flag-white">
                 <div className="center-emblem" style={{width: '90px', height: '90px', borderRadius: '50%', border: 'none'}}></div>
@@ -320,36 +388,8 @@ export const LandingPage: React.FC = () => {
             </motion.form>
           </div>
 
-          <div className="lg:col-span-5 relative hidden md:block">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
-              className="absolute top-10 right-10 w-80 z-20 animate-float"
-            >
-              <div className="card-3d glass p-8 rounded-3xl shadow-2xl shadow-blue-900/10 border-t border-l border-white/80">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-50 text-blue-600 flex items-center justify-center mb-6 shadow-inner">
-                  <ShieldCheck size={28} strokeWidth={2.5} />
-                </div>
-                <h3 className="text-xl font-heading font-bold text-slate-900 mb-3">Direct Benefit Transfer</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">Instant, transparent payouts directly to your Aadhaar-linked bank account. Zero intermediaries.</p>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotateY: 30 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="absolute top-64 right-32 w-80 z-30 animate-float-delay"
-            >
-              <div className="card-3d bg-white/90 backdrop-blur-3xl p-8 rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100/80">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-100 to-fuchsia-50 text-purple-600 flex items-center justify-center mb-6 shadow-inner">
-                  <FileText size={28} strokeWidth={2.5} />
-                </div>
-                <h3 className="text-xl font-heading font-bold text-slate-900 mb-3">Paperless & Secure</h3>
-                <p className="text-slate-500 font-medium leading-relaxed">End-to-end encrypted document vaults with real-time tracking of AI-driven approvals.</p>
-              </div>
-            </motion.div>
+          <div className="lg:col-span-5 relative hidden md:block h-[500px]">
+            {/* Empty space on the right, since the flag and avatars are now absolutely positioned on the screen right */}
           </div>
         </div>
       </section>
@@ -382,30 +422,111 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Pillars of India 3D Graphic Section */}
-      <section className="relative py-20 bg-white overflow-hidden border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-6 relative z-10 flex justify-center">
+      {/* Visionary Leaders Graphic Section */}
+      <section className="relative py-32 bg-slate-50 overflow-hidden border-b border-slate-100">
+        <div className="absolute inset-0 bg-mesh opacity-40 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center perspective-container">
+          
+          <div className="text-center max-w-3xl mb-12">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl font-heading font-extrabold text-slate-900 mb-4 tracking-tight"
+            >
+              Honoring Our <span className="text-blue-600">Visionaries.</span>
+            </motion.h2>
+            <p className="text-lg md:text-xl text-slate-600 font-medium">
+              Guided by the principles of our great leaders, education reformers, peacemakers, and warriors.
+            </p>
+          </div>
+
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full max-w-6xl rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border border-slate-100 relative group perspective-container"
+            initial={{ opacity: 0, y: 60, rotateX: 20, rotateY: -15 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 10, rotateY: -10 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            style={{ transformStyle: 'preserve-3d' }}
+            className="w-full max-w-5xl rounded-[2.5rem] bg-white p-4 shadow-[0_20px_50px_rgba(8,112,184,0.15)] border border-white relative group animate-float-slow"
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent z-10 pointer-events-none"></div>
-            <img 
-              src="/src/assets/pillars_of_india.jpg" 
-              alt="Pillars of India: Scientist, Warrior, Farmer, Civilian" 
-              className="w-full h-auto object-cover aspect-[2.4/1] transform group-hover:scale-105 transition-transform duration-1000 ease-out"
-            />
-            <div className="absolute bottom-12 left-12 z-20 text-white max-w-2xl">
-              <h3 className="text-3xl md:text-5xl font-heading font-extrabold mb-4 drop-shadow-lg tracking-tight text-white">Built for every Citizen.</h3>
-              <p className="text-lg md:text-xl font-medium text-white/90 drop-shadow-md leading-relaxed">
-                Empowering our farmers, honoring our warriors, and advancing our scientists. 
-                A digital future designed for the people of India.
-              </p>
+            {/* Inner 3D border effect */}
+            <div 
+              className="absolute inset-0 rounded-[2.5rem] border-4 border-white/50 pointer-events-none z-20"
+              style={{ transform: 'translateZ(20px)' }}
+            ></div>
+            
+            <div className="relative rounded-[2rem] overflow-hidden bg-slate-50 flex justify-center">
+              <img 
+                src="/src/assets/indian_leaders_v2.jpg" 
+                alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none mix-blend-multiply"></div>
+            </div>
+            
+            {/* 3D floating badge */}
+            <div 
+              className="absolute -bottom-8 -right-8 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 z-30"
+              style={{ transform: 'translateZ(50px) rotateY(-5deg)' }}
+            >
+              <p className="font-heading font-bold text-xl tracking-wide">Digital India 2026</p>
+              <p className="text-sm text-blue-100 font-medium mt-1">Built for the people.</p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Chief Ministers Marquee Section */}
+      <section className="relative py-16 bg-white overflow-hidden border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
+          <h3 className="text-2xl md:text-3xl font-heading font-extrabold text-slate-800 tracking-tight">Leadership Across the States</h3>
+          <p className="text-slate-500 font-medium mt-2">Chief Ministers of Indian States and Union Territories</p>
+        </div>
+        
+        <div className="relative w-full overflow-hidden marquee-container-h flex flex-col gap-6">
+          {/* Fade masks for horizontal marquee */}
+          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-white to-transparent z-40 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-white to-transparent z-40 pointer-events-none"></div>
+          
+          {/* Row 1 (Leftward) */}
+          <div className="marquee-horizontal flex gap-6 w-max pl-6">
+            {[...chiefMinisters.slice(0, 16), ...chiefMinisters.slice(0, 16)].map((cm, idx) => (
+              <div 
+                key={`r1-${idx}`} 
+                className="w-80 shrink-0 bg-slate-50 p-5 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md hover:bg-white hover:-translate-y-1 transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-orange-100 to-orange-50 text-orange-600 flex items-center justify-center font-heading font-bold text-lg shadow-inner border border-orange-200">
+                    {cm.name.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-[15px] leading-tight mb-0.5">{cm.name}</h4>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{cm.state}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Row 2 (Rightward) */}
+          <div className="marquee-horizontal-reverse flex gap-6 w-max pl-6">
+            {[...chiefMinisters.slice(16), ...chiefMinisters.slice(16)].map((cm, idx) => (
+              <div 
+                key={`r2-${idx}`} 
+                className="w-80 shrink-0 bg-slate-50 p-5 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md hover:bg-white hover:-translate-y-1 transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-green-100 to-green-50 text-green-700 flex items-center justify-center font-heading font-bold text-lg shadow-inner border border-green-200">
+                    {cm.name.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-[15px] leading-tight mb-0.5">{cm.name}</h4>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{cm.state}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -439,7 +560,7 @@ export const LandingPage: React.FC = () => {
               transition={{ delay: 0.2 }}
               className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
             >
-              Honoring our <strong>visionary scientists</strong>, our <strong>great warriors</strong>, our <strong>hardworking farmers</strong>, and every <strong>civilian</strong>. A digital future engineered purely for the people.
+              Honoring our <strong>visionary scientists</strong>, our <strong>great warriors</strong>, our <strong>hardworking farmers</strong>, our tireless <strong>education reformers</strong>, and every civilian. A digital future engineered purely for the people.
             </motion.p>
           </div>
 
@@ -451,7 +572,10 @@ export const LandingPage: React.FC = () => {
               <div className="pillar pillar-1 pillar-3d">
                 <div className="hologram-wrapper">
                   <div className="hologram hologram-1">
-                    <Sprout size={48} strokeWidth={1.5} />
+                    <div className="flex flex-col items-center justify-center">
+                      <Sprout size={36} strokeWidth={1.5} />
+                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Farmers</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -460,7 +584,10 @@ export const LandingPage: React.FC = () => {
               <div className="pillar pillar-2 pillar-3d">
                 <div className="hologram-wrapper">
                   <div className="hologram hologram-2">
-                    <HeartPulse size={48} strokeWidth={1.5} />
+                    <div className="flex flex-col items-center justify-center">
+                      <HeartPulse size={36} strokeWidth={1.5} />
+                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Scientists</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -469,7 +596,10 @@ export const LandingPage: React.FC = () => {
               <div className="pillar pillar-3 pillar-3d">
                 <div className="hologram-wrapper">
                   <div className="hologram hologram-3">
-                    <HomeIcon size={48} strokeWidth={1.5} />
+                    <div className="flex flex-col items-center justify-center">
+                      <HomeIcon size={36} strokeWidth={1.5} />
+                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Peace</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -478,7 +608,22 @@ export const LandingPage: React.FC = () => {
               <div className="pillar pillar-4 pillar-3d">
                 <div className="hologram-wrapper">
                   <div className="hologram hologram-4">
-                    <ShieldCheck size={48} strokeWidth={1.5} />
+                    <div className="flex flex-col items-center justify-center">
+                      <ShieldCheck size={36} strokeWidth={1.5} />
+                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Warriors</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Education Reformer Pillar (Center) */}
+              <div className="pillar pillar-5 pillar-3d">
+                <div className="hologram-wrapper">
+                  <div className="hologram hologram-5">
+                    <div className="flex flex-col items-center justify-center text-center">
+                      <GraduationCap size={36} strokeWidth={1.5} />
+                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider leading-none">Education<br/>Reformers</span>
+                    </div>
                   </div>
                 </div>
               </div>
