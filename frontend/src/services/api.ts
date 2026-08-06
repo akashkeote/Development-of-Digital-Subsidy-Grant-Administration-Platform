@@ -35,33 +35,91 @@ export const userService = {
   }
 };
 
+// --- RENDER BACKEND ADAPTERS FOR SCHEMES ---
+const mapCategory = (cat: string): any => {
+  const lower = cat?.toLowerCase() || '';
+  if (lower.includes('agri')) return 'agriculture';
+  if (lower.includes('edu')) return 'education';
+  if (lower.includes('hous') || lower.includes('shelter')) return 'housing';
+  if (lower.includes('bus') || lower.includes('msme')) return 'business';
+  if (lower.includes('health')) return 'healthcare';
+  return 'infrastructure';
+};
+
+const mapBackendSubsidyToScheme = (subsidy: any): Scheme => {
+  return {
+    id: subsidy.id || `SCH-${Math.random()}`,
+    title: subsidy.title || 'Untitled Scheme',
+    department: subsidy.ministry || 'General Administration',
+    ministry: subsidy.ministry || 'State Ministry',
+    category: mapCategory(subsidy.category),
+    description: subsidy.description || '',
+    benefits: subsidy.benefits || 'Financial Assistance',
+    eligibilityCriteria: subsidy.eligibilityCriteria 
+      ? subsidy.eligibilityCriteria.split('\n').filter((s: string) => s.trim().length > 0)
+      : [],
+    requiredDocuments: subsidy.documentsRequired || [],
+    financialYear: '2025-26', // Mock fallback
+    totalAllocation: 50000000, // Mock fallback
+    disbursedAmount: 0, // Mock fallback
+    subsidyAmount: subsidy.amount || 10000,
+    installmentCount: 3 // Mock fallback
+  };
+};
+
+const mapSchemeToBackendSubsidy = (scheme: Partial<Scheme>) => {
+  return {
+    title: scheme.title,
+    description: scheme.description,
+    amount: scheme.subsidyAmount,
+    eligibilityCriteria: scheme.eligibilityCriteria ? scheme.eligibilityCriteria.join('\n') : '',
+    category: scheme.category,
+    ministry: scheme.department,
+    documentsRequired: scheme.requiredDocuments,
+    benefits: scheme.benefits,
+    incomeLimit: "Not specified",
+    grantAmount: "Varies",
+    schemeStatus: "Active",
+    active: true,
+    expired: false
+  };
+};
+
 // --- SCHEMES API ---
 export const schemeService = {
   getAllSchemes: async (): Promise<Scheme[]> => {
-    // REAL IMPLEMENTATION FOR BACKEND TEAM:
-    // const { data } = await apiClient.get<Scheme[]>('/subsidies');
-    // return data;
-    
-    await delay(600);
-    return getStorage('mock_db_schemes', INITIAL_SCHEMES);
+    try {
+      const { data } = await apiClient.get<any[]>('/subsidies');
+      return data.map(mapBackendSubsidyToScheme);
+    } catch (error) {
+      console.error("Failed to fetch from Render backend, falling back to mock", error);
+      return getStorage('mock_db_schemes', INITIAL_SCHEMES);
+    }
   },
   
   getSchemeById: async (id: string): Promise<Scheme | null> => {
-    await delay(300);
-    const schemes = getStorage('mock_db_schemes', INITIAL_SCHEMES);
-    return schemes.find(s => s.id === id) || null;
+    try {
+      const { data } = await apiClient.get<any>(`/subsidies/${id}`);
+      return mapBackendSubsidyToScheme(data);
+    } catch (error) {
+      console.error("Failed to fetch by ID from Render backend", error);
+      const schemes = getStorage('mock_db_schemes', INITIAL_SCHEMES);
+      return schemes.find(s => s.id === id) || null;
+    }
   },
   
   createScheme: async (schemeData: Partial<Scheme>): Promise<Scheme> => {
-    // REAL IMPLEMENTATION FOR BACKEND TEAM:
-    // const { data } = await apiClient.post<Scheme>('/subsidies', schemeData);
-    // return data;
-
-    await delay(800);
-    const schemes = getStorage('mock_db_schemes', INITIAL_SCHEMES);
-    const newScheme = { ...schemeData, id: `SCH-${Date.now()}` } as Scheme;
-    setStorage('mock_db_schemes', [...schemes, newScheme]);
-    return newScheme;
+    try {
+      const payload = mapSchemeToBackendSubsidy(schemeData);
+      const { data } = await apiClient.post<any>('/subsidies', payload);
+      return mapBackendSubsidyToScheme(data);
+    } catch (error) {
+      console.error("Failed to post to Render backend, saving to mock DB", error);
+      const schemes = getStorage('mock_db_schemes', INITIAL_SCHEMES);
+      const newScheme = { ...schemeData, id: `SCH-${Date.now()}` } as Scheme;
+      setStorage('mock_db_schemes', [...schemes, newScheme]);
+      return newScheme;
+    }
   }
 };
 
