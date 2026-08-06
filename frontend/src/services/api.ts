@@ -89,7 +89,7 @@ const mapSchemeToBackendSubsidy = (scheme: Partial<Scheme>) => {
 export const schemeService = {
   getAllSchemes: async (): Promise<Scheme[]> => {
     try {
-      const { data } = await apiClient.get<any[]>('/subsidies');
+      const { data } = await apiClient.get<any[]>('/subsidies?limit=1000');
       return data.map(mapBackendSubsidyToScheme);
     } catch (error) {
       console.error("Failed to fetch from Render backend, falling back to mock", error);
