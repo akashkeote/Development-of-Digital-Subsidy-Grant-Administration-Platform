@@ -128,9 +128,90 @@ export const LandingPage: React.FC = () => {
           25% { transform: perspective(800px) rotateY(8deg) skewY(2deg); }
           75% { transform: perspective(800px) rotateY(-4deg) skewY(-1deg); }
         }
-        @keyframes chakraSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        }
+        
+        /* Pure CSS 3D Monument */
+        .monument-container {
+          perspective: 1400px;
+          height: 600px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .monument-base {
+          position: relative;
+          width: 360px;
+          height: 360px;
+          transform-style: preserve-3d;
+          animation: spinBase 24s linear infinite;
+        }
+        @keyframes spinBase {
+          0% { transform: rotateX(65deg) rotateZ(0deg); }
+          100% { transform: rotateX(65deg) rotateZ(360deg); }
+        }
+        .monument-floor {
+          position: absolute;
+          inset: 0;
+          background: rgba(255,255,255,0.3);
+          border: 4px solid rgba(255,255,255,0.8);
+          box-shadow: 0 0 60px rgba(59, 130, 246, 0.4), inset 0 0 30px rgba(255,255,255,0.6);
+          border-radius: 30px;
+          backdrop-filter: blur(8px);
+        }
+        .pillar {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+          background: linear-gradient(135deg, #ffffff, #f1f5f9);
+          border: 2px solid #e2e8f0;
+          transform-style: preserve-3d;
+          border-radius: 12px;
+        }
+        .pillar-1 { top: 30px; left: 30px; transform: translateZ(80px); }
+        .pillar-2 { top: 30px; right: 30px; transform: translateZ(120px); }
+        .pillar-3 { bottom: 30px; left: 30px; transform: translateZ(100px); }
+        .pillar-4 { bottom: 30px; right: 30px; transform: translateZ(140px); }
+        
+        .pillar-3d {
+          box-shadow: 
+            -1px 1px 0 #cbd5e1, -2px 2px 0 #cbd5e1, -3px 3px 0 #cbd5e1, -4px 4px 0 #cbd5e1, -5px 5px 0 #cbd5e1,
+            -6px 6px 0 #cbd5e1, -7px 7px 0 #cbd5e1, -8px 8px 0 #cbd5e1, -9px 9px 0 #cbd5e1, -10px 10px 0 #cbd5e1,
+            -11px 11px 0 #94a3b8, -12px 12px 0 #94a3b8, -13px 13px 0 #94a3b8, -14px 14px 0 #94a3b8, -15px 15px 0 #94a3b8,
+            -16px 16px 0 #94a3b8, -17px 17px 0 #94a3b8, -18px 18px 0 #94a3b8, -19px 19px 0 #94a3b8, -20px 20px 0 #94a3b8,
+            -21px 21px 25px rgba(0,0,0,0.3);
+        }
+        
+        .hologram-wrapper {
+          position: absolute;
+          top: 50%; left: 50%;
+          width: 0; height: 0;
+          transform-style: preserve-3d;
+          animation: counterSpinHolo 24s linear infinite;
+        }
+        @keyframes counterSpinHolo {
+          0% { transform: rotateX(-90deg) rotateY(0deg); }
+          100% { transform: rotateX(-90deg) rotateY(-360deg); }
+        }
+        .hologram {
+          position: absolute;
+          top: -50px; left: -50px;
+          width: 100px; height: 100px;
+          background: rgba(255,255,255,0.7);
+          border: 2px solid rgba(59, 130, 246, 0.6);
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), inset 0 0 20px rgba(59, 130, 246, 0.4);
+          animation: floatBounce 3s ease-in-out infinite alternate;
+          color: #2563eb;
+        }
+        .hologram-1 { animation-delay: 0s; color: #16a34a; border-color: rgba(22, 163, 74, 0.6); box-shadow: 0 0 30px rgba(22, 163, 74, 0.6), inset 0 0 20px rgba(22, 163, 74, 0.4); }
+        .hologram-2 { animation-delay: 0.5s; color: #9333ea; border-color: rgba(147, 51, 234, 0.6); box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), inset 0 0 20px rgba(147, 51, 234, 0.4); }
+        .hologram-3 { animation-delay: 1s; color: #ea580c; border-color: rgba(234, 88, 12, 0.6); box-shadow: 0 0 30px rgba(234, 88, 12, 0.6), inset 0 0 20px rgba(234, 88, 12, 0.4); }
+        .hologram-4 { animation-delay: 1.5s; color: #2563eb; }
+        
+        @keyframes floatBounce {
+          0% { transform: translateY(-30px); }
+          100% { transform: translateY(-60px); }
         }
       `}</style>
       
@@ -328,31 +409,83 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Pillars of India 3D Graphic Section */}
-      <section className="relative py-24 bg-white overflow-hidden border-b border-slate-100">
-        <div className="absolute inset-0 bg-slate-50 opacity-50"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10 flex justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="w-full max-w-6xl rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-900/10 border border-slate-200 relative group"
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent z-10 pointer-events-none"></div>
-            <img 
-              src="/src/assets/indian_leaders.jpg" 
-              alt="Pillars of India: Gandhiji, Nehru, APJ Kalam, Shivaji" 
-              className="w-full h-auto object-cover aspect-[2.2/1] transform group-hover:scale-105 transition-transform duration-1000 ease-out"
-            />
-            <div className="absolute bottom-12 left-12 z-20 text-white max-w-3xl">
-              <h3 className="text-3xl md:text-5xl font-heading font-extrabold mb-4 drop-shadow-lg tracking-tight text-white">Built for every Citizen.</h3>
-              <p className="text-lg md:text-xl font-medium text-white/90 drop-shadow-md leading-relaxed">
-                Empowering our farmers, honoring our great warriors, and advancing our visionary scientists. 
-                A digital future designed for the people of India.
-              </p>
+      {/* Pillars of India 3D CSS Monument Section */}
+      <section className="relative py-24 bg-gradient-to-b from-white to-slate-50 overflow-hidden border-b border-slate-100">
+        <div className="absolute inset-0 bg-mesh opacity-30 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          <div className="text-center lg:text-left space-y-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border border-blue-100/60"
+            >
+              <span className="text-xs font-bold text-blue-700 uppercase tracking-wider font-heading">The Pillars of India</span>
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-5xl font-heading font-extrabold text-slate-900 leading-tight"
+            >
+              Built for every <span className="text-blue-600">Citizen.</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
+            >
+              Honoring our <strong>visionary scientists</strong>, our <strong>great warriors</strong>, our <strong>hardworking farmers</strong>, and every <strong>civilian</strong>. A digital future engineered purely for the people.
+            </motion.p>
+          </div>
+
+          <div className="monument-container w-full">
+            <div className="monument-base">
+              <div className="monument-floor"></div>
+              
+              {/* Farmer Pillar */}
+              <div className="pillar pillar-1 pillar-3d">
+                <div className="hologram-wrapper">
+                  <div className="hologram hologram-1">
+                    <Sprout size={48} strokeWidth={1.5} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Scientist / APJ Kalam Pillar */}
+              <div className="pillar pillar-2 pillar-3d">
+                <div className="hologram-wrapper">
+                  <div className="hologram hologram-2">
+                    <HeartPulse size={48} strokeWidth={1.5} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Peacemaker / Gandhi Pillar */}
+              <div className="pillar pillar-3 pillar-3d">
+                <div className="hologram-wrapper">
+                  <div className="hologram hologram-3">
+                    <HomeIcon size={48} strokeWidth={1.5} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Warrior Pillar */}
+              <div className="pillar pillar-4 pillar-3d">
+                <div className="hologram-wrapper">
+                  <div className="hologram hologram-4">
+                    <ShieldCheck size={48} strokeWidth={1.5} />
+                  </div>
+                </div>
+              </div>
+              
             </div>
-          </motion.div>
+          </div>
+          
         </div>
       </section>
 
