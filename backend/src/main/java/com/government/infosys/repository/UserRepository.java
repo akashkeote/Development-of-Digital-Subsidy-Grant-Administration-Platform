@@ -15,7 +15,7 @@ public class UserRepository {
 
     public void save(User user) {
         if (user.getId() == null) {
-            user.setId(UUID.randomUUID().toString());
+            user.setId(Long.valueOf(UUID.randomUUID().toString()));
         }
         users.add(user);
     }

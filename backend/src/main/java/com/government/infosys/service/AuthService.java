@@ -50,7 +50,7 @@ public class AuthService {
         user.setPassword(password); // TODO: Encode password later
         user.setAadharNumber(aadharNumber);
         user.setRole(citizenRole);
-        user.setCreatedAt(LocalDateTime.now().toString());
+        user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
 
