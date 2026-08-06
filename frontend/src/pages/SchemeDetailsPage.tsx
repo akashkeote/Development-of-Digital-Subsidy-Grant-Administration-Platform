@@ -185,19 +185,20 @@ export const SchemeDetailsPage: React.FC = () => {
             </div>
 
             {/* Department stats card */}
-            <div className="bg-slate-800 text-white p-8 rounded-2xl space-y-5 shadow-lg border border-slate-700">
-              <div>
-                <p className="font-heading text-[10px] uppercase font-bold text-slate-400 tracking-widest">Administered By</p>
-                <h4 className="text-sm font-bold text-white mt-1 leading-snug">{scheme.department}</h4>
+            <div className="bg-blue-50 p-8 rounded-2xl space-y-5 shadow-sm border border-blue-100 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="relative z-10">
+                <p className="font-heading text-[10px] uppercase font-bold text-blue-600 tracking-widest">Administered By</p>
+                <h4 className="text-sm font-bold text-slate-800 mt-1 leading-snug">{scheme.department}</h4>
               </div>
-              <div className="grid grid-cols-2 gap-4 border-t border-slate-600 pt-4 text-xs font-medium">
+              <div className="grid grid-cols-2 gap-4 border-t border-blue-200/60 pt-4 text-xs font-medium relative z-10">
                 <div>
-                  <p className="text-slate-400 mb-1">Budget:</p>
-                  <p className="font-heading font-bold text-white text-base">₹{(scheme.totalAllocation / 10000000).toFixed(1)} Cr</p>
+                  <p className="text-slate-500 mb-1 font-bold text-[10px] uppercase tracking-widest">Budget:</p>
+                  <p className="font-heading font-extrabold text-blue-700 text-base">₹{(scheme.totalAllocation / 10000000).toFixed(1)} Cr</p>
                 </div>
                 <div>
-                  <p className="text-slate-400 mb-1">Disbursed:</p>
-                  <p className="font-heading font-bold text-[#198754] text-base">₹{(scheme.disbursedAmount / 10000000).toFixed(1)} Cr</p>
+                  <p className="text-slate-500 mb-1 font-bold text-[10px] uppercase tracking-widest">Disbursed:</p>
+                  <p className="font-heading font-extrabold text-emerald-600 text-base">₹{(scheme.disbursedAmount / 10000000).toFixed(1)} Cr</p>
                 </div>
               </div>
             </div>
