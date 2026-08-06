@@ -182,7 +182,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     comment: string, 
     approved: boolean
   ) => {
-    const status = approved ? 'approved' : 'rejected_by_admin';
+    const status = approved ? 'approved_by_district' : 'rejected_by_district';
     approveAppMutation.mutate({ appId, status, remarks: comment }, {
       onSuccess: () => {
         const app = applications.find(a => a.id === appId);

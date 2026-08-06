@@ -1,4 +1,4 @@
-import { Scheme, Application, Installment, DashboardStats } from '../types';
+import { Scheme, Application, Installment, SystemStats } from '../types';
 import { INITIAL_SCHEMES, INITIAL_APPLICATIONS, INITIAL_INSTALLMENTS } from '../data/dummyData';
 import { apiClient } from './apiClient';
 
@@ -108,17 +108,16 @@ export const applicationService = {
     setStorage('mock_db_applications', updated);
 
     // If approved, automatically create an installment
-    if (status === 'approved') {
+    if (status === 'approved_by_district') {
       const app = updated.find(a => a.id === appId)!;
       const installments = getStorage('mock_db_installments', INITIAL_INSTALLMENTS);
       const newInst: Installment = {
         id: `INST-${Date.now()}`,
         applicationId: app.id,
-        applicantName: app.applicantName,
-        schemeId: app.schemeId,
-        schemeName: app.schemeName,
+        schemeTitle: app.schemeTitle,
+        installmentNumber: 1,
         amount: 50000, // Mock amount
-        status: 'pending_release',
+        status: 'pending',
         dueDate: new Date(Date.now() + 86400000 * 7).toISOString() // 7 days from now
       };
       setStorage('mock_db_installments', [newInst, ...installments]);

@@ -361,13 +361,13 @@ export const AdminDashboard: React.FC = () => {
                   <div key={app.id} className="flex flex-col xl:flex-row items-center justify-between p-5 bg-white/60 border border-white/80 shadow-sm rounded-2xl hover:bg-white/80 transition-all">
                     <div className="flex items-center gap-5 w-full xl:w-auto">
                       <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold shadow-inner shrink-0 ${
-                        app.status === 'approved' || app.status === 'disbursing' || app.status === 'completed'
+                        app.status === 'approved_by_district' || app.status === 'disbursing' || app.status === 'completed'
                           ? 'bg-emerald-100 text-emerald-600 border border-emerald-200' 
-                          : app.status === 'rejected_by_verifier' || app.status === 'rejected_by_admin'
+                          : app.status === 'rejected_by_verifier' || app.status === 'rejected_by_district'
                           ? 'bg-red-100 text-red-600 border border-red-200'
                           : 'bg-amber-100 text-amber-600 border border-amber-200'
                       }`}>
-                        {app.status === 'approved' || app.status === 'disbursing' || app.status === 'completed' ? 'A' : app.status.includes('reject') ? 'R' : '!'}
+                        {app.status === 'approved_by_district' || app.status === 'disbursing' || app.status === 'completed' ? 'A' : app.status.includes('reject') ? 'R' : '!'}
                       </div>
                       <div>
                         <h4 className="font-bold text-slate-800 text-base">{app.citizenName} <span className="text-xs text-slate-400 font-normal ml-2">({app.schemeTitle})</span></h4>
@@ -394,7 +394,7 @@ export const AdminDashboard: React.FC = () => {
                           approveApplication(app.id, 'Force Approved by System Administrator (Bypassed L1/L2)', true);
                           setOverridingAppId(null);
                         }}
-                        disabled={overridingAppId !== null || app.status === 'approved' || app.status === 'disbursing' || app.status === 'completed'}
+                        disabled={overridingAppId !== null || app.status === 'approved_by_district' || app.status === 'disbursing' || app.status === 'completed'}
                         className="btn-3d px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border border-transparent rounded-xl text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center gap-2 transition-all whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <CheckCircle2 size={16} /> 
