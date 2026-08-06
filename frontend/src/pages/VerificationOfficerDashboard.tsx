@@ -42,6 +42,13 @@ export const VerificationOfficerDashboard: React.FC = () => {
       return;
     }
 
+    // Ensure all documents have been explicitly accepted or rejected
+    const unverifiedDocs = activeApp.documents.filter(doc => !docStatuses[doc.id]);
+    if (unverifiedDocs.length > 0 && action === 'approve') {
+      alert('You must explicitly Accept or Reject all uploaded certificates before approving.');
+      return;
+    }
+
     if (activeRole === 'finance_approver' && action === 'approve' && grantAmount <= 0) {
       alert('Finance Approvers must set a valid grant amount before final approval.');
       return;
@@ -50,7 +57,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
     // Prepare document approvals array
     const docApprovals = activeApp.documents.map(doc => ({
       id: doc.id,
-      status: docStatuses[doc.id] || 'verified',
+      status: docStatuses[doc.id] || (action === 'reject' ? 'rejected' : 'pending'),
       comment: docComments[doc.id] || ''
     }));
 
@@ -260,7 +267,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
 
                 <div className="space-y-6">
                   {activeApp.documents.map((doc) => {
-                    const status = docStatuses[doc.id] || 'verified';
+                    const status = docStatuses[doc.id];
                     const docComment = docComments[doc.id] || '';
 
                     return (
