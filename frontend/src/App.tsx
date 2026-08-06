@@ -30,7 +30,6 @@ import { DistrictOfficerDashboard } from './pages/DistrictOfficerDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 
 import { ChatbotWidget } from './components/ChatbotWidget';
-import { SandboxRoleSwitcher } from './components/SandboxRoleSwitcher';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -80,7 +79,6 @@ export default function App() {
         <BrowserRouter>
           <AnimatedRoutes />
           <ChatbotWidget />
-          <SandboxRoleSwitcher />
         </BrowserRouter>
       </AppProvider>
     </ErrorBoundary>
