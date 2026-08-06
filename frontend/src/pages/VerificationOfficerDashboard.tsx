@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { ShieldCheck, FileText, CheckCircle2, XCircle, AlertCircle, Clock, Check, RefreshCw } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { ShieldCheck, FileText, CheckCircle2, XCircle, Clock, Check } from 'lucide-react';
 
 export const VerificationOfficerDashboard: React.FC = () => {
   const { applications, verifyApplication } = useApp();
@@ -61,46 +61,45 @@ export const VerificationOfficerDashboard: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6" id="verifier_dashboard_root">
+      <div className="space-y-10 relative z-10 p-4" id="verifier_dashboard_root">
         
         {/* Header */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-60 -z-10 translate-x-1/2 -translate-y-1/2"></div>
-          <div className="z-10">
-            <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">Document Verification</h1>
-            <p className="text-sm text-slate-500 mt-2 font-medium">Review applicant demographics, audit uploaded PDF certificates, and verify compliance criteria.</p>
+        <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8 backdrop-blur-xl">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-800 tracking-tight font-heading">Document Verification</h1>
+            <p className="text-base text-slate-600 mt-2 font-medium">Review applicant demographics, audit uploaded PDF certificates, and verify compliance criteria.</p>
           </div>
-          <div className="z-10 text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-100 px-4 py-2.5 rounded-xl flex items-center shadow-sm uppercase tracking-widest">
-            <Clock className="w-5 h-5 mr-2 text-indigo-500" /> Pending Reviews: <span className="ml-1.5 text-indigo-800 text-sm">{queue.length}</span>
+          <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-200/50 px-6 py-4 rounded-2xl flex items-center tracking-widest shadow-inner">
+            <Clock className="w-5 h-5 mr-3" /> Pending Reviews: <span className="ml-2 font-black text-blue-700 text-lg">{queue.length}</span>
           </div>
         </div>
 
         {/* Core Review Workspace */}
         {queue.length === 0 ? (
-          <div className="bg-white text-center py-20 px-8 border border-slate-100 shadow-sm rounded-3xl max-w-2xl mx-auto space-y-4">
-            <div className="w-20 h-20 mx-auto bg-emerald-50 rounded-2xl flex items-center justify-center mb-6">
-              <CheckCircle2 className="w-10 h-10 text-emerald-500 animate-bounce" />
+          <div className="glass-card card-3d bg-white/70 text-center py-24 px-8 border border-white/50 rounded-3xl max-w-2xl mx-auto space-y-8 shadow-xl backdrop-blur-xl">
+            <div className="w-24 h-24 mx-auto bg-green-50/80 rounded-3xl flex items-center justify-center shadow-inner border border-green-100/50">
+              <CheckCircle2 className="w-12 h-12 text-green-600" />
             </div>
-            <h3 className="text-xl text-slate-900 font-extrabold">Queue is Empty</h3>
-            <p className="text-slate-500 font-medium">All submitted applications have been verified. Excellent work!</p>
-            <div className="mt-8 p-4 bg-indigo-50/50 border border-indigo-100 rounded-2xl text-xs text-indigo-800 font-medium leading-relaxed">
-              <strong className="text-indigo-900 font-extrabold uppercase tracking-widest block mb-1">Evaluator Tip:</strong> Switch back to "Citizen Mode" in the header to submit a new scheme application. It will immediately appear here for review!
+            <h3 className="text-3xl text-slate-800 font-bold font-heading">Queue is Empty</h3>
+            <p className="text-slate-600 font-medium text-lg">All submitted applications have been verified. Excellent work!</p>
+            <div className="mt-10 p-6 bg-blue-50/80 border border-blue-100/50 rounded-2xl text-sm text-slate-700 font-medium leading-relaxed shadow-inner">
+              <strong className="text-blue-700 font-bold tracking-widest block mb-2">Evaluator Tip:</strong> Switch back to "Citizen Mode" in the header to submit a new scheme application. It will immediately appear here for review!
             </div>
           </div>
         ) : !activeApp ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-sm">
-            <p className="text-slate-400 font-bold uppercase tracking-widest text-sm">Please select an application from the queue to review.</p>
+          <div className="text-center py-24 glass-card card-3d bg-white/70 rounded-3xl border border-white/50 shadow-xl backdrop-blur-xl">
+            <p className="text-slate-500 font-bold tracking-widest text-base">Please select an application from the queue to review.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             
             {/* Left Column: Applications Queue Picker */}
-            <div className="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 space-y-5 h-fit">
-              <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-3">
+            <div className="lg:col-span-4 glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-6 h-fit backdrop-blur-xl">
+              <h3 className="text-sm font-bold text-slate-500 tracking-widest border-b border-slate-200/50 pb-5 font-heading uppercase">
                 Pending Queue ({queue.length})
               </h3>
               
-              <div className="space-y-3 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                 {queue.map((app) => {
                   const active = app.id === selectedAppId;
                   return (
@@ -111,17 +110,17 @@ export const VerificationOfficerDashboard: React.FC = () => {
                         setComment('');
                         setDocStatuses({});
                       }}
-                      className={`w-full text-left p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                      className={`w-full text-left p-6 rounded-2xl border transition-all duration-300 cursor-pointer btn-3d ${
                         active 
-                          ? 'bg-indigo-50/50 border-indigo-500 shadow-sm scale-[1.02]' 
-                          : 'border-transparent bg-slate-50 hover:bg-slate-100 hover:border-slate-200'
+                          ? 'bg-white border-blue-600 shadow-md ring-1 ring-blue-600/20' 
+                          : 'border-white/60 bg-white/40 hover:bg-white/80 shadow-sm hover:border-blue-200'
                       }`}
                     >
-                      <div className="flex justify-between items-start gap-2 mb-2">
-                        <span className={`text-sm font-bold line-clamp-1 flex-1 ${active ? 'text-indigo-900' : 'text-slate-700'}`}>{app.schemeTitle}</span>
-                        <span className="text-[10px] text-slate-400 font-bold font-mono flex-shrink-0 bg-white px-2 py-1 rounded-md shadow-sm">#{app.id}</span>
+                      <div className="flex justify-between items-start gap-3 mb-4">
+                        <span className={`text-base font-bold line-clamp-1 flex-1 font-heading ${active ? 'text-blue-700' : 'text-slate-700'}`}>{app.schemeTitle}</span>
+                        <span className="text-xs text-slate-500 font-bold font-mono flex-shrink-0 bg-white/80 border border-slate-200/50 px-2 py-1 rounded-lg shadow-inner">#{app.id}</span>
                       </div>
-                      <div className="flex justify-between text-[11px] text-slate-500 font-medium">
+                      <div className="flex justify-between text-sm text-slate-600 font-medium">
                         <span>{app.citizenName}</span>
                         <span>{app.appliedDate}</span>
                       </div>
@@ -132,76 +131,76 @@ export const VerificationOfficerDashboard: React.FC = () => {
             </div>
 
             {/* Right Column: Interactive Document Review Panel */}
-            <div className="lg:col-span-8 space-y-6">
+            <div className="lg:col-span-8 space-y-10">
               
               {/* Applicant Demographic Specs */}
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 space-y-6">
-                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-4 flex items-center">
-                  <FileText className="w-5 h-5 mr-3 text-indigo-600" />
+              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
+                <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase">
+                  <FileText className="w-5 h-5 mr-3 text-blue-600" />
                   Applicant Dossier
                 </h3>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-6 text-sm font-medium">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-8 text-base font-medium">
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">FullName:</p>
-                    <p className="text-slate-900 font-bold">{activeApp.personalDetails.fullName}</p>
+                    <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase">FullName:</p>
+                    <p className="text-slate-800 font-bold">{activeApp.personalDetails.fullName}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">Aadhaar:</p>
-                    <p className="text-slate-900 font-mono font-bold bg-slate-50 px-2 py-0.5 rounded-md inline-block border border-slate-100">{activeApp.personalDetails.aadhaar}</p>
+                    <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase">Aadhaar:</p>
+                    <p className="text-slate-800 font-mono font-bold bg-white/80 px-3 py-1.5 rounded-lg inline-block border border-slate-200/50 shadow-inner">{activeApp.personalDetails.aadhaar}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">Mobile:</p>
-                    <p className="text-slate-900 font-bold">{activeApp.personalDetails.phone}</p>
+                    <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase">Mobile:</p>
+                    <p className="text-slate-800 font-bold">{activeApp.personalDetails.phone}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">Income:</p>
-                    <p className="text-emerald-700 font-extrabold bg-emerald-50 px-2 py-0.5 rounded-md inline-block border border-emerald-100">₹{activeApp.personalDetails.income.toLocaleString('en-IN')}/yr</p>
+                    <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase">Income:</p>
+                    <p className="text-green-700 font-bold bg-green-50/80 px-3 py-1.5 rounded-lg inline-block border border-green-200/50 shadow-inner">₹{activeApp.personalDetails.income.toLocaleString('en-IN')}/yr</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">State:</p>
-                    <p className="text-slate-900 font-bold">{activeApp.personalDetails.state}</p>
+                    <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase">State:</p>
+                    <p className="text-slate-800 font-bold">{activeApp.personalDetails.state}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">District:</p>
-                    <p className="text-slate-900 font-bold">{activeApp.personalDetails.district}</p>
+                    <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase">District:</p>
+                    <p className="text-slate-800 font-bold">{activeApp.personalDetails.district}</p>
                   </div>
                 </div>
               </div>
 
               {/* Uploaded Documents List with checkboxes */}
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
-                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-4 flex items-center">
-                  <ShieldCheck className="w-5 h-5 mr-3 text-indigo-600" /> Certificates Audit
+              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
+                <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase">
+                  <ShieldCheck className="w-5 h-5 mr-3 text-blue-600" /> Certificates Audit
                 </h3>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {activeApp.documents.map((doc) => {
                     const status = docStatuses[doc.id] || 'verified';
                     const docComment = docComments[doc.id] || '';
 
                     return (
-                      <div key={doc.id} className="p-5 border border-slate-100 rounded-2xl bg-slate-50 space-y-4 hover:shadow-sm transition-all duration-300">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                          <div className="flex gap-4 items-center">
-                            <span className="w-12 h-12 bg-white shadow-sm text-indigo-600 rounded-xl flex items-center justify-center border border-slate-100">
+                      <div key={doc.id} className="p-6 border border-white/60 rounded-2xl bg-white/50 space-y-6 hover:bg-white/80 transition-all duration-300 shadow-sm card-3d">
+                        <div className="flex flex-col 2xl:flex-row justify-between items-start 2xl:items-center gap-6">
+                          <div className="flex gap-5 items-center w-full min-w-0">
+                            <span className="w-14 h-14 bg-white shadow-md text-blue-600 rounded-2xl flex items-center justify-center border border-slate-100 flex-shrink-0 card-3d">
                               <FileText className="w-6 h-6" />
                             </span>
-                            <div className="leading-none text-left">
-                              <p className="text-sm font-extrabold text-slate-900">{doc.type}</p>
-                              <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mt-1.5">File: {doc.name}</p>
+                            <div className="leading-none text-left min-w-0 overflow-hidden">
+                              <p className="text-base font-bold text-slate-800 font-heading truncate">{doc.type}</p>
+                              <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-2 font-mono truncate">File: {doc.name}</p>
                             </div>
                           </div>
 
                           {/* Quick validation toggles */}
-                          <div className="flex gap-2 self-end sm:self-auto bg-white p-1 rounded-xl shadow-sm border border-slate-100">
+                          <div className="flex gap-4 flex-wrap bg-white/60 p-2 rounded-2xl shadow-inner border border-slate-100 backdrop-blur-sm shrink-0">
                             <button
                               type="button"
                               onClick={() => handleDocVerify(doc.id, 'verified')}
-                              className={`px-4 py-2 rounded-lg text-xs font-extrabold transition-all flex items-center space-x-2 cursor-pointer ${
+                              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center space-x-2 cursor-pointer border btn-3d ${
                                 status === 'verified'
-                                  ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
-                                  : 'text-slate-400 hover:text-emerald-500 hover:bg-slate-50'
+                                  ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white border-transparent shadow-md'
+                                  : 'text-slate-600 hover:text-slate-800 hover:bg-white border-transparent bg-transparent'
                               }`}
                             >
                               <CheckCircle2 className="w-4 h-4" />
@@ -210,10 +209,10 @@ export const VerificationOfficerDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => handleDocVerify(doc.id, 'rejected')}
-                              className={`px-4 py-2 rounded-lg text-xs font-extrabold transition-all flex items-center space-x-2 cursor-pointer ${
+                              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center space-x-2 cursor-pointer border btn-3d ${
                                 status === 'rejected'
-                                  ? 'bg-red-500 text-white shadow-md shadow-red-500/20'
-                                  : 'text-slate-400 hover:text-red-500 hover:bg-slate-50'
+                                  ? 'bg-gradient-to-r from-red-500 to-rose-500 text-white border-transparent shadow-md'
+                                  : 'text-slate-600 hover:text-slate-800 hover:bg-white border-transparent bg-transparent'
                               }`}
                             >
                               <XCircle className="w-4 h-4" />
@@ -228,7 +227,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
                           placeholder="Audit comment / description of discrepancy (optional if accepted)"
                           value={docComment}
                           onChange={(e) => handleDocComment(doc.id, e.target.value)}
-                          className="w-full p-4 bg-white border border-slate-200 focus:border-indigo-500 rounded-xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-300"
+                          className="w-full p-4 bg-white/80 border border-slate-200/50 focus:border-blue-400 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 input-3d shadow-inner"
                         />
                       </div>
                     );
@@ -237,35 +236,33 @@ export const VerificationOfficerDashboard: React.FC = () => {
               </div>
 
               {/* Review Logging Form */}
-              <div className="bg-slate-900 p-8 rounded-3xl shadow-xl shadow-slate-900/20 space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full blur-3xl opacity-20 -mr-10 -mt-10"></div>
-                
-                <h3 className="text-sm font-extrabold text-white uppercase tracking-widest border-b border-slate-800 pb-4 relative z-10">
+              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl shadow-xl border border-white/50 space-y-8 backdrop-blur-xl">
+                <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 font-heading uppercase">
                   Verifier Remarks Log
                 </h3>
 
-                <div className="space-y-6 relative z-10">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Official Process Comments (Required)</label>
+                <div className="space-y-8">
+                  <div className="space-y-4">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Official Process Comments (Required)</label>
                     <textarea
                       placeholder="Input comprehensive audit comments, detailing certificate verification parameters and local records check..."
-                      rows={3}
+                      rows={4}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-4 bg-slate-800/50 border border-slate-700 focus:border-indigo-500 rounded-2xl text-sm text-white font-medium focus:outline-none focus:ring-4 focus:ring-indigo-500/20 transition-all placeholder:text-slate-500 resize-none"
+                      className="w-full p-5 bg-white/80 border border-slate-200/50 focus:border-blue-400 rounded-2xl text-base text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 resize-none input-3d shadow-inner"
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-end pt-2">
+                  <div className="flex flex-col sm:flex-row gap-5 justify-end pt-6 border-t border-slate-200/50">
                     <button
                       onClick={() => handleSubmitReview(false)}
-                      className="w-full sm:w-auto bg-slate-800 hover:bg-red-500 text-white hover:shadow-lg hover:shadow-red-500/20 text-sm font-extrabold px-6 py-3.5 rounded-xl transition-all cursor-pointer border border-slate-700 hover:border-red-500"
+                      className="w-full sm:w-auto bg-white border border-slate-200 hover:border-red-400 hover:text-red-600 text-slate-700 text-sm font-bold px-8 py-3.5 rounded-2xl transition-all duration-300 cursor-pointer btn-3d shadow-sm"
                     >
                       Reject File
                     </button>
                     <button
                       onClick={() => handleSubmitReview(true)}
-                      className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20 text-sm font-extrabold px-8 py-3.5 rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                      className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white shadow-lg shadow-blue-500/30 text-sm font-bold px-8 py-3.5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer btn-3d"
                     >
                       <Check className="w-5 h-5" />
                       <span>Verify & Forward</span>
@@ -282,3 +279,4 @@ export const VerificationOfficerDashboard: React.FC = () => {
     </DashboardLayout>
   );
 };
+

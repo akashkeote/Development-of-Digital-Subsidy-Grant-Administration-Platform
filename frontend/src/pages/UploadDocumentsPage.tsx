@@ -35,9 +35,9 @@ export const UploadDocumentsPage: React.FC = () => {
   if (!scheme) {
     return (
       <DashboardLayout>
-        <div className="text-center py-12 bg-white rounded-2xl border border-gray-100">
+        <div className="text-center py-12 glass-card rounded-2xl">
           <p className="text-gray-400 font-bold mb-3">Scheme reference not found</p>
-          <Link to="/schemes" className="text-purple-800 underline font-bold text-xs">Return to Catalog</Link>
+          <Link to="/schemes" className="gradient-text underline font-bold text-xs">Return to Catalog</Link>
         </div>
       </DashboardLayout>
     );
@@ -152,42 +152,39 @@ export const UploadDocumentsPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6" id="upload_documents_page_root">
+      <div className="space-y-8 relative z-10" id="upload_documents_page_root">
         
         {/* Header navigation and status info */}
         <div className="space-y-4">
-          <Link to={`/schemes/${scheme.id}/apply`} className="inline-flex items-center text-xs font-bold text-indigo-600 hover:text-indigo-700 transition">
+          <Link to={`/schemes/${scheme.id}/apply`} className="inline-flex items-center text-xs font-bold text-[#00599f] hover:text-[#004a85] transition-colors">
             <ArrowLeft className="w-4 h-4 mr-1.5" />
             <span>Return to Form Details</span>
           </Link>
 
-          <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex justify-between items-center relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-48 h-48 bg-emerald-50 rounded-full blur-3xl opacity-60"></div>
-            
+          <div className="bg-white border border-slate-200 p-8 rounded-2xl flex justify-between items-center relative overflow-hidden shadow-sm">
             <div className="relative z-10">
-              <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md tracking-widest uppercase">KYC Attachments</span>
-              <h1 className="text-2xl font-extrabold text-slate-900 mt-2 tracking-tight">Upload Certificates</h1>
-              <p className="text-sm text-slate-500 mt-1 font-medium">Scheme: <span className="font-bold text-slate-900">{scheme.title}</span></p>
+              <span className="text-[10px] font-bold text-[#198754] bg-green-50 border border-green-100 px-3 py-1 rounded-md tracking-widest uppercase">KYC Attachments</span>
+              <h1 className="text-3xl font-heading font-bold text-slate-800 mt-3 tracking-tight">Upload Certificates</h1>
+              <p className="text-sm text-slate-500 mt-2 font-medium">Scheme: <span className="font-bold text-slate-700">{scheme.title}</span></p>
             </div>
             <div className="hidden sm:block text-right relative z-10">
-              <p className="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-1">Step 2 of 2</p>
-              <p className="font-bold text-emerald-600 text-sm bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100">Document Upload</p>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Step 2 of 2</p>
+              <p className="font-bold text-[#198754] text-sm bg-green-50 px-4 py-2 rounded-xl border border-green-100">Document Upload</p>
             </div>
           </div>
         </div>
 
         {/* Step progress bar */}
-        <div className="bg-slate-100 h-2 rounded-full overflow-hidden shadow-inner">
-          <div className="w-full h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] relative">
-            <div className="absolute top-0 right-0 bottom-0 w-20 bg-gradient-to-r from-transparent to-white/30 animate-pulse"></div>
+        <div className="bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-200">
+          <div className="w-full h-full bg-[#198754] relative">
           </div>
         </div>
 
         {/* Upload Container Grid */}
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Main upload list */}
-          <div className="lg:col-span-8 space-y-4">
+          <div className="lg:col-span-8 space-y-6">
             
             {scheme.requiredDocuments.map((docType) => {
               const fileUpload = uploads[docType];
@@ -196,22 +193,22 @@ export const UploadDocumentsPage: React.FC = () => {
               return (
                 <div 
                   key={docType}
-                  className={`bg-white p-6 rounded-3xl border-2 border-dashed transition-all ${
+                  className={`bg-white p-8 rounded-2xl border-2 border-dashed transition-all duration-300 shadow-sm ${
                     fileUpload?.uploaded 
-                      ? 'border-emerald-200 bg-emerald-50/20' 
+                      ? 'border-[#198754] bg-green-50' 
                       : isDrag 
-                        ? 'border-indigo-500 bg-indigo-50/50 scale-[1.01]' 
-                        : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50/50'
+                        ? 'border-[#00599f] bg-blue-50 scale-[1.01]' 
+                        : 'border-slate-300 hover:border-[#00599f]'
                   }`}
                   onDragEnter={(e) => handleDrag(e, docType)}
                   onDragOver={(e) => handleDrag(e, docType)}
                   onDragLeave={(e) => handleDrag(e, docType)}
                   onDrop={(e) => handleDrop(e, docType)}
                 >
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div className="space-y-1.5">
-                      <p className="text-sm font-extrabold text-slate-900 uppercase tracking-widest">{docType}</p>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Format: PDF, JPG, PNG (Max 5MB)</p>
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div className="space-y-2">
+                      <p className="text-sm font-heading font-bold text-slate-800 uppercase tracking-widest">{docType}</p>
+                      <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Format: PDF, JPG, PNG (Max 5MB)</p>
                     </div>
 
                     <div className="w-full md:w-auto">
@@ -229,32 +226,32 @@ export const UploadDocumentsPage: React.FC = () => {
                           />
                           <label 
                             htmlFor={`file-${docType}`}
-                            className="text-xs font-bold text-indigo-700 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-6 py-3.5 rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
+                            className="text-xs font-bold text-[#00599f] bg-blue-50 hover:bg-blue-100 border border-blue-200 px-6 py-3.5 rounded-xl transition-colors flex items-center justify-center space-x-2 cursor-pointer shadow-sm"
                           >
                             <Upload className="w-5 h-5" />
                             <span>Select Document</span>
                           </label>
                         </div>
                       ) : (
-                        <div className="flex items-center space-x-4 bg-white border border-slate-100 p-3 rounded-2xl shadow-sm">
-                          <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
-                            <FileText className="w-5 h-5" />
+                        <div className="flex items-center space-x-4 bg-slate-50 border border-slate-200 p-4 rounded-xl shadow-sm">
+                          <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#00599f] border border-blue-100">
+                            <FileText className="w-6 h-6" />
                           </div>
                           <div className="leading-none text-left min-w-[120px]">
                             <p className="text-sm font-bold text-slate-800 max-w-[180px] truncate">{fileUpload.name}</p>
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5">{fileUpload.progress}% Uploaded</p>
+                            <p className="text-[10px] text-[#00599f] font-bold uppercase tracking-widest mt-2">{fileUpload.progress}% Uploaded</p>
                           </div>
                           
                           {fileUpload.uploaded ? (
-                            <CheckCircle2 className="w-6 h-6 text-emerald-500 flex-shrink-0" />
+                            <CheckCircle2 className="w-7 h-7 text-[#198754] flex-shrink-0" />
                           ) : (
-                            <div className="w-5 h-5 rounded-full border-2 border-slate-200 border-t-indigo-600 animate-spin"></div>
+                            <div className="w-6 h-6 rounded-full border-2 border-slate-300 border-t-[#00599f] animate-spin"></div>
                           )}
 
                           <button 
                             type="button" 
                             onClick={() => handleDelete(docType)}
-                            className="p-2 hover:bg-red-50 text-red-400 hover:text-red-500 rounded-xl transition-all ml-2"
+                            className="p-2 hover:bg-red-50 text-red-500 hover:text-red-600 rounded-xl transition-colors ml-2 border border-transparent hover:border-red-200"
                           >
                             <Trash2 className="w-5 h-5" />
                           </button>
@@ -265,8 +262,9 @@ export const UploadDocumentsPage: React.FC = () => {
 
                   {/* Progress bar indicator */}
                   {fileUpload && !fileUpload.uploaded && (
-                    <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-5 shadow-inner">
-                      <div className="h-full bg-indigo-600 transition-all duration-300" style={{ width: `${fileUpload.progress}%` }}></div>
+                    <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden mt-6 border border-slate-200">
+                      <div className="h-full bg-[#00599f] transition-all duration-300 relative" style={{ width: `${fileUpload.progress}%` }}>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -274,16 +272,16 @@ export const UploadDocumentsPage: React.FC = () => {
             })}
 
             {/* Submission triggers */}
-            <div className="flex flex-col sm:flex-row justify-between items-center bg-white p-6 rounded-3xl border border-slate-100 shadow-sm gap-4 mt-6">
-              <span className="text-xs text-slate-400 font-bold text-center sm:text-left">Confirm uploads before submitting to registry.</span>
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-white border border-slate-200 p-6 rounded-2xl shadow-sm gap-4 mt-8">
+              <span className="text-xs text-slate-500 font-bold text-center sm:text-left">Confirm uploads before submitting to registry.</span>
               <button 
                 type="submit"
                 disabled={loading}
-                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/20 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto bg-[#198754] hover:bg-green-700 text-white text-sm font-bold px-10 py-4 rounded-xl flex items-center justify-center space-x-3 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed transition-colors shadow-sm"
               >
                 {loading ? (
                   <>
-                    <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
+                    <div className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin"></div>
                     <span>Saving...</span>
                   </>
                 ) : (
@@ -298,27 +296,25 @@ export const UploadDocumentsPage: React.FC = () => {
           </div>
 
           {/* Right sidebar instructions */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-4 space-y-8">
             
-            <div className="bg-slate-900 text-white p-8 rounded-3xl shadow-xl shadow-slate-900/20 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500 rounded-full blur-3xl opacity-20 -mr-10 -mt-10"></div>
-              
-              <div className="w-12 h-12 rounded-2xl bg-sky-500/20 flex items-center justify-center mb-5 text-sky-400 border border-sky-500/30 relative z-10">
-                <CloudLightning className="w-6 h-6" />
+            <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 relative overflow-hidden shadow-lg">
+              <div className="w-14 h-14 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 text-sky-400 border border-slate-700 relative z-10">
+                <CloudLightning className="w-7 h-7" />
               </div>
-              <h3 className="font-extrabold text-sm uppercase tracking-widest text-white relative z-10 mb-2">Self-Attestation Rule</h3>
-              <p className="text-sm text-slate-400 leading-relaxed font-medium relative z-10">
+              <h3 className="font-heading font-bold text-sm uppercase tracking-widest text-white relative z-10 mb-3">Self-Attestation Rule</h3>
+              <p className="text-sm text-slate-300 leading-relaxed font-medium relative z-10">
                 Ensure uploaded scans are self-attested (signed by you at the margin) where applicable. Document clarity is important; blurry files trigger immediate verifier rejections.
               </p>
-              <div className="mt-5 p-4 bg-slate-800/50 border border-slate-700 rounded-2xl text-xs text-slate-300 font-medium relative z-10">
+              <div className="mt-6 p-5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-300 font-medium relative z-10">
                 Uploaded data is encrypted with <span className="text-sky-400 font-bold">SHA-256 signatures</span> before forwarding to district offices.
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-3">
-              <p className="font-extrabold text-slate-900 uppercase tracking-widest text-sm border-b border-slate-100 pb-3">Need Help?</p>
-              <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                Visit your local <span className="font-bold text-slate-700">Common Service Centre (CSC)</span> for support with land document scans and mobile Aadhaar seeding triggers.
+            <div className="bg-white p-8 rounded-2xl space-y-4 border border-slate-200 shadow-sm">
+              <p className="font-heading font-bold text-slate-800 uppercase tracking-widest text-sm border-b border-slate-100 pb-4">Need Help?</p>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                Visit your local <span className="font-bold text-[#00599f]">Common Service Centre (CSC)</span> for support with land document scans and mobile Aadhaar seeding triggers.
               </p>
             </div>
 

@@ -72,31 +72,53 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [citizenProfile]);
 
   useEffect(() => {
-    localStorage.setItem('gov_schemes', JSON.stringify(schemes));
+    try {
+      localStorage.setItem('gov_schemes', JSON.stringify(schemes));
+    } catch (e) {
+      console.warn('Could not save schemes to localStorage (quota exceeded)', e);
+    }
   }, [schemes]);
 
-  // Fetch real schemes from backend on mount
+  // Fetch real schemes from JSON on mount
   useEffect(() => {
-    fetch('http://localhost:8080/api/subsidies')
+    fetch('/schemes.json')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
-          const mappedSchemes = data.map((d: any) => ({
-            id: d.id,
-            title: d.title,
-            department: d.ministry || 'Government',
-            ministry: d.ministry || 'Various Ministries',
-            category: (d.category || 'social_welfare').toLowerCase().replace(' & ', '_'),
-            description: d.details || d.description || '',
-            benefits: 'Financial assistance via DBT',
-            eligibilityCriteria: ['Citizen of India', 'Meets category requirements'],
-            requiredDocuments: ['Aadhaar Card', 'Bank Passbook'],
-            financialYear: '2026-27',
-            totalAllocation: 50000000,
-            disbursedAmount: 0,
-            subsidyAmount: d.grantAmount || 5000,
-            installmentCount: d.installmentCount || 1
-          }));
+          const mappedSchemes = data.map((d: any) => {
+            // Try to extract a numeric amount from grantAmount string, fallback to 5000
+            let parsedAmount = 5000;
+            if (typeof d.grantAmount === 'string') {
+              const numMatch = d.grantAmount.match(/[\d.]+/);
+              if (numMatch) {
+                parsedAmount = parseFloat(numMatch[0]);
+                if (d.grantAmount.toLowerCase().includes('lakh')) {
+                  parsedAmount *= 100000;
+                } else if (d.grantAmount.toLowerCase().includes('crore')) {
+                  parsedAmount *= 10000000;
+                }
+              }
+            } else if (typeof d.grantAmount === 'number') {
+              parsedAmount = d.grantAmount;
+            }
+
+            return {
+              id: d.id,
+              title: d.title,
+              department: d.ministry || 'Government',
+              ministry: d.ministry || 'Various Ministries',
+              category: (d.category || 'social_welfare').toLowerCase().replace(' & ', '_'),
+              description: d.details || d.description || '',
+              benefits: d.benefits || 'Financial assistance via DBT',
+              eligibilityCriteria: typeof d.eligibilityCriteria === 'string' ? d.eligibilityCriteria.split('\n') : ['Citizen of India', 'Meets category requirements'],
+              requiredDocuments: Array.isArray(d.documentsRequired) && d.documentsRequired.length > 0 ? d.documentsRequired : ['Aadhaar Card', 'Bank Passbook'],
+              financialYear: '2026-27',
+              totalAllocation: 50000000,
+              disbursedAmount: 0,
+              subsidyAmount: parsedAmount,
+              installmentCount: d.installmentCount || 1
+            };
+          });
           setSchemes(mappedSchemes);
         }
       })

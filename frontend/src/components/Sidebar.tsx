@@ -78,20 +78,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   const getRoleBadge = () => {
     switch (currentRole) {
-      case 'verifier': return { label: 'Verifier Mode', color: 'bg-purple-800 text-purple-100' };
-      case 'district_officer': return { label: 'Sanction Officer', color: 'bg-purple-800 text-purple-100' };
-      case 'admin': return { label: 'Admin Root', color: 'bg-purple-800 text-purple-100' };
+      case 'verifier': return { label: 'Verifier Mode', color: 'from-violet-500 to-fuchsia-500' };
+      case 'district_officer': return { label: 'Sanction Officer', color: 'from-blue-500 to-cyan-500' };
+      case 'admin': return { label: 'Admin Root', color: 'from-rose-500 to-orange-500' };
       case 'citizen':
       default:
-        return { label: 'Citizen Account', color: 'bg-purple-800 text-purple-100' };
+        return { label: 'Citizen Account', color: 'from-emerald-500 to-teal-500' };
     }
   };
 
   const links = getLinks();
   const badge = getRoleBadge();
   const isCitizen = currentRole === 'citizen';
-  const sidebarBg = 'bg-white border-r border-gray-200';
-  const activeBg = 'bg-black';
 
   return (
     <>
@@ -99,47 +97,70 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div 
           onClick={onClose}
-          className="fixed inset-0 z-30 bg-gray-900/40 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-30 bg-slate-900/50 backdrop-blur-sm md:hidden"
         ></div>
       )}
 
       <aside className={`
-        fixed top-[64px] bottom-0 left-0 z-35 w-64 ${sidebarBg} flex flex-col justify-between transition-all duration-300 ease-in-out md:sticky md:top-[64px] md:translate-x-0
+        pastel-card fixed top-[96px] bottom-8 left-4 z-35 w-64 flex flex-col justify-between transition-transform duration-300 ease-in-out md:sticky md:top-[96px] md:h-[calc(100vh-128px)]
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         <div className="py-6 px-4 flex-1 overflow-y-auto">
-          {/* User role visualization inside sidebar */}
-          <div className="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200">
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Active View Profile</p>
-            <p className="font-semibold text-gray-900 text-xs truncate">
-              {isCitizen ? 'Rajesh Kumar Sharma' : 'Govt Operations'}
-            </p>
-            <span className={`inline-block mt-2 text-[10px] px-2 py-0.5 rounded font-bold uppercase border border-gray-200 bg-white text-gray-700`}>
-              {badge.label}
-            </span>
+          {/* User profile section */}
+          <div className="mb-8 bg-slate-50/50 p-4 rounded-xl border border-slate-200/60 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold border border-blue-200">
+              {isCitizen ? 'RK' : 'GO'}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-heading font-bold text-slate-800 text-sm truncate">
+                {isCitizen ? 'Rajesh Kumar' : 'Govt Operations'}
+              </p>
+              <div className="mt-1">
+                <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider bg-white border border-slate-200 text-slate-600 shadow-sm`}>
+                  {badge.label}
+                </span>
+              </div>
+            </div>
           </div>
 
-          <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-2.5 px-3">Navigation</p>
-          <nav className="space-y-1">
+          <p className="text-[10px] text-slate-400 font-heading font-bold uppercase tracking-[0.2em] mb-3 px-3">Navigation</p>
+          <nav className="space-y-3 px-2">
             {links.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 onClick={onClose}
                 className={({ isActive }) => `
-                  flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all duration-200
+                  flex items-center space-x-3 px-4 py-3 rounded-xl text-sm transition-all relative w-full
                   ${isActive 
-                    ? `bg-black text-white font-semibold` 
-                    : 'text-gray-600 hover:text-black hover:bg-gray-100'}
+                    ? 'btn-3d-primary font-bold border border-blue-600' 
+                    : 'btn-3d bg-white text-slate-700 hover:text-blue-600 hover:border-blue-200 border border-slate-200 font-medium'}
                 `}
               >
-                <span>{link.label}</span>
+                {({ isActive }) => (
+                  <>
+                    <span>{link.label}</span>
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
         </div>
 
-
+        {/* Bottom Section */}
+        <div className="p-4 border-t border-slate-200 bg-slate-50">
+          <div className="flex items-center gap-2 px-2">
+            <div className="w-6 h-6 rounded bg-slate-200 p-[2px]">
+              <div className="w-full h-full bg-white rounded-[2px] flex items-center justify-center">
+                <div className="w-2 h-2 rounded-full border border-slate-400"></div>
+              </div>
+            </div>
+            <div>
+              <p className="font-heading font-bold text-sm text-slate-800 leading-tight">DigiGrant</p>
+              <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">v3.0.0-ultra</p>
+            </div>
+          </div>
+        </div>
       </aside>
     </>
   );

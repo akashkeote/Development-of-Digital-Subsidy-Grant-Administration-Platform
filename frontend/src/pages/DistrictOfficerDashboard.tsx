@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Landmark, FileText, CheckCircle2, AlertCircle, Bookmark, Check, Compass, DollarSign } from 'lucide-react';
+import { Landmark, FileText, CheckCircle2, Bookmark, Compass, DollarSign } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
 
 export const DistrictOfficerDashboard: React.FC = () => {
@@ -37,46 +37,45 @@ export const DistrictOfficerDashboard: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6" id="district_dashboard_root">
+      <div className="space-y-10 relative z-10" id="district_dashboard_root">
         
         {/* Header */}
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-fuchsia-50 rounded-full blur-3xl opacity-60 -z-10 translate-x-1/2 -translate-y-1/2"></div>
+        <div className="glass-card bg-white/80 p-8 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden backdrop-blur-xl border border-white/50 shadow-xl">
           <div className="z-10">
-            <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">District Sanction Desk</h1>
+            <h1 className="text-3xl font-bold text-slate-800 tracking-tight font-heading">District Sanction Desk</h1>
             <p className="text-sm text-slate-500 mt-2 font-medium">Authorize fiscal allocations, audit verifier comments, and sign off on scheduled welfare grant disbursements.</p>
           </div>
-          <div className="z-10 text-xs font-extrabold bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-100 px-4 py-2.5 rounded-xl flex items-center shadow-sm uppercase tracking-widest">
-            <Landmark className="w-5 h-5 mr-2 text-fuchsia-500" /> Sanction Queue: <span className="ml-1.5 text-fuchsia-900 text-sm">{queue.length}</span>
+          <div className="z-10 text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-100/50 px-6 py-4 rounded-xl flex items-center tracking-widest card-3d">
+            <Landmark className="w-5 h-5 mr-3 text-blue-600" /> Sanction Queue: <span className="ml-2 font-bold text-blue-700 text-lg">{queue.length}</span>
           </div>
         </div>
 
         {/* Content Section */}
         {queue.length === 0 ? (
-          <div className="bg-white text-center py-20 px-8 border border-slate-100 shadow-sm rounded-3xl max-w-2xl mx-auto space-y-4">
-            <div className="w-20 h-20 mx-auto bg-indigo-50 rounded-2xl flex items-center justify-center mb-6">
-              <CheckCircle2 className="w-10 h-10 text-indigo-500 animate-bounce" />
+          <div className="glass-card bg-white/80 text-center py-24 px-8 border border-white/50 rounded-2xl max-w-2xl mx-auto space-y-6 shadow-2xl backdrop-blur-xl">
+            <div className="w-24 h-24 mx-auto bg-blue-50/80 rounded-2xl flex items-center justify-center mb-6 border border-blue-100/50 card-3d">
+              <CheckCircle2 className="w-12 h-12 text-blue-600" />
             </div>
-            <h3 className="text-xl text-slate-900 font-extrabold">Sanction Desk Empty</h3>
-            <p className="text-slate-500 font-medium">No verified files are awaiting district sanctioning at this time.</p>
-            <div className="mt-8 p-4 bg-fuchsia-50/50 border border-fuchsia-100 rounded-2xl text-xs text-fuchsia-800 font-medium leading-relaxed">
-              <strong className="text-fuchsia-900 font-extrabold uppercase tracking-widest block mb-1">Evaluator Guide:</strong> To test, switch to "Verification Officer" mode in the header, approve any pending application in their queue, and it will immediately flow into this desk for final sanctioning!
+            <h3 className="text-2xl text-slate-800 font-bold font-heading">Sanction Desk Empty</h3>
+            <p className="text-slate-600 font-medium text-lg">No verified files are awaiting district sanctioning at this time.</p>
+            <div className="mt-8 p-6 bg-blue-50/50 border border-blue-100/50 rounded-xl text-sm text-slate-700 font-medium leading-relaxed">
+              <strong className="text-blue-600 font-bold tracking-widest block mb-2">Evaluator Guide:</strong> To test, switch to "Verification Officer" mode in the header, approve any pending application in their queue, and it will immediately flow into this desk for final sanctioning!
             </div>
           </div>
         ) : !activeApp ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-sm">
-            <p className="text-slate-400 font-bold uppercase tracking-widest text-sm">Please select an application from the queue to review.</p>
+          <div className="text-center py-24 glass-card bg-white/80 rounded-2xl border border-white/50 shadow-2xl backdrop-blur-xl">
+            <p className="text-slate-500 font-bold tracking-widest text-sm uppercase">Please select an application from the queue to review.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             
             {/* Left Queue Panel */}
-            <div className="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 space-y-5 h-fit">
-              <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-widest border-b border-slate-100 pb-3">
-                Sanctioning List ({queue.length})
+            <div className="lg:col-span-4 glass-card bg-white/80 p-8 rounded-2xl border border-white/50 shadow-2xl space-y-6 h-fit relative overflow-hidden backdrop-blur-xl">
+              <h3 className="text-xs font-bold text-slate-500 tracking-widest border-b border-slate-200/50 pb-4 font-heading uppercase flex items-center">
+                <FileText className="w-4 h-4 mr-2" /> Sanctioning List ({queue.length})
               </h3>
 
-              <div className="space-y-3 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                 {queue.map((app) => {
                   const active = app.id === selectedAppId;
                   return (
@@ -86,19 +85,19 @@ export const DistrictOfficerDashboard: React.FC = () => {
                         setSelectedAppId(app.id);
                         setComment('');
                       }}
-                      className={`w-full text-left p-4 rounded-2xl border-2 transition-all cursor-pointer ${
+                      className={`w-full text-left p-6 rounded-xl transition-all cursor-pointer btn-3d border ${
                         active 
-                          ? 'bg-fuchsia-50/50 border-fuchsia-500 shadow-sm scale-[1.02]' 
-                          : 'border-transparent bg-slate-50 hover:bg-slate-100 hover:border-slate-200'
+                          ? 'bg-blue-600 text-white shadow-md border-blue-600' 
+                          : 'bg-white border-slate-200/60 hover:border-blue-300 text-slate-700 shadow-sm'
                       }`}
                     >
-                      <div className="flex justify-between items-start gap-2 mb-2">
-                        <span className={`text-sm font-bold line-clamp-1 flex-1 ${active ? 'text-fuchsia-900' : 'text-slate-700'}`}>{app.schemeTitle}</span>
-                        <span className="text-[10px] text-slate-400 font-bold font-mono flex-shrink-0 bg-white px-2 py-1 rounded-md shadow-sm">#{app.id}</span>
+                      <div className="flex justify-between items-start gap-2 mb-4">
+                        <span className={`text-base font-bold line-clamp-1 flex-1 font-heading ${active ? 'text-white' : 'text-slate-800'}`}>{app.schemeTitle}</span>
+                        <span className={`text-[10px] font-bold font-mono flex-shrink-0 px-2 py-1 rounded-md ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500 border border-slate-200/60'}`}>#{app.id}</span>
                       </div>
-                      <div className="flex justify-between text-[11px] text-slate-500 font-medium">
+                      <div className={`flex justify-between items-center text-xs font-medium ${active ? 'text-blue-100' : 'text-slate-500'}`}>
                         <span>{app.citizenName}</span>
-                        <span className="text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded-sm">₹{app.personalDetails.income.toLocaleString()}/yr</span>
+                        <span className={`font-bold px-2 py-1 rounded-md ${active ? 'bg-white/20 text-white' : 'text-[#138808] bg-green-50 border border-green-100'}`}>₹{app.personalDetails.income.toLocaleString()}/yr</span>
                       </div>
                     </button>
                   );
@@ -107,76 +106,74 @@ export const DistrictOfficerDashboard: React.FC = () => {
             </div>
 
             {/* Right Dossier and Approval Form */}
-            <div className="lg:col-span-8 space-y-6">
+            <div className="lg:col-span-8 space-y-10">
               
               {/* Demographics Summary */}
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 space-y-6">
-                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-4 flex items-center">
-                  <Bookmark className="w-5 h-5 mr-3 text-fuchsia-600" /> Demographic & Bank Specs
+              <div className="glass-card bg-white/80 p-8 rounded-2xl border border-white/50 shadow-2xl space-y-8 relative overflow-hidden backdrop-blur-xl">
+                <h3 className="text-sm font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-4 flex items-center font-heading uppercase">
+                  <Bookmark className="w-5 h-5 mr-3 text-blue-600" /> Demographic & Bank Specs
                 </h3>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-8 text-sm font-medium">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-8 text-sm font-medium">
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">FullName:</p>
-                    <p className="text-slate-900 font-bold">{activeApp.personalDetails.fullName}</p>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">FullName:</p>
+                    <p className="text-slate-800 font-bold text-base">{activeApp.personalDetails.fullName}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">Family Income:</p>
-                    <p className="text-emerald-700 font-extrabold bg-emerald-50 px-2 py-0.5 rounded-md inline-block border border-emerald-100">₹{activeApp.personalDetails.income.toLocaleString()}/yr</p>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">Family Income:</p>
+                    <p className="text-[#138808] font-bold bg-green-50/80 px-4 py-1.5 rounded-lg inline-block border border-green-200/50 text-base">₹{activeApp.personalDetails.income.toLocaleString()}/yr</p>
                   </div>
                   <div>
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">IFSC Code:</p>
-                    <p className="text-slate-900 font-mono font-bold bg-slate-50 px-2 py-0.5 rounded-md inline-block border border-slate-100">{activeApp.bankDetails.ifsc}</p>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">IFSC Code:</p>
+                    <p className="text-slate-800 font-mono font-bold bg-slate-100/50 px-4 py-1.5 rounded-lg inline-block border border-slate-200/50 text-base">{activeApp.bankDetails.ifsc}</p>
                   </div>
                   <div className="col-span-2">
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-1">Bank & Account Mapping:</p>
-                    <p className="text-slate-900 font-bold">{activeApp.bankDetails.bankName} <span className="text-slate-400 font-mono ml-2 text-[11px]">(A/C: {activeApp.bankDetails.accountNumber})</span></p>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">Bank & Account Mapping:</p>
+                    <p className="text-slate-800 font-bold text-base">{activeApp.bankDetails.bankName} <span className="text-slate-500 font-mono ml-3 text-xs bg-slate-100/50 border border-slate-200/50 px-3 py-1 rounded-lg">(A/C: {activeApp.bankDetails.accountNumber})</span></p>
                   </div>
                 </div>
               </div>
 
               {/* Verifier Officer Remarks */}
-              <div className="bg-indigo-50 border border-indigo-100 p-8 rounded-3xl shadow-sm space-y-4">
-                <p className="text-xs font-extrabold text-indigo-400 uppercase tracking-widest flex items-center">
-                  <CheckCircle2 className="w-4 h-4 mr-2" /> Verification Audit Log
+              <div className="glass-card bg-blue-50/60 border border-blue-100/60 p-8 rounded-2xl shadow-xl space-y-6 relative overflow-hidden backdrop-blur-xl">
+                <p className="text-xs font-bold text-blue-700 tracking-widest flex items-center uppercase">
+                  <CheckCircle2 className="w-5 h-5 mr-3" /> Verification Audit Log
                 </p>
-                <div className="bg-white p-5 rounded-2xl shadow-sm border border-indigo-50">
-                  <p className="text-sm text-slate-700 leading-relaxed font-bold italic border-l-4 border-indigo-300 pl-4">
+                <div className="bg-white/80 p-8 rounded-xl border border-white/60 shadow-inner card-3d">
+                  <p className="text-base text-slate-700 leading-relaxed font-medium italic font-heading border-l-4 border-blue-400 pl-5">
                     "{activeApp.verifierComment || 'No verifier comment logged.'}"
                   </p>
                 </div>
               </div>
 
               {/* District Approval Inputs Form */}
-              <div className="bg-slate-900 p-8 rounded-3xl shadow-xl shadow-slate-900/20 space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-500 rounded-full blur-3xl opacity-20 -mr-10 -mt-10"></div>
-                
-                <h3 className="text-sm font-extrabold text-white uppercase tracking-widest border-b border-slate-800 pb-4 relative z-10">
-                  Sanction Remarks Log & Signoff
+              <div className="glass-card bg-white/80 p-8 rounded-2xl shadow-2xl border border-white/50 space-y-8 relative overflow-hidden backdrop-blur-xl">
+                <h3 className="text-sm font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-4 relative z-10 font-heading uppercase flex items-center">
+                  <Compass className="w-5 h-5 mr-3 text-blue-600" /> Sanction Remarks Log & Signoff
                 </h3>
 
-                <div className="space-y-6 relative z-10">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Official Sanctioning Remarks (Required)</label>
+                <div className="space-y-8 relative z-10">
+                  <div className="space-y-4">
+                    <label className="text-xs font-bold text-slate-600 tracking-widest uppercase">Official Sanctioning Remarks (Required)</label>
                     <textarea
                       placeholder="Input statutory remarks declaring budget allocation compliance, income verification confirmations, and DBT schedules..."
-                      rows={3}
+                      rows={4}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-4 bg-slate-800/50 border border-slate-700 focus:border-fuchsia-500 rounded-2xl text-sm text-white font-medium focus:outline-none focus:ring-4 focus:ring-fuchsia-500/20 transition-all placeholder:text-slate-500 resize-none"
+                      className="input-3d w-full p-6 bg-slate-50/50 border border-slate-200/60 focus:border-blue-500 rounded-xl text-base text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 resize-none shadow-inner"
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-end pt-2">
+                  <div className="flex flex-col sm:flex-row gap-5 justify-end pt-6 border-t border-slate-200/50">
                     <button
                       onClick={() => handleSubmitSanction(false)}
-                      className="w-full sm:w-auto bg-slate-800 hover:bg-red-500 text-white hover:shadow-lg hover:shadow-red-500/20 text-sm font-extrabold px-6 py-3.5 rounded-xl transition-all cursor-pointer border border-slate-700 hover:border-red-500"
+                      className="btn-3d w-full sm:w-auto bg-white border border-slate-200/60 text-slate-700 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 text-sm font-bold px-8 py-4 rounded-xl transition-all cursor-pointer shadow-sm"
                     >
                       Deny Grant
                     </button>
                     <button
                       onClick={() => handleSubmitSanction(true)}
-                      className="w-full sm:w-auto bg-fuchsia-600 hover:bg-fuchsia-700 text-white shadow-lg shadow-fuchsia-600/20 text-sm font-extrabold px-8 py-3.5 rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                      className="btn-3d w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white shadow-xl text-sm font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-3 cursor-pointer border border-transparent"
                     >
                       <DollarSign className="w-5 h-5" />
                       <span>Sanction & Release Funds</span>

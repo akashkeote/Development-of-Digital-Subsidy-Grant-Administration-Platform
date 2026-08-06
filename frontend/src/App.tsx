@@ -25,6 +25,8 @@ import { VerificationOfficerDashboard } from './pages/VerificationOfficerDashboa
 import { DistrictOfficerDashboard } from './pages/DistrictOfficerDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 
+import { ChatbotWidget } from './components/ChatbotWidget';
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -60,12 +62,17 @@ const AnimatedRoutes = () => {
   );
 };
 
+import { ErrorBoundary } from './ErrorBoundary';
+
 export default function App() {
   return (
-    <AppProvider>
-      <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter>
-    </AppProvider>
+    <ErrorBoundary>
+      <AppProvider>
+        <BrowserRouter>
+          <AnimatedRoutes />
+          <ChatbotWidget />
+        </BrowserRouter>
+      </AppProvider>
+    </ErrorBoundary>
   );
 }

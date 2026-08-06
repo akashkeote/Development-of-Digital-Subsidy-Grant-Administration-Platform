@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Scheme } from '../types';
-import { Landmark, PlusCircle, LineChart, ShieldCheck, DollarSign, ListOrdered, CheckCircle2, PlayCircle, Plus, Trash2 } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2 } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
   const { schemes, installments, stats, addNewScheme, releaseInstallment } = useApp();
@@ -90,43 +90,46 @@ export const AdminDashboard: React.FC = () => {
     setActiveTab('analytics');
   };
 
-  // Find processing / pending installments for treasury desk
   const pendingPayments = installments.filter(i => i.status === 'processing' || i.status === 'pending');
 
   return (
     <DashboardLayout>
-      <div className="space-y-6" id="admin_dashboard_root">
+      <div className="space-y-10">
         
         {/* Header */}
-        <div className="bg-slate-900 p-8 rounded-3xl shadow-xl shadow-slate-900/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full blur-3xl opacity-20 -z-10 translate-x-1/2 -translate-y-1/2"></div>
-          
-          <div className="z-10 relative">
-            <h1 className="text-2xl lg:text-3xl font-extrabold text-white tracking-tight">System Administrator</h1>
-            <p className="text-sm text-slate-400 mt-2 font-medium">Configure welfare schemes, review general ledger stats, and authorize treasury direct transfer releases.</p>
+        <div className="glass-card card-3d p-8 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8 border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white/40">
+          <div>
+            <h1 className="font-heading text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-700">System Administrator</h1>
+            <p className="text-slate-600 mt-2 font-medium">Configure welfare schemes, review general ledger stats, and authorize treasury direct transfer releases.</p>
           </div>
 
-          <div className="flex bg-slate-800/80 p-1.5 rounded-2xl border border-slate-700 backdrop-blur-sm relative z-10 w-full md:w-auto overflow-x-auto custom-scrollbar">
+          <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`px-5 py-2.5 text-sm font-extrabold rounded-xl transition-all whitespace-nowrap ${
-                activeTab === 'analytics' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-700'
+              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+                activeTab === 'analytics' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
               }`}
             >
               System Analytics
             </button>
             <button
               onClick={() => setActiveTab('treasury')}
-              className={`px-5 py-2.5 text-sm font-extrabold rounded-xl transition-all whitespace-nowrap ${
-                activeTab === 'treasury' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-700'
+              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+                activeTab === 'treasury' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
               }`}
             >
               Treasury Desk
             </button>
             <button
               onClick={() => setActiveTab('create_scheme')}
-              className={`px-5 py-2.5 text-sm font-extrabold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
-                activeTab === 'create_scheme' ? 'bg-white text-slate-900 shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-700'
+              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+                activeTab === 'create_scheme' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
               }`}
             >
               <PlusCircle className="w-4 h-4" />
@@ -137,116 +140,122 @@ export const AdminDashboard: React.FC = () => {
 
         {/* 1. SYSTEM ANALYTICS VIEW */}
         {activeTab === 'analytics' && (
-          <div className="space-y-6">
+          <div className="space-y-10">
             {/* Stats Metrics Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-100 rounded-full blur-3xl opacity-50 group-hover:bg-emerald-200 transition-colors"></div>
-                <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest relative z-10">Consolidated Disbursed</p>
-                <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 mt-2 relative z-10 tracking-tight">₹{(stats.totalDisbursedAmount / 10000000).toFixed(2)} Cr</h3>
-                <p className="text-[10px] text-emerald-600 font-extrabold mt-3 uppercase tracking-widest bg-emerald-50 inline-block px-2 py-1 rounded-md border border-emerald-100 relative z-10">Cleared RBI-DBT transfers</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest relative z-10">Consolidated Disbursed</p>
+                <h3 className="font-heading text-3xl font-bold mt-3 relative z-10 text-slate-800">₹{(stats.totalDisbursedAmount / 10000000).toFixed(2)} Cr</h3>
+                <div className="mt-4 inline-flex items-center space-x-1.5 bg-green-100/50 text-[#138808] px-3 py-1 rounded-lg border border-green-200/50 backdrop-blur-sm relative z-10">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#138808] animate-pulse"></span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Cleared RBI-DBT transfers</span>
+                </div>
               </div>
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-100 rounded-full blur-3xl opacity-50 group-hover:bg-indigo-200 transition-colors"></div>
-                <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest relative z-10">Total Sanctions</p>
-                <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 mt-2 relative z-10 tracking-tight">₹{(stats.totalSanctionedAmount / 10000000).toFixed(2)} Cr</h3>
-                <p className="text-[10px] text-indigo-600 font-extrabold mt-3 uppercase tracking-widest bg-indigo-50 inline-block px-2 py-1 rounded-md border border-indigo-100 relative z-10">Sanctioned budgets</p>
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest relative z-10">Total Sanctions</p>
+                <h3 className="font-heading text-3xl font-bold mt-3 relative z-10 text-slate-800">₹{(stats.totalSanctionedAmount / 10000000).toFixed(2)} Cr</h3>
+                <div className="mt-4 inline-flex items-center space-x-1.5 bg-blue-100/50 text-blue-700 px-3 py-1 rounded-lg border border-blue-200/50 backdrop-blur-sm relative z-10">
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Sanctioned budgets</span>
+                </div>
               </div>
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-sky-100 rounded-full blur-3xl opacity-50 group-hover:bg-sky-200 transition-colors"></div>
-                <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest relative z-10">Active Subsidies</p>
-                <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 mt-2 relative z-10 tracking-tight">{stats.totalSchemesActive} Live</h3>
-                <p className="text-[10px] text-sky-600 font-extrabold mt-3 uppercase tracking-widest bg-sky-50 inline-block px-2 py-1 rounded-md border border-sky-100 relative z-10">Accepting applications</p>
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest relative z-10">Active Subsidies</p>
+                <h3 className="font-heading text-3xl font-bold mt-3 relative z-10 text-slate-800">{stats.totalSchemesActive} Live</h3>
+                <div className="mt-4 inline-flex items-center space-x-1.5 bg-sky-100/50 text-sky-700 px-3 py-1 rounded-lg border border-sky-200/50 backdrop-blur-sm relative z-10">
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Accepting applications</span>
+                </div>
               </div>
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-fuchsia-100 rounded-full blur-3xl opacity-50 group-hover:bg-fuchsia-200 transition-colors"></div>
-                <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest relative z-10">Total Applications</p>
-                <h3 className="text-2xl lg:text-3xl font-extrabold text-slate-900 mt-2 relative z-10 tracking-tight">{stats.totalApplicationsReceived} Files</h3>
-                <p className="text-[10px] text-fuchsia-600 font-extrabold mt-3 uppercase tracking-widest bg-fuchsia-50 inline-block px-2 py-1 rounded-md border border-fuchsia-100 relative z-10">Audited globally</p>
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest relative z-10">Total Applications</p>
+                <h3 className="font-heading text-3xl font-bold mt-3 relative z-10 text-slate-800">{stats.totalApplicationsReceived} Files</h3>
+                <div className="mt-4 inline-flex items-center space-x-1.5 bg-fuchsia-100/50 text-fuchsia-700 px-3 py-1 rounded-lg border border-fuchsia-200/50 backdrop-blur-sm relative z-10">
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Audited globally</span>
+                </div>
               </div>
             </div>
 
-            {/* SVG Visualizations Panel */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Visualizations Panel */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
-              {/* Category distribution bar chart */}
-              <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
-                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-4 flex items-center">
-                  <LineChart className="w-5 h-5 mr-3 text-emerald-500" />
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 flex items-center font-heading">
+                  <LineChart className="w-5 h-5 mr-3 text-blue-600" />
                   Ministry Allocation Proportions (FY 26-27)
                 </h3>
 
-                <div className="space-y-6 text-xs font-bold text-slate-600">
-                  <div className="space-y-2.5">
+                <div className="space-y-6 text-sm font-medium text-slate-700">
+                  <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Agriculture & Farmers Welfare <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹15 Cr)</span></span>
-                      <span className="font-extrabold text-slate-900 bg-slate-50 px-2 py-1 rounded-md">74.6%</span>
+                      <span>Agriculture & Farmers Welfare <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹15 Cr)</span></span>
+                      <span className="font-bold text-slate-800 bg-white/60 px-3 py-1 rounded-lg border border-white backdrop-blur-md shadow-sm">74.6%</span>
                     </div>
-                    <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden shadow-inner">
-                      <div className="h-full bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: '74.6%' }}></div>
+                    <div className="w-full bg-slate-200/50 h-3 rounded-full overflow-hidden border border-white/60 shadow-inner">
+                      <div className="h-full bg-gradient-to-r from-green-500 to-[#138808] rounded-full shadow-[0_0_10px_rgba(19,136,8,0.5)]" style={{ width: '74.6%' }}></div>
                     </div>
                   </div>
 
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">New & Renewable Energy <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹8.5 Cr)</span></span>
-                      <span className="font-extrabold text-slate-900 bg-slate-50 px-2 py-1 rounded-md">49.4%</span>
+                      <span>New & Renewable Energy <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹8.5 Cr)</span></span>
+                      <span className="font-bold text-slate-800 bg-white/60 px-3 py-1 rounded-lg border border-white backdrop-blur-md shadow-sm">49.4%</span>
                     </div>
-                    <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden shadow-inner">
-                      <div className="h-full bg-amber-500 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)]" style={{ width: '49.4%' }}></div>
+                    <div className="w-full bg-slate-200/50 h-3 rounded-full overflow-hidden border border-white/60 shadow-inner">
+                      <div className="h-full bg-gradient-to-r from-amber-400 to-[#FF9933] rounded-full shadow-[0_0_10px_rgba(255,153,51,0.5)]" style={{ width: '49.4%' }}></div>
                     </div>
                   </div>
 
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">School Education & Literacy <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹5 Cr)</span></span>
-                      <span className="font-extrabold text-slate-900 bg-slate-50 px-2 py-1 rounded-md">62.0%</span>
+                      <span>School Education & Literacy <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹5 Cr)</span></span>
+                      <span className="font-bold text-slate-800 bg-white/60 px-3 py-1 rounded-lg border border-white backdrop-blur-md shadow-sm">62.0%</span>
                     </div>
-                    <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden shadow-inner">
-                      <div className="h-full bg-sky-500 rounded-full shadow-[0_0_10px_rgba(14,165,233,0.5)]" style={{ width: '62%' }}></div>
+                    <div className="w-full bg-slate-200/50 h-3 rounded-full overflow-hidden border border-white/60 shadow-inner">
+                      <div className="h-full bg-gradient-to-r from-sky-400 to-blue-500 rounded-full shadow-[0_0_10px_rgba(56,189,248,0.5)]" style={{ width: '62%' }}></div>
                     </div>
                   </div>
 
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Ministry of Rural Development <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹24 Cr)</span></span>
-                      <span className="font-extrabold text-slate-900 bg-slate-50 px-2 py-1 rounded-md">77.0%</span>
+                      <span>Ministry of Rural Development <span className="text-[10px] text-slate-400 uppercase tracking-widest ml-1">(₹24 Cr)</span></span>
+                      <span className="font-bold text-slate-800 bg-white/60 px-3 py-1 rounded-lg border border-white backdrop-blur-md shadow-sm">77.0%</span>
                     </div>
-                    <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden shadow-inner">
-                      <div className="h-full bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]" style={{ width: '77%' }}></div>
+                    <div className="w-full bg-slate-200/50 h-3 rounded-full overflow-hidden border border-white/60 shadow-inner">
+                      <div className="h-full bg-gradient-to-r from-blue-500 to-blue-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]" style={{ width: '77%' }}></div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* System logs info */}
-              <div className="bg-slate-900 p-8 rounded-3xl shadow-xl shadow-slate-900/20 space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500 rounded-full blur-3xl opacity-10 -mr-10 -mt-10"></div>
-                <h3 className="text-sm font-extrabold text-white uppercase tracking-widest border-b border-slate-800 pb-4 flex items-center relative z-10">
-                  <ShieldCheck className="w-5 h-5 mr-3 text-sky-400" />
+              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
+                <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 flex items-center font-heading">
+                  <ShieldCheck className="w-5 h-5 mr-3 text-blue-600" />
                   System Audit Logs
                 </h3>
 
-                <div className="space-y-5 font-mono text-xs text-slate-400 relative z-10">
-                  <div className="flex items-start space-x-3 border-b border-slate-800/50 pb-4 last:border-0 last:pb-0">
-                    <span className="text-emerald-400 font-extrabold bg-emerald-950/50 border border-emerald-900/50 px-2 py-1 rounded-md text-[10px] tracking-widest">INFO</span>
+                <div className="space-y-6 font-mono text-xs text-slate-600">
+                  <div className="flex items-start space-x-4 border-b border-white/40 pb-5 last:border-0 last:pb-0">
+                    <span className="text-[#138808] font-bold bg-green-100/50 border border-green-200/50 px-2 py-1 rounded-md text-[10px] tracking-widest shadow-sm">INFO</span>
                     <div className="leading-relaxed">
-                      <p className="font-bold text-slate-200">Aadhaar Verification Node Online</p>
-                      <p className="mt-1">Retrieved successfully 124,050 citizen indexes from National demographics registers.</p>
+                      <p className="font-bold text-slate-800 text-sm">Aadhaar Verification Node Online</p>
+                      <p className="mt-1.5 text-slate-500">Retrieved successfully 124,050 citizen indexes from National demographics registers.</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3 border-b border-slate-800/50 pb-4 last:border-0 last:pb-0">
-                    <span className="text-purple-400 font-extrabold bg-purple-950/50 border border-purple-900/50 px-2 py-1 rounded-md text-[10px] tracking-widest">DBT</span>
+                  <div className="flex items-start space-x-4 border-b border-white/40 pb-5 last:border-0 last:pb-0">
+                    <span className="text-blue-700 font-bold bg-blue-100/50 border border-blue-200/50 px-2 py-1 rounded-md text-[10px] tracking-widest shadow-sm">DBT</span>
                     <div className="leading-relaxed">
-                      <p className="font-bold text-slate-200">NPCI Map Synchronization Complete</p>
-                      <p className="mt-1">Connected State Bank of India & Bank of Baroda direct routing routers. Latency: 12ms.</p>
+                      <p className="font-bold text-slate-800 text-sm">NPCI Map Synchronization Complete</p>
+                      <p className="mt-1.5 text-slate-500">Connected State Bank of India & Bank of Baroda direct routing routers. Latency: 12ms.</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3 pb-4 last:border-0 last:pb-0">
-                    <span className="text-amber-400 font-extrabold bg-amber-950/50 border border-amber-900/50 px-2 py-1 rounded-md text-[10px] tracking-widest">AUDIT</span>
+                  <div className="flex items-start space-x-4 pb-5 last:border-0 last:pb-0">
+                    <span className="text-amber-700 font-bold bg-amber-100/50 border border-amber-200/50 px-2 py-1 rounded-md text-[10px] tracking-widest shadow-sm">AUDIT</span>
                     <div className="leading-relaxed">
-                      <p className="font-bold text-slate-200">Sanction Threshold Audited</p>
-                      <p className="mt-1">Consolidated district budgets are within 85% safety limits of national welfare reserve allocations.</p>
+                      <p className="font-bold text-slate-800 text-sm">Sanction Threshold Audited</p>
+                      <p className="mt-1.5 text-slate-500">Consolidated district budgets are within 85% safety limits of national welfare reserve allocations.</p>
                     </div>
                   </div>
                 </div>
@@ -258,53 +267,53 @@ export const AdminDashboard: React.FC = () => {
 
         {/* 2. DIRECT TRANSFERS (TREASURY) RELEASE VIEW */}
         {activeTab === 'treasury' && (
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
-            <h2 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-4">
+          <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 font-heading">
               Treasury Pending Disbursements Queue
             </h2>
 
             {pendingPayments.length === 0 ? (
-              <div className="text-center py-24 text-slate-400 text-sm">
-                <DollarSign className="w-12 h-12 text-slate-300 mx-auto mb-4 animate-pulse" />
-                <p className="font-extrabold uppercase tracking-widest">Treasury ledger clear</p>
+              <div className="text-center py-24 text-slate-500 bg-white/30 rounded-2xl border border-white/50 shadow-inner">
+                <DollarSign className="w-16 h-16 text-[#138808] mx-auto mb-4 drop-shadow-md" />
+                <p className="font-bold uppercase tracking-widest text-slate-700">Treasury ledger clear</p>
                 <p className="mt-2 font-medium">All sanctioned installments are already released or pending sanctioning.</p>
               </div>
             ) : (
-              <div className="overflow-x-auto custom-scrollbar">
-                <table className="w-full text-left text-sm divide-y divide-slate-100 font-medium text-slate-600">
+              <div className="overflow-x-auto rounded-2xl border border-white/50 bg-white/30 shadow-inner">
+                <table className="w-full text-left text-sm divide-y divide-white/40 text-slate-700">
                   <thead>
-                    <tr className="text-slate-400 uppercase font-extrabold tracking-widest text-[10px]">
-                      <th className="pb-4 pl-4">Reference ID</th>
-                      <th className="pb-4">Scheme Grant</th>
-                      <th className="pb-4">Inst. #</th>
-                      <th className="pb-4">Value (₹)</th>
-                      <th className="pb-4">Current Status</th>
-                      <th className="pb-4 pr-4 text-right">DBT Action</th>
+                    <tr className="text-slate-500 uppercase font-bold tracking-widest text-[10px] bg-white/50 backdrop-blur-md">
+                      <th className="py-5 pl-6">Reference ID</th>
+                      <th className="py-5">Scheme Grant</th>
+                      <th className="py-5">Inst. #</th>
+                      <th className="py-5">Value (₹)</th>
+                      <th className="py-5">Current Status</th>
+                      <th className="py-5 pr-6 text-right">DBT Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-50">
+                  <tbody className="divide-y divide-white/40">
                     {pendingPayments.map((inst) => (
-                      <tr key={inst.id} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="py-5 font-mono text-xs font-bold text-slate-900 pl-4">#{inst.id}</td>
+                      <tr key={inst.id} className="hover:bg-white/60 transition-colors group">
+                        <td className="py-5 font-mono text-xs font-bold text-slate-900 pl-6">#{inst.id}</td>
                         <td className="py-5 font-bold text-slate-800 max-w-xs truncate">{inst.schemeTitle}</td>
                         <td className="py-5 text-slate-500 font-bold">{inst.installmentNumber}</td>
-                        <td className="py-5 font-extrabold text-emerald-600">₹{inst.amount.toLocaleString('en-IN')}</td>
+                        <td className="py-5 font-bold text-[#138808]">₹{inst.amount.toLocaleString('en-IN')}</td>
                         <td className="py-5">
-                          <span className={`inline-block text-[10px] px-2.5 py-1 rounded-md border font-extrabold uppercase tracking-widest ${
+                          <span className={`inline-block text-[10px] px-3 py-1.5 rounded-lg border font-bold uppercase tracking-widest shadow-sm backdrop-blur-md ${
                             inst.status === 'processing' 
-                              ? 'bg-amber-50 text-amber-600 border-amber-200 animate-pulse shadow-sm' 
-                              : 'bg-slate-50 text-slate-500 border-slate-200'
+                              ? 'bg-amber-100/50 text-amber-700 border-amber-200/50' 
+                              : 'bg-white/60 text-slate-600 border-white/60'
                           }`}>
                             {inst.status}
                           </span>
                         </td>
-                        <td className="py-5 pr-4 text-right">
+                        <td className="py-5 pr-6 text-right">
                           <button
                             onClick={() => {
                               releaseInstallment(inst.id);
                               alert(`DBT authorized! ₹${inst.amount.toLocaleString('en-IN')} released to applicant's Aadhaar-mapped bank node.`);
                             }}
-                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-500/20 inline-flex items-center space-x-2 cursor-pointer"
+                            className="btn-3d bg-gradient-to-r from-blue-600 to-blue-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all inline-flex items-center space-x-2 shadow-lg shadow-blue-500/30 border-t border-white/20"
                           >
                             <PlayCircle className="w-4 h-4" />
                             <span>Authorize Transfer</span>
@@ -321,55 +330,55 @@ export const AdminDashboard: React.FC = () => {
 
         {/* 3. NEW SCHEME CONFIGURATOR */}
         {activeTab === 'create_scheme' && (
-          <form onSubmit={handleCreateSchemeSubmit} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-8">
-            <h2 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-4">
+          <form onSubmit={handleCreateSchemeSubmit} className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-10">
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 font-heading">
               Configure New Grant / Subsidy Scheme
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
               
-              <div className="space-y-2 col-span-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Scheme Official Title</label>
+              <div className="space-y-3 col-span-2">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Scheme Official Title</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. PM Suryodaya Yojana (Solar Subsidy program)"
                   value={title}
+                  placeholder="e.g. PM Suryodaya Yojana"
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-400"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
                   required
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Administering Department</label>
+              <div className="space-y-3">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Administering Department</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. Department of School Education"
                   value={department}
+                  placeholder="e.g. Department of Energy"
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-400"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
                   required
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Nodal Ministry</label>
+              <div className="space-y-3">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Nodal Ministry</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. Ministry of Education"
                   value={ministry}
+                  placeholder="e.g. Ministry of New & Renewable Energy"
                   onChange={(e) => setMinistry(e.target.value)}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-400"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
                   required
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Sector Category</label>
+              <div className="space-y-3">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Sector Category</label>
                 <select 
                   value={category}
                   onChange={(e) => setCategory(e.target.value as Scheme['category'])}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234F46E5%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-[position:right_1.25rem_center] bg-no-repeat cursor-pointer"
                 >
                   <option value="agriculture">Agriculture</option>
                   <option value="education">Education</option>
@@ -379,96 +388,95 @@ export const AdminDashboard: React.FC = () => {
                 </select>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Total Allocation Budget (₹)</label>
+              <div className="space-y-3">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Total Allocation Budget (₹)</label>
                 <input 
                   type="number" 
                   value={totalAllocation}
                   onChange={(e) => setTotalAllocation(Number(e.target.value))}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
                   required
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Grant Value Per Beneficiary (₹)</label>
+              <div className="space-y-3">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Grant Value Per Beneficiary (₹)</label>
                 <input 
                   type="number" 
                   value={subsidyAmount}
                   onChange={(e) => setSubsidyAmount(Number(e.target.value))}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
                   required
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Installment Disbursements</label>
+              <div className="space-y-3">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Installment Disbursements</label>
                 <input 
                   type="number" 
                   min={1} 
                   max={12}
                   value={installmentCount}
                   onChange={(e) => setInstallmentCount(Number(e.target.value))}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
                   required
                 />
               </div>
 
-              <div className="space-y-2 col-span-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Program Description</label>
+              <div className="space-y-3 col-span-2">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Program Description</label>
                 <textarea 
-                  placeholder="Input detailed background, targets and context..."
                   value={description}
+                  placeholder="Input detailed background, targets and context..."
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-400 resize-none"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner resize-none"
                   rows={4}
                   required
                 />
               </div>
 
-              <div className="space-y-2 col-span-2">
-                <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Financial Benefits Structure</label>
+              <div className="space-y-3 col-span-2">
+                <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Financial Benefits Structure</label>
                 <textarea 
-                  placeholder="Input distribution timeline details (e.g. ₹6000 per year paid in 3 installments)..."
                   value={benefits}
+                  placeholder="Input distribution timeline details (e.g. ₹6000 per year paid in 3 installments)..."
                   onChange={(e) => setBenefits(e.target.value)}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white rounded-2xl font-bold focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-400 resize-none"
+                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner resize-none"
                   rows={2}
                   required
                 />
               </div>
 
-              {/* Dynamic list: Eligibility checklist */}
-              <div className="col-span-2 space-y-4 pt-6 border-t border-slate-100">
+              <div className="col-span-2 space-y-5 pt-8 border-t border-white/40">
                 <div className="flex justify-between items-center">
-                  <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Eligibility Criteria Parameters List</label>
+                  <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Eligibility Criteria</label>
                   <button
                     type="button"
                     onClick={handleAddCriteria}
-                    className="text-xs text-indigo-600 font-extrabold hover:text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center space-x-1 cursor-pointer transition-colors"
+                    className="btn-3d text-xs bg-white/60 border border-white/60 text-slate-700 hover:text-blue-600 hover:bg-white/80 px-5 py-2.5 rounded-xl transition-all font-bold flex items-center space-x-1 shadow-sm"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Add Parameter</span>
                   </button>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {eligibilityCriteria.map((crit, idx) => (
-                    <div key={idx} className="flex gap-3 items-center group">
-                      <span className="w-8 h-8 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center font-extrabold text-xs">#{idx + 1}</span>
+                    <div key={idx} className="flex gap-4 items-center">
+                      <span className="w-12 h-12 rounded-xl bg-white/50 border border-white/60 text-slate-500 flex items-center justify-center font-bold text-sm shadow-inner shrink-0">#{idx + 1}</span>
                       <input 
                         type="text" 
-                        placeholder="e.g. Household annual family income must not exceed ₹2.5 Lakhs"
                         value={crit}
+                        placeholder="e.g. Household annual family income must not exceed ₹2.5 Lakhs"
                         onChange={(e) => handleCriteriaChange(idx, e.target.value)}
-                        className="flex-1 p-3.5 bg-white border border-slate-200 hover:border-slate-300 focus:border-indigo-500 rounded-xl font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-sm"
+                        className="input-3d flex-1 p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner placeholder:text-slate-400"
                         required
                       />
                       {eligibilityCriteria.length > 1 && (
                         <button 
                           type="button" 
                           onClick={() => handleRemoveCriteria(idx)}
-                          className="p-3 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                          className="btn-3d w-12 h-12 flex items-center justify-center text-red-500 bg-white/50 border border-white/60 hover:bg-red-50 hover:text-red-600 hover:border-red-200 rounded-xl transition-all shadow-sm shrink-0"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
@@ -478,37 +486,36 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Dynamic list: Required Documents checklist */}
-              <div className="col-span-2 space-y-4 pt-6 border-t border-slate-100">
+              <div className="col-span-2 space-y-5 pt-8 border-t border-white/40">
                 <div className="flex justify-between items-center">
-                  <label className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest ml-1">Required Documents Checklist</label>
+                  <label className="text-[11px] text-slate-500 font-bold uppercase tracking-widest block ml-1">Required Documents</label>
                   <button
                     type="button"
                     onClick={handleAddDoc}
-                    className="text-xs text-indigo-600 font-extrabold hover:text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center space-x-1 cursor-pointer transition-colors"
+                    className="btn-3d text-xs bg-white/60 border border-white/60 text-slate-700 hover:text-blue-600 hover:bg-white/80 px-5 py-2.5 rounded-xl transition-all font-bold flex items-center space-x-1 shadow-sm"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Add Document</span>
                   </button>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {requiredDocuments.map((doc, idx) => (
-                    <div key={idx} className="flex gap-3 items-center">
-                      <span className="w-8 h-8 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center font-extrabold text-xs">#{idx + 1}</span>
+                    <div key={idx} className="flex gap-4 items-center">
+                      <span className="w-12 h-12 rounded-xl bg-white/50 border border-white/60 text-slate-500 flex items-center justify-center font-bold text-sm shadow-inner shrink-0">#{idx + 1}</span>
                       <input 
                         type="text" 
-                        placeholder="e.g. Income Certificate issued by competent Revenue Authority"
                         value={doc}
+                        placeholder="e.g. Income Certificate issued by competent Revenue Authority"
                         onChange={(e) => handleDocChange(idx, e.target.value)}
-                        className="flex-1 p-3.5 bg-white border border-slate-200 hover:border-slate-300 focus:border-indigo-500 rounded-xl font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all shadow-sm"
+                        className="input-3d flex-1 p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner placeholder:text-slate-400"
                         required
                       />
                       {requiredDocuments.length > 1 && (
                         <button 
                           type="button" 
                           onClick={() => handleRemoveDoc(idx)}
-                          className="p-3 text-red-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                          className="btn-3d w-12 h-12 flex items-center justify-center text-red-500 bg-white/50 border border-white/60 hover:bg-red-50 hover:text-red-600 hover:border-red-200 rounded-xl transition-all shadow-sm shrink-0"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
@@ -520,13 +527,15 @@ export const AdminDashboard: React.FC = () => {
 
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-4 mt-6 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-extrabold rounded-2xl transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-lg shadow-indigo-600/20"
-            >
-              <PlusCircle className="w-5 h-5" />
-              <span>Launch New Subsidy Scheme</span>
-            </button>
+            <div className="pt-6">
+              <button
+                type="submit"
+                className="btn-3d w-full py-5 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-lg font-bold rounded-xl transition-all shadow-xl shadow-blue-500/30 flex items-center justify-center space-x-3 border-t border-white/20 hover:scale-[1.01]"
+              >
+                <PlusCircle className="w-6 h-6" />
+                <span>Launch New Subsidy Scheme</span>
+              </button>
+            </div>
           </form>
         )}
 
