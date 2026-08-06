@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { DashboardLayout } from '../components/DashboardLayout';
-import { ShieldCheck, FileText, CheckCircle2, XCircle, Clock, Check } from 'lucide-react';
-
+import { ShieldCheck, FileText, CheckCircle2, XCircle, Clock, Check, Users, ArrowUpCircle, RefreshCcw, Landmark } from 'lucide-react';
 export const VerificationOfficerDashboard: React.FC = () => {
   const { applications, verifyApplication } = useApp();
   const [selectedAppId, setSelectedAppId] = useState<string>('');
   const [comment, setComment] = useState('');
+  
+  const [activeRole, setActiveRole] = useState<'field_officer' | 'district_officer' | 'finance_approver'>('field_officer');
+  const [grantAmount, setGrantAmount] = useState<number>(0);
   
   // Document statuses tracking
   const [docStatuses, setDocStatuses] = useState<Record<string, 'verified' | 'rejected'>>({});
@@ -32,7 +34,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
     setDocComments(prev => ({ ...prev, [docId]: val }));
   };
 
-  const handleSubmitReview = (approved: boolean) => {
+  const handleWorkflowAction = (action: 'approve' | 'reject' | 'escalate' | 're_verify') => {
     if (!activeApp) return;
 
     if (!comment.trim()) {
@@ -40,23 +42,29 @@ export const VerificationOfficerDashboard: React.FC = () => {
       return;
     }
 
+    if (activeRole === 'finance_approver' && action === 'approve' && grantAmount <= 0) {
+      alert('Finance Approvers must set a valid grant amount before final approval.');
+      return;
+    }
+
     // Prepare document approvals array
     const docApprovals = activeApp.documents.map(doc => ({
       id: doc.id,
-      status: docStatuses[doc.id] || 'verified', // Default to verified for sandbox convenience
+      status: docStatuses[doc.id] || 'verified',
       comment: docComments[doc.id] || ''
     }));
 
-    const status = approved ? 'documents_verified' : 'rejected_by_verifier';
+    // Mock API processing
+    alert(`[${activeRole.replace('_', ' ').toUpperCase()}] Action: ${action.toUpperCase()} processed successfully for File #${activeApp.id}. Notification sent to applicant.`);
     
-    verifyApplication(activeApp.id, comment, status, docApprovals);
+    // Note: In real backend integration, we would call verifyApplication with action, role, and amount
+    // verifyApplication(activeApp.id, comment, action, docApprovals);
 
-    // Reset states
-    alert(`File #${activeApp.id} successfully processed and marked as [${status.replace('_', ' ')}].`);
     setSelectedAppId('');
     setComment('');
     setDocStatuses({});
     setDocComments({});
+    setGrantAmount(0);
   };
 
   return (
@@ -64,13 +72,42 @@ export const VerificationOfficerDashboard: React.FC = () => {
       <div className="space-y-10 relative z-10 p-4" id="verifier_dashboard_root">
         
         {/* Header */}
-        <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8 backdrop-blur-xl">
+        <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 backdrop-blur-xl">
           <div>
-            <h1 className="text-3xl font-bold text-slate-800 tracking-tight font-heading">Document Verification</h1>
-            <p className="text-base text-slate-600 mt-2 font-medium">Review applicant demographics, audit uploaded PDF certificates, and verify compliance criteria.</p>
+            <h1 className="text-3xl font-bold text-slate-800 tracking-tight font-heading">
+              {activeRole === 'field_officer' ? 'Field Officer Verification' : activeRole === 'district_officer' ? 'District Officer Approval' : 'Finance Approver Desk'}
+            </h1>
+            <p className="text-base text-slate-600 mt-2 font-medium">
+              {activeRole === 'field_officer' ? 'Review applicant demographics and audit uploaded PDF certificates (Level 1).' : activeRole === 'district_officer' ? 'Review escalated files and authorize forward to Finance (Level 2).' : 'Final review and grant disbursement authorization (Level 3).'}
+            </p>
           </div>
-          <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-200/50 px-6 py-4 rounded-2xl flex items-center tracking-widest shadow-inner">
-            <Clock className="w-5 h-5 mr-3" /> Pending Reviews: <span className="ml-2 font-black text-blue-700 text-lg">{queue.length}</span>
+          
+          <div className="flex flex-col md:flex-row items-center gap-4 w-full xl:w-auto overflow-x-auto pb-2 xl:pb-0">
+            {/* Role Switcher */}
+            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
+              <button 
+                onClick={() => setActiveRole('field_officer')}
+                className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeRole === 'field_officer' ? 'bg-white text-blue-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
+              >
+                L1: Field
+              </button>
+              <button 
+                onClick={() => setActiveRole('district_officer')}
+                className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeRole === 'district_officer' ? 'bg-white text-blue-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
+              >
+                L2: District
+              </button>
+              <button 
+                onClick={() => setActiveRole('finance_approver')}
+                className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeRole === 'finance_approver' ? 'bg-white text-blue-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
+              >
+                L3: Finance
+              </button>
+            </div>
+
+            <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-200/50 px-6 py-4 rounded-2xl flex items-center tracking-widest shadow-inner shrink-0">
+              <Clock className="w-5 h-5 mr-3" /> Pending Reviews: <span className="ml-2 font-black text-blue-700 text-lg">{queue.length}</span>
+            </div>
           </div>
         </div>
 
@@ -289,19 +326,55 @@ export const VerificationOfficerDashboard: React.FC = () => {
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-5 justify-end pt-6 border-t border-slate-200/50">
+                  <div className="flex flex-wrap gap-4 justify-end pt-6 border-t border-slate-200/50">
+                    
+                    {activeRole === 'finance_approver' && (
+                      <div className="w-full sm:w-auto flex items-center gap-3 mr-auto bg-green-50 px-4 py-2 rounded-2xl border border-green-200">
+                        <Landmark className="text-green-600" size={20} />
+                        <div className="flex flex-col">
+                          <label className="text-[10px] font-bold text-green-700 uppercase tracking-widest">Sanction Amount (₹)</label>
+                          <input 
+                            type="number" 
+                            value={grantAmount || ''}
+                            onChange={(e) => setGrantAmount(Number(e.target.value))}
+                            className="bg-transparent border-none text-slate-800 font-bold focus:outline-none w-32 font-mono" 
+                            placeholder="0.00"
+                          />
+                        </div>
+                      </div>
+                    )}
+
                     <button
-                      onClick={() => handleSubmitReview(false)}
-                      className="w-full sm:w-auto bg-white border border-slate-200 hover:border-red-400 hover:text-red-600 text-slate-700 text-sm font-bold px-8 py-3.5 rounded-2xl transition-all duration-300 cursor-pointer btn-3d shadow-sm"
+                      onClick={() => handleWorkflowAction('reject')}
+                      className="w-full sm:w-auto bg-white border border-slate-200 hover:border-red-400 hover:text-red-600 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-2xl transition-all duration-300 cursor-pointer btn-3d shadow-sm flex items-center justify-center gap-2"
                     >
-                      Reject File
+                      <XCircle size={18} /> Reject File
                     </button>
+                    
+                    {activeRole !== 'finance_approver' && (
+                      <button
+                        onClick={() => handleWorkflowAction('re_verify')}
+                        className="w-full sm:w-auto bg-white border border-slate-200 hover:border-amber-400 hover:text-amber-600 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-2xl transition-all duration-300 cursor-pointer btn-3d shadow-sm flex items-center justify-center gap-2"
+                      >
+                        <RefreshCcw size={18} /> Re-Verify
+                      </button>
+                    )}
+
+                    {activeRole !== 'finance_approver' && (
+                      <button
+                        onClick={() => handleWorkflowAction('escalate')}
+                        className="w-full sm:w-auto bg-white border border-slate-200 hover:border-indigo-400 hover:text-indigo-600 text-slate-700 text-sm font-bold px-6 py-3.5 rounded-2xl transition-all duration-300 cursor-pointer btn-3d shadow-sm flex items-center justify-center gap-2"
+                      >
+                        <ArrowUpCircle size={18} /> Escalate
+                      </button>
+                    )}
+
                     <button
-                      onClick={() => handleSubmitReview(true)}
+                      onClick={() => handleWorkflowAction('approve')}
                       className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white shadow-lg shadow-blue-500/30 text-sm font-bold px-8 py-3.5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-2 cursor-pointer btn-3d"
                     >
                       <Check className="w-5 h-5" />
-                      <span>Verify & Forward</span>
+                      <span>{activeRole === 'finance_approver' ? 'Final Sanction' : 'Approve & Forward'}</span>
                     </button>
                   </div>
                 </div>
