@@ -19,6 +19,17 @@ export interface UserProfile {
   isAadhaarVerified: boolean;
 }
 
+export interface SystemUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  status: 'active' | 'blocked' | 'offline';
+  department: string;
+  lastLogin: string;
+  applicationsProcessed?: number;
+}
+
 export interface Scheme {
   id: string;
   title: string;

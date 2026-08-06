@@ -1,4 +1,66 @@
-import { Scheme, UserProfile, Application, Installment, Notification, SystemStats } from '../types';
+import { Scheme, UserProfile, Application, Installment, Notification, SystemStats, SystemUser } from '../types';
+
+export const INITIAL_USERS: SystemUser[] = [
+  {
+    id: 'USR-ADMIN-01',
+    name: 'Sanjeev Kumar (IAS)',
+    email: 'sanjeev.kumar@gov.in',
+    role: 'admin',
+    status: 'active',
+    department: 'Ministry of Finance',
+    lastLogin: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+    applicationsProcessed: 1420
+  },
+  {
+    id: 'USR-DIST-01',
+    name: 'Anita Desai',
+    email: 'anita.desai@gov.in',
+    role: 'district_officer',
+    status: 'active',
+    department: 'District Collectorate, Pune',
+    lastLogin: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    applicationsProcessed: 893
+  },
+  {
+    id: 'USR-DIST-02',
+    name: 'Vikram Singh',
+    email: 'vikram.singh@gov.in',
+    role: 'district_officer',
+    status: 'blocked',
+    department: 'District Collectorate, Jaipur',
+    lastLogin: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
+    applicationsProcessed: 412
+  },
+  {
+    id: 'USR-VER-01',
+    name: 'Ramesh Patel',
+    email: 'ramesh.patel@gov.in',
+    role: 'verifier',
+    status: 'active',
+    department: 'Field Office, Ward 4',
+    lastLogin: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
+    applicationsProcessed: 3205
+  },
+  {
+    id: 'USR-VER-02',
+    name: 'Priya Sharma',
+    email: 'priya.sharma@gov.in',
+    role: 'verifier',
+    status: 'offline',
+    department: 'Field Office, Ward 7',
+    lastLogin: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
+    applicationsProcessed: 2840
+  },
+  {
+    id: 'USR-CIT-01',
+    name: 'Rajesh Kumar Sharma',
+    email: 'rajesh.sharma@email.com',
+    role: 'citizen',
+    status: 'active',
+    department: 'Citizen Portal',
+    lastLogin: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString()
+  }
+];
 
 export const INITIAL_SCHEMES: Scheme[] = [
   {

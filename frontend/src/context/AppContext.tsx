@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { UserRole, UserProfile, Scheme, Application, Installment, Notification, SystemStats } from '../types';
+import { UserRole, UserProfile, Scheme, Application, Installment, Notification, SystemStats, SystemUser } from '../types';
 import { DEFAULT_CITIZEN, INITIAL_NOTIFICATIONS, SYSTEM_STATS } from '../data/dummyData';
 import { 
   useSchemes, 
@@ -9,7 +9,9 @@ import {
   useVerifyApplication, 
   useApproveApplication, 
   useReleaseFunds,
-  useCreateScheme
+  useCreateScheme,
+  useUsers,
+  useUpdateUserStatus
 } from '../hooks/useApi';
 
 interface AppContextType {
@@ -21,6 +23,7 @@ interface AppContextType {
   applications: Application[];
   installments: Installment[];
   notifications: Notification[];
+  users: SystemUser[];
   stats: SystemStats;
   applyToScheme: (
     schemeId: string, 
@@ -42,6 +45,8 @@ interface AppContextType {
   releaseInstallment: (installmentId: string) => void;
   addNewScheme: (scheme: Omit<Scheme, 'id' | 'disbursedAmount'>) => void;
   markNotificationRead: (id: string) => void;
+  createScheme: (scheme: Omit<Scheme, 'id' | 'disbursedAmount'>) => void;
+  updateUserStatus: (userId: string, status: SystemUser['status'], role?: SystemUser['role']) => void;
   clearAllNotifications: () => void;
 }
 
@@ -74,12 +79,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const { data: schemes = [] } = useSchemes();
   const { data: applications = [] } = useApplications();
   const { data: installments = [] } = useInstallments();
+  const { data: users = [] } = useUsers();
 
   const submitAppMutation = useSubmitApplication();
   const verifyAppMutation = useVerifyApplication();
   const approveAppMutation = useApproveApplication();
   const releaseFundsMutation = useReleaseFunds();
   const createSchemeMutation = useCreateScheme();
+  const updateUserStatusMutation = useUpdateUserStatus();
 
   // Recalculate stats whenever lists change
   useEffect(() => {
@@ -238,11 +245,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const markNotificationRead = (id: string) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
+    setNotifications(prev => 
+      prev.map(n => n.id === id ? { ...n, isRead: true } : n)
+    );
   };
 
   const clearAllNotifications = () => {
     setNotifications([]);
+  };
+
+  const updateUserStatus = (userId: string, status: SystemUser['status'], role?: SystemUser['role']) => {
+    updateUserStatusMutation.mutate({ userId, status, role });
   };
 
   return (
@@ -256,13 +269,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         applications,
         installments,
         notifications,
+        users,
         stats,
         applyToScheme,
         verifyApplication,
         approveApplication,
         releaseInstallment,
         addNewScheme,
+        createScheme: addNewScheme,
         markNotificationRead,
+        updateUserStatus,
         clearAllNotifications
       }}
     >

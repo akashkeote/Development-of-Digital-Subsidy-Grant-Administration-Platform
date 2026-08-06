@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Scheme } from '../types';
 import { DashboardLayout } from '../components/DashboardLayout';
-import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2, Download, FileSpreadsheet, Map, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2, Download, FileSpreadsheet, Map, AlertTriangle, CheckCircle2, Users, Lock, Unlock, ShieldAlert } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
-  const { schemes, installments, stats, addNewScheme, releaseInstallment, applications, approveApplication } = useApp();
+  const { schemes, installments, stats, addNewScheme, releaseInstallment, applications, approveApplication, users, updateUserStatus } = useApp();
   
-  const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury' | 'compliance'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury' | 'compliance' | 'access_management'>('analytics');
   const [overridingAppId, setOverridingAppId] = useState<string | null>(null);
 
   // Scheme Form States
@@ -143,6 +143,17 @@ export const AdminDashboard: React.FC = () => {
               }`}
             >
               Compliance Desk
+            </button>
+            <button
+              onClick={() => setActiveTab('access_management')}
+              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+                activeTab === 'access_management' 
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span>Access Management</span>
             </button>
             <button
               onClick={() => setActiveTab('create_scheme')}
@@ -699,6 +710,72 @@ export const AdminDashboard: React.FC = () => {
               </button>
             </div>
           </form>
+        )}
+
+        {/* 5. ACCESS MANAGEMENT (USER DIRECTORY) */}
+        {activeTab === 'access_management' && (
+          <div className="space-y-10">
+            <div>
+              <h2 className="text-xl font-bold font-heading text-slate-800">System Users & Access Control</h2>
+              <p className="text-sm text-slate-500 mt-1">Manage system officers, monitor application throughput, and block suspicious accounts.</p>
+            </div>
+
+            <div className="grid gap-6">
+              {users.map(user => (
+                <div key={user.id} className="glass-card card-3d p-6 rounded-2xl border border-white/60 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white/40">
+                  <div className="flex items-center gap-5">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border shadow-inner ${user.status === 'blocked' ? 'bg-rose-50 text-rose-500 border-rose-100' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
+                      {user.status === 'blocked' ? <Lock size={20} /> : <Users size={20} />}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <h3 className="font-bold text-slate-800 text-lg">{user.name}</h3>
+                        <span className="font-mono text-xs font-bold px-2 py-1 bg-white border border-slate-200 rounded text-slate-500">#{user.id}</span>
+                        {user.status === 'blocked' && (
+                          <span className="bg-rose-100 text-rose-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-widest flex items-center gap-1">
+                            <ShieldAlert size={10} /> Suspended
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-slate-500 font-medium">{user.email} • {user.department}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Role</span>
+                      <span className="text-sm font-bold text-slate-700 capitalize">{user.role.replace('_', ' ')}</span>
+                    </div>
+                    
+                    {user.applicationsProcessed !== undefined && (
+                      <div className="flex flex-col px-4 border-l border-slate-200">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Processed</span>
+                        <span className="text-sm font-bold text-blue-600">{user.applicationsProcessed} Apps</span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-2 ml-auto md:ml-4">
+                      {user.status === 'blocked' ? (
+                        <button 
+                          onClick={() => updateUserStatus(user.id, 'active')}
+                          className="btn-3d px-4 py-2 bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 hover:text-emerald-700 rounded-lg text-sm font-bold flex items-center gap-2 transition-all"
+                        >
+                          <Unlock size={16} /> Unblock
+                        </button>
+                      ) : (
+                        <button 
+                          onClick={() => updateUserStatus(user.id, 'blocked')}
+                          className="btn-3d px-4 py-2 bg-white text-rose-600 border border-slate-200 hover:border-rose-300 hover:bg-rose-50 rounded-lg text-sm font-bold flex items-center gap-2 transition-all"
+                        >
+                          <Lock size={16} /> Suspend
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
       </div>

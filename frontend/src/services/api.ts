@@ -1,5 +1,5 @@
-import { Scheme, Application, Installment, SystemStats } from '../types';
-import { INITIAL_SCHEMES, INITIAL_APPLICATIONS, INITIAL_INSTALLMENTS } from '../data/dummyData';
+import { Scheme, Application, Installment, SystemStats, SystemUser } from '../types';
+import { INITIAL_SCHEMES, INITIAL_APPLICATIONS, INITIAL_INSTALLMENTS, INITIAL_USERS } from '../data/dummyData';
 import { apiClient } from './apiClient';
 
 // --- MOCK BACKEND STORAGE UTILS ---
@@ -14,6 +14,25 @@ const getStorage = <T>(key: string, initialData: T): T => {
 
 const setStorage = <T>(key: string, data: T) => {
   localStorage.setItem(key, JSON.stringify(data));
+};
+
+// --- USER API ---
+export const userService = {
+  getUsers: async (): Promise<SystemUser[]> => {
+    await delay(300);
+    return getStorage('mock_db_users', INITIAL_USERS);
+  },
+  updateUserStatus: async (userId: string, status: SystemUser['status'], role?: SystemUser['role']): Promise<SystemUser> => {
+    await delay(600);
+    const users = getStorage('mock_db_users', INITIAL_USERS);
+    const updated = users.map(u => 
+      u.id === userId 
+        ? { ...u, status: status, ...(role ? { role } : {}) } 
+        : u
+    );
+    setStorage('mock_db_users', updated);
+    return updated.find(u => u.id === userId)!;
+  }
 };
 
 // --- SCHEMES API ---

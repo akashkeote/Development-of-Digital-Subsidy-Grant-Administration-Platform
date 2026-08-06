@@ -1,6 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { schemeService, applicationService, treasuryService } from '../services/api';
-import { Application, Scheme, Installment } from '../types';
+import { schemeService, applicationService, treasuryService, userService } from '../services/api';
+import { Application, Scheme, Installment, SystemUser } from '../types';
+
+// --- USER HOOKS ---
+export const useUsers = () => {
+  return useQuery({
+    queryKey: ['users'],
+    queryFn: userService.getUsers,
+  });
+};
+
+export const useUpdateUserStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ userId, status, role }: { userId: string, status: SystemUser['status'], role?: SystemUser['role'] }) => 
+      userService.updateUserStatus(userId, status, role),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+};
 
 // --- SCHEMES HOOKS ---
 export const useSchemes = () => {
