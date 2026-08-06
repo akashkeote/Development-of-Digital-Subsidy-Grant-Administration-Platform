@@ -5,9 +5,10 @@ import { DashboardLayout } from '../components/DashboardLayout';
 import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2, Download, FileSpreadsheet, Map, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
-  const { schemes, installments, stats, addNewScheme, releaseInstallment } = useApp();
+  const { schemes, installments, stats, addNewScheme, releaseInstallment, applications, approveApplication } = useApp();
   
   const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury' | 'compliance'>('analytics');
+  const [overridingAppId, setOverridingAppId] = useState<string | null>(null);
 
   // Scheme Form States
   const [title, setTitle] = useState('');
@@ -333,40 +334,71 @@ export const AdminDashboard: React.FC = () => {
         {/* COMPLIANCE DESK VIEW */}
         {activeTab === 'compliance' && (
           <div className="space-y-8">
-            <h2 className="text-xl font-bold font-heading text-slate-800 border-b border-slate-200/50 pb-4">Compliance Tracking & Scheduler</h2>
+            <h2 className="text-xl font-bold font-heading text-slate-800 border-b border-slate-200/50 pb-4">Master Application Override Console</h2>
             
-            <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 relative overflow-hidden">
+            <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 relative overflow-hidden shadow-inner">
               <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
               <div className="relative z-10 flex gap-4">
                 <AlertTriangle className="text-rose-600 shrink-0" size={24} />
                 <div>
-                  <h3 className="font-bold text-rose-800 text-lg">Overdue Milestones Detected</h3>
+                  <h3 className="font-bold text-rose-800 text-lg">System Administrator Privileges Active</h3>
                   <p className="text-sm text-rose-600 mt-1">
-                    The daily overdue scheduler has flagged 3 pending disbursements that have crossed their SLA thresholds. These stages are currently blocked until admin overrides them.
+                    You have global override authority. You can bypass L1 (Verifier) and L2 (District) stages and forcefully approve or reject any application in the system. Use with extreme caution.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
-              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-4 mb-6">Blocked Applications</h3>
+            <div className="bg-white/80 border border-white/60 rounded-3xl p-8 shadow-xl backdrop-blur-xl">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-4 mb-6 flex items-center">
+                Global Application Registry ({applications.length})
+              </h3>
               
-              <div className="space-y-4">
-                {[1, 2, 3].map((item) => (
-                  <div key={item} className="flex flex-col md:flex-row items-center justify-between p-5 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center font-bold">
-                        !
+              <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                {applications.length === 0 ? (
+                  <p className="text-center text-slate-500 font-medium py-10">No applications registered in the system.</p>
+                ) : applications.map((app) => (
+                  <div key={app.id} className="flex flex-col xl:flex-row items-center justify-between p-5 bg-white/60 border border-white/80 shadow-sm rounded-2xl hover:bg-white/80 transition-all">
+                    <div className="flex items-center gap-5 w-full xl:w-auto">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold shadow-inner shrink-0 ${
+                        app.status === 'approved' || app.status === 'disbursing' || app.status === 'completed'
+                          ? 'bg-emerald-100 text-emerald-600 border border-emerald-200' 
+                          : app.status === 'rejected_by_verifier' || app.status === 'rejected_by_admin'
+                          ? 'bg-red-100 text-red-600 border border-red-200'
+                          : 'bg-amber-100 text-amber-600 border border-amber-200'
+                      }`}>
+                        {app.status === 'approved' || app.status === 'disbursing' || app.status === 'completed' ? 'A' : app.status.includes('reject') ? 'R' : '!'}
                       </div>
                       <div>
-                        <h4 className="font-bold text-slate-800">APP-2026-X{item}9{item}</h4>
-                        <p className="text-xs text-slate-500 mt-1">Pending Stage 2 Disbursement • Due: 7 days ago</p>
+                        <h4 className="font-bold text-slate-800 text-base">{app.citizenName} <span className="text-xs text-slate-400 font-normal ml-2">({app.schemeTitle})</span></h4>
+                        <p className="text-xs font-mono text-slate-500 mt-1">ID: {app.id} • Status: <span className="font-bold text-slate-700 uppercase tracking-wider">{app.status.replace(/_/g, ' ')}</span></p>
                       </div>
                     </div>
-                    <div className="mt-4 md:mt-0 flex items-center gap-3">
-                      <span className="px-3 py-1 bg-slate-200 text-slate-600 rounded-lg text-xs font-bold uppercase tracking-widest">Under Audit</span>
-                      <button className="btn-3d px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg text-sm font-bold shadow-md shadow-emerald-500/20 flex items-center gap-2 transition-transform hover:scale-105 active:scale-95">
-                        <CheckCircle2 size={16} /> Admin Override
+                    <div className="mt-5 xl:mt-0 flex items-center gap-3 w-full xl:w-auto overflow-x-auto pb-2 xl:pb-0">
+                      <button 
+                        onClick={async () => {
+                          setOverridingAppId(app.id + '_reject');
+                          await new Promise(r => setTimeout(r, 800));
+                          approveApplication(app.id, 'Force Rejected by System Administrator', false);
+                          setOverridingAppId(null);
+                        }}
+                        disabled={overridingAppId !== null}
+                        className="btn-3d px-5 py-2.5 bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 rounded-xl text-xs font-bold shadow-sm flex items-center gap-2 transition-all whitespace-nowrap disabled:opacity-50"
+                      >
+                        {overridingAppId === app.id + '_reject' ? 'Overriding...' : 'Force Reject'}
+                      </button>
+                      <button 
+                        onClick={async () => {
+                          setOverridingAppId(app.id + '_approve');
+                          await new Promise(r => setTimeout(r, 800));
+                          approveApplication(app.id, 'Force Approved by System Administrator (Bypassed L1/L2)', true);
+                          setOverridingAppId(null);
+                        }}
+                        disabled={overridingAppId !== null || app.status === 'approved' || app.status === 'disbursing' || app.status === 'completed'}
+                        className="btn-3d px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border border-transparent rounded-xl text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center gap-2 transition-all whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <CheckCircle2 size={16} /> 
+                        {overridingAppId === app.id + '_approve' ? 'Authorizing...' : 'Force Approve'}
                       </button>
                     </div>
                   </div>
