@@ -260,7 +260,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
               </div>
 
               {/* Uploaded Documents List with checkboxes */}
-              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
+              <div className="glass-card bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
                 <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase">
                   <ShieldCheck className="w-5 h-5 mr-3 text-blue-600" /> Certificates Audit
                 </h3>
@@ -274,7 +274,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
                       <div key={doc.id} className="p-6 border border-white/60 rounded-2xl bg-white/50 space-y-6 hover:bg-white/80 transition-all duration-300 shadow-sm relative z-10">
                         <div className="flex flex-col 2xl:flex-row justify-between items-start 2xl:items-center gap-6">
                           <div className="flex gap-5 items-center w-full min-w-0">
-                            <span className="w-14 h-14 bg-white shadow-md text-blue-600 rounded-2xl flex items-center justify-center border border-slate-100 flex-shrink-0 card-3d">
+                            <span className="w-14 h-14 bg-white shadow-md text-blue-600 rounded-2xl flex items-center justify-center border border-slate-100 flex-shrink-0">
                               <FileText className="w-6 h-6" />
                             </span>
                             <div className="leading-none text-left min-w-0 overflow-hidden">
@@ -318,7 +318,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
                           placeholder="Audit comment / description of discrepancy (optional if accepted)"
                           value={docComment}
                           onChange={(e) => handleDocComment(doc.id, e.target.value)}
-                          className="w-full p-4 bg-white/80 border border-slate-200/50 focus:border-blue-400 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 input-3d shadow-inner"
+                          className="w-full p-4 bg-white/80 border border-slate-200/50 focus:border-blue-400 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 shadow-inner"
                         />
                       </div>
                     );
@@ -327,7 +327,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
               </div>
 
               {/* Review Logging Form */}
-              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl shadow-xl border border-white/50 space-y-8 backdrop-blur-xl">
+              <div className="glass-card bg-white/70 p-8 rounded-3xl shadow-xl border border-white/50 space-y-8 backdrop-blur-xl">
                 <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 font-heading uppercase">
                   Verifier Remarks Log
                 </h3>
