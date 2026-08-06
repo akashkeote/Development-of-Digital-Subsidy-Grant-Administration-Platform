@@ -72,30 +72,26 @@ export const SchemeListingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedMinistry, setSelectedMinistry] = useState<string>('all');
 
-  // Load query params on mount
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  // Reset pagination when filters change
   useEffect(() => {
-    const q = searchParams.get('search');
-    const cat = searchParams.get('category');
-    if (q) setSearchQuery(q);
-    if (cat) setSelectedCategory(cat);
-  }, [searchParams]);
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory, selectedMinistry]);
+
+  // Extract unique categories and ministries from the data
+  const uniqueCategories = Array.from(new Set(schemes.map(s => s.category).filter(Boolean))) as string[];
+  const uniqueMinistries = Array.from(new Set(schemes.map(s => s.ministry).filter(Boolean))) as string[];
 
   const categoryOptions = [
     { value: 'all', label: 'All Categories' },
-    { value: 'agriculture', label: 'Agriculture' },
-    { value: 'education', label: 'Education' },
-    { value: 'energy', label: 'Green Energy' },
-    { value: 'housing', label: 'Housing' },
-    { value: 'healthcare', label: 'Healthcare & Insurance' },
+    ...uniqueCategories.map(c => ({ value: c, label: c.replace(/_/g, ' ') }))
   ];
 
   const ministryOptions = [
     { value: 'all', label: 'All Ministries' },
-    { value: 'Ministry of Agriculture and Farmers Welfare', label: 'Ministry of Agriculture and Farmers Welfare' },
-    { value: 'Ministry of New and Renewable Energy', label: 'Ministry of New and Renewable Energy' },
-    { value: 'Ministry of Education', label: 'Ministry of Education' },
-    { value: 'Ministry of Rural Development', label: 'Ministry of Rural Development' },
-    { value: 'Ministry of Health and Family Welfare', label: 'Ministry of Health and Family Welfare' }
+    ...uniqueMinistries.map(m => ({ value: m, label: m }))
   ];
 
   // Filtering logic
@@ -110,6 +106,10 @@ export const SchemeListingPage: React.FC = () => {
 
     return matchesSearch && matchesCategory && matchesMinistry;
   });
+
+  const totalPages = Math.ceil(filteredSchemes.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedSchemes = filteredSchemes.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <DashboardLayout>
@@ -147,20 +147,20 @@ export const SchemeListingPage: React.FC = () => {
               />
             </div>
             
-            <div className="text-xs text-slate-400 font-medium">
-              Showing {filteredSchemes.slice(0, 50).length} of {filteredSchemes.length} schemes
+            <div className="text-xs text-slate-400 font-medium whitespace-nowrap">
+              Showing {startIndex + 1}-{Math.min(startIndex + itemsPerPage, filteredSchemes.length)} of {filteredSchemes.length} schemes
             </div>
           </div>
         </div>
 
         {/* Schemes List */}
         <div className="space-y-4 relative z-10">
-          {filteredSchemes.length === 0 ? (
+          {paginatedSchemes.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-slate-500 text-sm font-medium">No matching schemes found.</p>
             </div>
           ) : (
-            filteredSchemes.slice(0, 50).map((scheme, idx) => (
+            paginatedSchemes.map((scheme, idx) => (
               <SchemeCard 
                 key={scheme.id} 
                 scheme={scheme} 
@@ -180,14 +180,44 @@ export const SchemeListingPage: React.FC = () => {
           }}
         />
         
-        {/* Pagination Reference */}
-        {filteredSchemes.length > 50 && (
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 pt-6 pb-12 relative z-10">
-            <button className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-transparent hover:border-slate-200 rounded-md transition-colors">Prev.</button>
-            <button className="w-8 h-8 flex items-center justify-center text-xs font-bold text-white bg-blue-600 rounded-md shadow-sm">1</button>
-            <button className="w-8 h-8 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-50 border border-transparent rounded-md transition-colors">2</button>
-            <button className="w-8 h-8 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-50 border border-transparent rounded-md transition-colors">3</button>
-            <button className="px-3 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 rounded-md shadow-sm transition-colors">Next</button>
+            <button 
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1.5 text-xs font-medium text-slate-500 border border-transparent hover:border-slate-200 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Prev.
+            </button>
+            
+            {Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(page => page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1)
+              .map((page, index, array) => (
+                <React.Fragment key={page}>
+                  {index > 0 && array[index - 1] !== page - 1 && (
+                    <span className="text-slate-400 text-xs">...</span>
+                  )}
+                  <button 
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-8 h-8 flex items-center justify-center text-xs font-bold rounded-md transition-colors ${
+                      currentPage === page 
+                        ? 'text-white bg-blue-600 shadow-sm' 
+                        : 'text-slate-600 hover:bg-slate-50 border border-transparent'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                </React.Fragment>
+              ))}
+
+            <button 
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 border border-slate-200 hover:bg-slate-50 rounded-md shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
           </div>
         )}
       </div>
