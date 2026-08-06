@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "status_types")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role {
+public class StatusType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Role {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(name = "is_system")
-    private Boolean isSystem;
+    @Column(name = "is_active")
+    private Boolean isActive;
 
 }
