@@ -301,6 +301,33 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Pillars of India 3D Graphic Section */}
+      <section className="relative py-20 bg-white overflow-hidden border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 relative z-10 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="w-full max-w-6xl rounded-[2.5rem] overflow-hidden shadow-2xl shadow-blue-900/10 border border-slate-100 relative group perspective-container"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent z-10 pointer-events-none"></div>
+            <img 
+              src="/src/assets/pillars_of_india.jpg" 
+              alt="Pillars of India: Scientist, Warrior, Farmer, Civilian" 
+              className="w-full h-auto object-cover aspect-[2.4/1] transform group-hover:scale-105 transition-transform duration-1000 ease-out"
+            />
+            <div className="absolute bottom-12 left-12 z-20 text-white max-w-2xl">
+              <h3 className="text-3xl md:text-5xl font-heading font-extrabold mb-4 drop-shadow-lg tracking-tight text-white">Built for every Citizen.</h3>
+              <p className="text-lg md:text-xl font-medium text-white/90 drop-shadow-md leading-relaxed">
+                Empowering our farmers, honoring our warriors, and advancing our scientists. 
+                A digital future designed for the people of India.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* 3D Category Icons Selector */}
       <section className="relative py-32 bg-slate-50 overflow-hidden">
         <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-blue-50/50 to-transparent pointer-events-none"></div>
