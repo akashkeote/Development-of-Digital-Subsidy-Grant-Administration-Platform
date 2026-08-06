@@ -89,7 +89,32 @@ export const VerificationOfficerDashboard: React.FC = () => {
           </div>
           
           <div className="flex flex-col md:flex-row items-center gap-4 w-full xl:w-auto overflow-x-auto pb-2 xl:pb-0">
-            {/* Removed internal Role Switcher as District/Admin have their own protected dashboards now */}
+            {/* Sandbox Role Switcher - Restored for easy testing navigation! */}
+            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
+              <button 
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-700 shadow-sm border border-slate-200"
+              >
+                L1: Field
+              </button>
+              <button 
+                onClick={() => {
+                  setCurrentRole('district_officer');
+                  navigate('/district/dashboard');
+                }}
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700"
+              >
+                L2: District
+              </button>
+              <button 
+                onClick={() => {
+                  setCurrentRole('admin');
+                  navigate('/admin/dashboard');
+                }}
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700"
+              >
+                L3: Finance
+              </button>
+            </div>
 
             <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-200/50 px-6 py-4 rounded-2xl flex items-center tracking-widest shadow-inner shrink-0">
               <Clock className="w-5 h-5 mr-3" /> Pending Reviews: <span className="ml-2 font-black text-blue-700 text-lg">{queue.length}</span>
