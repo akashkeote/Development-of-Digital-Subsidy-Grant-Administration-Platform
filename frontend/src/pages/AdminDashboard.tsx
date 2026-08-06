@@ -43,11 +43,14 @@ export const AdminDashboard: React.FC = () => {
     setRequiredDocuments(next);
   };
 
-  const handleCreateSchemeSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleCreateSchemeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title.trim() || !department.trim() || !description.trim()) {
-      alert('Please fill out all primary scheme details.');
+      setErrorMsg('Please fill out all primary scheme details.');
       return;
     }
 
@@ -55,9 +58,15 @@ export const AdminDashboard: React.FC = () => {
     const filteredDocs = requiredDocuments.filter(d => d.trim() !== '');
 
     if (filteredCrit.length === 0 || filteredDocs.length === 0) {
-      alert('Please add at least one eligibility criterion and one required document.');
+      setErrorMsg('Please add at least one eligibility criterion and one required document.');
       return;
     }
+
+    setErrorMsg('');
+    setIsSubmitting(true);
+
+    // Simulate Network Request
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     addNewScheme({
       title,
@@ -74,7 +83,7 @@ export const AdminDashboard: React.FC = () => {
       installmentCount
     });
 
-    alert(`Successfully launched new scheme: "${title}"! Notification sent to all citizens.`);
+    setIsSubmitting(false);
     
     // Clear Form
     setTitle('');
@@ -394,7 +403,10 @@ export const AdminDashboard: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/40">
-                    {pendingPayments.map((inst) => (
+                    {pendingPayments.map((inst) => {
+                      // We can check if this specific row is being processed if we had a state, but since we can't easily add a hook here without refactoring the whole component, we will just use a global state or inline if we add it at the top of AdminDashboard.
+                      // Wait, I will add it right now inside the component body in the next step.
+                      return (
                       <tr key={inst.id} className="hover:bg-white/60 transition-colors group">
                         <td className="py-5 font-mono text-xs font-bold text-slate-900 pl-6">#{inst.id}</td>
                         <td className="py-5 font-bold text-slate-800 max-w-xs truncate">{inst.schemeTitle}</td>
@@ -411,10 +423,16 @@ export const AdminDashboard: React.FC = () => {
                         </td>
                         <td className="py-5 pr-6 text-right">
                           <button
-                            onClick={() => {
+                            onClick={async () => {
+                              const btn = document.getElementById(`btn-${inst.id}`);
+                              if (btn) {
+                                btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div><span>Authorizing...</span>';
+                                btn.classList.add('opacity-70', 'cursor-not-allowed');
+                              }
+                              await new Promise(r => setTimeout(r, 1500)); // Simulate RBI Gateway
                               releaseInstallment(inst.id);
-                              alert(`DBT authorized! ₹${inst.amount.toLocaleString('en-IN')} released to applicant's Aadhaar-mapped bank node.`);
                             }}
+                            id={`btn-${inst.id}`}
                             className="btn-3d bg-gradient-to-r from-blue-600 to-blue-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all inline-flex items-center space-x-2 shadow-lg shadow-blue-500/30 border-t border-white/20"
                           >
                             <PlayCircle className="w-4 h-4" />
@@ -422,7 +440,7 @@ export const AdminDashboard: React.FC = () => {
                           </button>
                         </td>
                       </tr>
-                    ))}
+                    )})}
                   </tbody>
                 </table>
               </div>
@@ -629,13 +647,23 @@ export const AdminDashboard: React.FC = () => {
 
             </div>
 
-            <div className="pt-6">
+            <div className="pt-6 space-y-4">
+              {errorMsg && (
+                <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-xl text-sm font-bold flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5" /> {errorMsg}
+                </div>
+              )}
               <button
                 type="submit"
-                className="btn-3d w-full py-5 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-lg font-bold rounded-xl transition-all shadow-xl shadow-blue-500/30 flex items-center justify-center space-x-3 border-t border-white/20 hover:scale-[1.01]"
+                disabled={isSubmitting}
+                className="btn-3d w-full py-5 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-lg font-bold rounded-xl transition-all shadow-xl shadow-blue-500/30 flex items-center justify-center space-x-3 border-t border-white/20 hover:scale-[1.01] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <PlusCircle className="w-6 h-6" />
-                <span>Launch New Subsidy Scheme</span>
+                {isSubmitting ? (
+                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                ) : (
+                  <PlusCircle className="w-6 h-6" />
+                )}
+                <span>{isSubmitting ? 'Publishing Scheme to National Database...' : 'Launch New Subsidy Scheme'}</span>
               </button>
             </div>
           </form>

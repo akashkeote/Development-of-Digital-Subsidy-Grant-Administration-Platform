@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Landmark, FileText, CheckCircle2, Bookmark, Compass, DollarSign } from 'lucide-react';
+import { Landmark, FileText, CheckCircle2, Bookmark, Compass, DollarSign, AlertTriangle } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
 
 export const DistrictOfficerDashboard: React.FC = () => {
@@ -20,17 +20,26 @@ export const DistrictOfficerDashboard: React.FC = () => {
 
   const activeApp = applications.find(app => app.id === selectedAppId);
 
-  const handleSubmitSanction = (approved: boolean) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmitSanction = async (approved: boolean) => {
     if (!activeApp) return;
 
     if (!comment.trim()) {
-      alert('Please enter a district sanction remark.');
+      setErrorMsg('Please enter statutory sanctioning remarks before proceeding.');
       return;
     }
+    
+    setErrorMsg('');
+    setIsSubmitting(true);
+
+    // Simulate the network request visually for the frontend user
+    await new Promise(resolve => setTimeout(resolve, 800));
 
     approveApplication(activeApp.id, comment, approved);
-
-    alert(`Application #${activeApp.id} has been successfully ${approved ? 'Sanctioned & Approved for disbursements!' : 'Rejected.'}`);
+    
+    setIsSubmitting(false);
     setSelectedAppId('');
     setComment('');
   };
@@ -159,24 +168,42 @@ export const DistrictOfficerDashboard: React.FC = () => {
                       placeholder="Input statutory remarks declaring budget allocation compliance, income verification confirmations, and DBT schedules..."
                       rows={4}
                       value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      className="input-3d w-full p-6 bg-slate-50/50 border border-slate-200/60 focus:border-blue-500 rounded-xl text-base text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 resize-none shadow-inner"
+                      onChange={(e) => {
+                        setComment(e.target.value);
+                        if (errorMsg) setErrorMsg('');
+                      }}
+                      className={`input-3d w-full p-6 bg-slate-50/50 border focus:ring-4 transition-all text-base text-slate-800 font-medium placeholder:text-slate-400 resize-none shadow-inner ${
+                        errorMsg 
+                          ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/10' 
+                          : 'border-slate-200/60 focus:border-blue-500 focus:ring-blue-500/20'
+                      }`}
                     />
+                    {errorMsg && (
+                      <p className="text-xs font-bold text-red-500 animate-in fade-in flex items-center gap-1.5">
+                        <AlertTriangle className="w-3.5 h-3.5" /> {errorMsg}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-5 justify-end pt-6 border-t border-slate-200/50">
                     <button
                       onClick={() => handleSubmitSanction(false)}
-                      className="btn-3d w-full sm:w-auto bg-white border border-slate-200/60 text-slate-700 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 text-sm font-bold px-8 py-4 rounded-xl transition-all cursor-pointer shadow-sm"
+                      disabled={isSubmitting}
+                      className="btn-3d w-full sm:w-auto bg-white border border-slate-200/60 text-slate-700 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 text-sm font-bold px-8 py-4 rounded-xl transition-all cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       Deny Grant
                     </button>
                     <button
                       onClick={() => handleSubmitSanction(true)}
-                      className="btn-3d w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white shadow-xl text-sm font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-3 cursor-pointer border border-transparent"
+                      disabled={isSubmitting}
+                      className="btn-3d w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white shadow-xl text-sm font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center space-x-3 cursor-pointer border border-transparent disabled:opacity-70 disabled:cursor-not-allowed"
                     >
-                      <DollarSign className="w-5 h-5" />
-                      <span>Sanction & Release Funds</span>
+                      {isSubmitting ? (
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      ) : (
+                        <DollarSign className="w-5 h-5" />
+                      )}
+                      <span>{isSubmitting ? 'Processing Sanction...' : 'Sanction & Release Funds'}</span>
                     </button>
                   </div>
                 </div>
