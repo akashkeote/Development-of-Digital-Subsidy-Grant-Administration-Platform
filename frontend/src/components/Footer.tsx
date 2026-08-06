@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, ShieldCheck, Mail, MapPin, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -60,10 +61,10 @@ export const Footer: React.FC = () => {
         <div className="col-span-1 flex flex-col space-y-4">
           <h3 className="text-sm font-bold text-emerald-500 uppercase tracking-wider font-space">Platform</h3>
           <ul className="space-y-3 text-sm font-medium">
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Dashboard</a></li>
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Schemes</a></li>
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Track Application</a></li>
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Nodal Agencies</a></li>
+            <li><Link to="/login" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Dashboard</Link></li>
+            <li><Link to="/schemes" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Schemes</Link></li>
+            <li><Link to="/citizen/tracking" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Track Application</Link></li>
+            <li><Link to="/nodal-agencies" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Nodal Agencies</Link></li>
           </ul>
         </div>
 
@@ -71,10 +72,10 @@ export const Footer: React.FC = () => {
         <div className="col-span-1 flex flex-col space-y-4">
           <h3 className="text-sm font-bold text-emerald-500 uppercase tracking-wider font-space">Resources</h3>
           <ul className="space-y-3 text-sm font-medium">
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Guidelines</a></li>
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> API Documentation</a></li>
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Help Center</a></li>
-            <li><a href="#" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Grievance</a></li>
+            <li><Link to="/guidelines" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Guidelines</Link></li>
+            <li><Link to="/api-docs" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> API Documentation</Link></li>
+            <li><Link to="/help" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Help Center</Link></li>
+            <li><Link to="/grievance" className="text-slate-500 hover:text-blue-500 transition-colors flex items-center gap-2 group"><ArrowRight className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors" /> Grievance</Link></li>
           </ul>
         </div>
 
@@ -131,9 +132,9 @@ export const Footer: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-xs font-bold text-blue-500/80">
               <a href="#" className="hover:text-blue-600 hover:underline transition-colors">Terms of Use</a>
               <span className="text-slate-300 font-normal">•</span>
-              <a href="#" className="hover:text-indigo-600 hover:underline transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-blue-600 hover:underline transition-colors">Privacy Policy</a>
               <span className="text-slate-300 font-normal">•</span>
-              <a href="#" className="hover:text-indigo-600 hover:underline transition-colors">Accessibility</a>
+              <a href="#" className="hover:text-blue-600 hover:underline transition-colors">Accessibility</a>
             </div>
         </div>
       </div>

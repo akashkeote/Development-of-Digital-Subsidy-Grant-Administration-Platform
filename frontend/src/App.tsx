@@ -10,6 +10,11 @@ import { Login } from './pages/Login';
 import { Registration } from './pages/Registration';
 import { SchemeListingPage } from './pages/SchemeListingPage';
 import { SchemeDetailsPage } from './pages/SchemeDetailsPage';
+import { NodalAgenciesPage } from './pages/NodalAgenciesPage';
+import { GuidelinesPage } from './pages/GuidelinesPage';
+import { ApiDocsPage } from './pages/ApiDocsPage';
+import { HelpCenterPage } from './pages/HelpCenterPage';
+import { GrievancePage } from './pages/GrievancePage';
 
 // Citizen Pages
 import { CitizenDashboard } from './pages/CitizenDashboard';
@@ -40,6 +45,11 @@ const AnimatedRoutes = () => {
         <Route path="/register" element={<PageTransition><Registration /></PageTransition>} />
         <Route path="/schemes" element={<PageTransition><SchemeListingPage /></PageTransition>} />
         <Route path="/schemes/:id" element={<PageTransition><SchemeDetailsPage /></PageTransition>} />
+        <Route path="/nodal-agencies" element={<PageTransition><NodalAgenciesPage /></PageTransition>} />
+        <Route path="/guidelines" element={<PageTransition><GuidelinesPage /></PageTransition>} />
+        <Route path="/api-docs" element={<PageTransition><ApiDocsPage /></PageTransition>} />
+        <Route path="/help" element={<PageTransition><HelpCenterPage /></PageTransition>} />
+        <Route path="/grievance" element={<PageTransition><GrievancePage /></PageTransition>} />
 
         {/* Citizen Routes */}
         <Route path="/citizen/dashboard" element={<PageTransition><CitizenDashboard /></PageTransition>} />
