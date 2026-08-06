@@ -85,7 +85,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
       <div className="space-y-10 relative z-10 p-4" id="verifier_dashboard_root">
         
         {/* Header */}
-        <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 backdrop-blur-xl">
+        <div className="glass-card bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl flex flex-col xl:flex-row justify-between items-start xl:items-center gap-8 backdrop-blur-xl">
           <div>
             <h1 className="text-3xl font-bold text-slate-800 tracking-tight font-heading">
               {activeRole === 'field_officer' ? 'Field Officer Verification' : activeRole === 'district_officer' ? 'District Officer Approval' : 'Finance Approver Desk'}

@@ -60,8 +60,8 @@ export const useSubmitApplication = () => {
 export const useVerifyApplication = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ appId, status, remarks, docApprovals }: { appId: string, status: string, remarks: string, docApprovals: any[] }) => 
-      applicationService.verifyApplication(appId, status, remarks, docApprovals),
+    mutationFn: ({ appId, status, remarks, docApprovals, officerName }: { appId: string, status: string, remarks: string, docApprovals: any[], officerName?: string }) => 
+      applicationService.verifyApplication(appId, status, remarks, docApprovals, officerName),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applications'] });
     },
@@ -71,8 +71,8 @@ export const useVerifyApplication = () => {
 export const useApproveApplication = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ appId, status, remarks }: { appId: string, status: string, remarks: string }) => 
-      applicationService.approveApplication(appId, status, remarks),
+    mutationFn: ({ appId, status, remarks, officerName }: { appId: string, status: string, remarks: string, officerName?: string }) => 
+      applicationService.approveApplication(appId, status, remarks, officerName),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applications'] });
       queryClient.invalidateQueries({ queryKey: ['installments'] });
@@ -91,7 +91,7 @@ export const useInstallments = () => {
 export const useReleaseFunds = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: treasuryService.releaseFunds,
+    mutationFn: ({ installmentId, officerName }: { installmentId: string, officerName?: string }) => treasuryService.releaseFunds(installmentId, officerName),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['installments'] });
     },

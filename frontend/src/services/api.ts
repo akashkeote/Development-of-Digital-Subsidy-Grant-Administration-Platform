@@ -148,9 +148,9 @@ export const applicationService = {
     return getStorage('mock_db_applications', INITIAL_APPLICATIONS);
   },
   
-  verifyApplication: async (appId: string, status: string, remarks: string, docApprovals: any[]): Promise<Application> => {
+  verifyApplication: async (appId: string, status: string, remarks: string, docApprovals: any[], officerName?: string): Promise<Application> => {
     // REAL IMPLEMENTATION FOR BACKEND TEAM:
-    // const { data } = await apiClient.put<Application>(`/applications/${appId}/verify`, { status, remarks, docApprovals });
+    // const { data } = await apiClient.put<Application>(`/applications/${appId}/verify`, { status, remarks, docApprovals, officerName });
     // return data;
 
     await delay(800);
@@ -161,6 +161,7 @@ export const applicationService = {
           ...app,
           status: status as any,
           verifierComment: remarks,
+          verifierName: officerName || 'Verification Officer',
           documents: app.documents.map(doc => {
             const approval = docApprovals.find(d => d.id === doc.id);
             if (approval) {
@@ -176,11 +177,11 @@ export const applicationService = {
     return updated.find(a => a.id === appId)!;
   },
 
-  approveApplication: async (appId: string, status: string, remarks: string): Promise<Application> => {
+  approveApplication: async (appId: string, status: string, remarks: string, officerName?: string): Promise<Application> => {
     await delay(800);
     const applications = getStorage('mock_db_applications', INITIAL_APPLICATIONS);
     const updated = applications.map(app => 
-      app.id === appId ? { ...app, status: status as any, districtOfficerComment: remarks } : app
+      app.id === appId ? { ...app, status: status as any, districtOfficerComment: remarks, districtOfficerName: officerName || 'District Officer' } : app
     );
     setStorage('mock_db_applications', updated);
 
@@ -211,9 +212,9 @@ export const treasuryService = {
     return getStorage('mock_db_installments', INITIAL_INSTALLMENTS);
   },
   
-  releaseFunds: async (installmentId: string): Promise<Installment> => {
+  releaseFunds: async (installmentId: string, officerName?: string): Promise<Installment> => {
     // REAL IMPLEMENTATION FOR BACKEND TEAM:
-    // const { data } = await apiClient.post<Installment>(`/installments/${installmentId}/release`);
+    // const { data } = await apiClient.post<Installment>(`/installments/${installmentId}/release`, { officerName });
     // return data;
 
     await delay(1200);
@@ -224,6 +225,14 @@ export const treasuryService = {
         : inst
     );
     setStorage('mock_db_installments', updated);
+    
+    // Also update the application with finance officer name
+    const app = getStorage('mock_db_applications', INITIAL_APPLICATIONS).find((a: Application) => a.id === updated.find(i => i.id === installmentId)?.applicationId);
+    if (app) {
+      const apps = getStorage('mock_db_applications', INITIAL_APPLICATIONS);
+      const updatedApps = apps.map((a: Application) => a.id === app.id ? { ...a, financeOfficerName: officerName || 'Finance Dept' } : a);
+      setStorage('mock_db_applications', updatedApps);
+    }
     return updated.find(i => i.id === installmentId)!;
   }
 };

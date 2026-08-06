@@ -88,7 +88,11 @@ export interface Application {
     comment?: string;
   }[];
   verifierComment?: string;
+  verifierName?: string;
   districtOfficerComment?: string;
+  districtOfficerName?: string;
+  financeComment?: string;
+  financeOfficerName?: string;
   rejectionReason?: string;
 }
 

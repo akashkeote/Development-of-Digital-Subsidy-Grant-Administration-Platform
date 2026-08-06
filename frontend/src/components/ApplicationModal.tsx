@@ -204,7 +204,7 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ app, onClose
                     {/* Render remarks if applicable */}
                     {ws.id === 2 && app.verifierComment && (
                       <div className="mb-1">
-                        <span className="text-[13px] font-semibold text-blue-700 block">Verification Officer</span>
+                        <span className="text-[13px] font-semibold text-blue-700 block">{app.verifierName || 'Verification Officer'}</span>
                         <p className={`text-xs p-1.5 rounded bg-slate-100 text-slate-600 mt-1 ${isRejected ? 'bg-red-50 text-red-800 font-semibold' : ''}`}>
                           {app.verifierComment}
                         </p>
@@ -212,13 +212,21 @@ export const ApplicationModal: React.FC<ApplicationModalProps> = ({ app, onClose
                     )}
                     {ws.id === 3 && app.districtOfficerComment && (
                       <div className="mb-1">
-                        <span className="text-[13px] font-semibold text-blue-700 block">District Budget Officer</span>
+                        <span className="text-[13px] font-semibold text-blue-700 block">{app.districtOfficerName || 'District Budget Officer'}</span>
                         <p className={`text-xs p-1.5 rounded bg-slate-100 text-slate-600 mt-1 ${isRejected ? 'bg-red-50 text-red-800 font-semibold' : ''}`}>
                           {app.districtOfficerComment}
                         </p>
                       </div>
                     )}
-                    {!app.verifierComment && !app.districtOfficerComment && (
+                    {ws.id === 4 && app.financeComment && (
+                      <div className="mb-1">
+                        <span className="text-[13px] font-semibold text-blue-700 block">{app.financeOfficerName || 'Finance Dept'}</span>
+                        <p className={`text-xs p-1.5 rounded bg-slate-100 text-slate-600 mt-1 ${isRejected ? 'bg-red-50 text-red-800 font-semibold' : ''}`}>
+                          {app.financeComment}
+                        </p>
+                      </div>
+                    )}
+                    {!app.verifierComment && !app.districtOfficerComment && !app.financeComment && (
                       <p className="text-[13px] text-slate-500 mt-0.5">{ws.desc}</p>
                     )}
                     

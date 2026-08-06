@@ -160,9 +160,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     appId: string, 
     comment: string, 
     status: 'documents_verified' | 'rejected_by_verifier',
-    docApprovals: { id: string; status: 'verified' | 'rejected'; comment?: string }[]
+    docApprovals: { id: string; status: 'verified' | 'rejected'; comment?: string }[],
+    officerName?: string
   ) => {
-    verifyAppMutation.mutate({ appId, status, remarks: comment, docApprovals }, {
+    verifyAppMutation.mutate({ appId, status, remarks: comment, docApprovals, officerName: officerName || 'Rajesh Kumar (Field Officer)' }, {
       onSuccess: () => {
         const app = applications.find(a => a.id === appId);
         if (app && status === 'documents_verified') {
@@ -200,10 +201,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const approveApplication = (
     appId: string, 
     comment: string, 
-    approved: boolean
+    approved: boolean,
+    officerName?: string
   ) => {
     const status = approved ? 'approved_by_district' : 'rejected_by_district';
-    approveAppMutation.mutate({ appId, status, remarks: comment }, {
+    approveAppMutation.mutate({ appId, status, remarks: comment, officerName: officerName || 'Anita Sharma (District Officer)' }, {
       onSuccess: () => {
         const app = applications.find(a => a.id === appId);
         if (app && approved) {
@@ -225,8 +227,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
   };
 
-  const releaseInstallment = (installmentId: string) => {
-    releaseFundsMutation.mutate(installmentId, {
+  const releaseInstallment = (installmentId: string, officerName?: string) => {
+    releaseFundsMutation.mutate({ installmentId, officerName: officerName || 'Sanjay Verma (Finance Dept)' }, {
       onSuccess: () => {
         const inst = installments.find(i => i.id === installmentId);
         if (inst) {
