@@ -177,19 +177,6 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 3D Indian Leaders Graphic */}
-        <div className="absolute right-10 -bottom-20 opacity-40 pointer-events-none z-0 transform scale-[0.9] lg:scale-[1.1] hidden lg:block perspective-container mix-blend-multiply mask-image-bottom">
-          <motion.img 
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-            src="/src/assets/indian_leaders.jpg" 
-            className="w-[600px] rounded-[3rem] shadow-2xl"
-            style={{ transform: 'rotateY(-15deg) rotateX(10deg)', filter: 'contrast(1.1) saturate(1.2)' }}
-            alt="Indian Historical Leaders and Warriors"
-          />
-        </div>
-
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-[80px] animate-float z-0 pointer-events-none"></div>
         <div className="absolute top-40 right-20 w-96 h-96 bg-violet-400/20 rounded-full blur-[100px] animate-float-slow z-0 pointer-events-none"></div>
         
@@ -334,6 +321,34 @@ export const LandingPage: React.FC = () => {
               <h3 className="text-3xl md:text-5xl font-heading font-extrabold mb-4 drop-shadow-lg tracking-tight text-white">Built for every Citizen.</h3>
               <p className="text-lg md:text-xl font-medium text-white/90 drop-shadow-md leading-relaxed">
                 Empowering our farmers, honoring our warriors, and advancing our scientists. 
+                A digital future designed for the people of India.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Pillars of India 3D Graphic Section */}
+      <section className="relative py-24 bg-white overflow-hidden border-b border-slate-100">
+        <div className="absolute inset-0 bg-slate-50 opacity-50"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="w-full max-w-6xl rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-900/10 border border-slate-200 relative group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent z-10 pointer-events-none"></div>
+            <img 
+              src="/src/assets/indian_leaders.jpg" 
+              alt="Pillars of India: Gandhiji, Nehru, APJ Kalam, Shivaji" 
+              className="w-full h-auto object-cover aspect-[2.2/1] transform group-hover:scale-105 transition-transform duration-1000 ease-out"
+            />
+            <div className="absolute bottom-12 left-12 z-20 text-white max-w-3xl">
+              <h3 className="text-3xl md:text-5xl font-heading font-extrabold mb-4 drop-shadow-lg tracking-tight text-white">Built for every Citizen.</h3>
+              <p className="text-lg md:text-xl font-medium text-white/90 drop-shadow-md leading-relaxed">
+                Empowering our farmers, honoring our great warriors, and advancing our visionary scientists. 
                 A digital future designed for the people of India.
               </p>
             </div>
