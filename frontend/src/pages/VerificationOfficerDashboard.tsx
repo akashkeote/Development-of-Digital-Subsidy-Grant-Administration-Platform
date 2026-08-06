@@ -54,11 +54,17 @@ export const VerificationOfficerDashboard: React.FC = () => {
       comment: docComments[doc.id] || ''
     }));
 
-    // Mock API processing
-    alert(`[${activeRole.replace('_', ' ').toUpperCase()}] Action: ${action.toUpperCase()} processed successfully for File #${activeApp.id}. Notification sent to applicant.`);
-    
-    // Note: In real backend integration, we would call verifyApplication with action, role, and amount
-    // verifyApplication(activeApp.id, comment, action, docApprovals);
+    // Remove the L2/L3 actions if they are used here, but we will handle the L1 verify
+    let finalStatus: 'documents_verified' | 'rejected_by_verifier' = 'documents_verified';
+    if (action === 'reject') {
+      finalStatus = 'rejected_by_verifier';
+    } else if (action === 're_verify' || action === 'escalate') {
+      // For now, map these to documents_verified just to move it forward, or keep it as is
+      finalStatus = 'documents_verified';
+    }
+
+    // Call the actual API function from AppContext (which calls useApi React Query hooks)
+    verifyApplication(activeApp.id, comment, finalStatus, docApprovals);
 
     setSelectedAppId('');
     setComment('');
@@ -83,27 +89,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
           </div>
           
           <div className="flex flex-col md:flex-row items-center gap-4 w-full xl:w-auto overflow-x-auto pb-2 xl:pb-0">
-            {/* Role Switcher */}
-            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
-              <button 
-                onClick={() => setActiveRole('field_officer')}
-                className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeRole === 'field_officer' ? 'bg-white text-blue-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                L1: Field
-              </button>
-              <button 
-                onClick={() => setActiveRole('district_officer')}
-                className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeRole === 'district_officer' ? 'bg-white text-blue-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                L2: District
-              </button>
-              <button 
-                onClick={() => setActiveRole('finance_approver')}
-                className={`px-4 py-2 text-xs font-bold rounded-lg transition-all ${activeRole === 'finance_approver' ? 'bg-white text-blue-700 shadow-sm border border-slate-200' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                L3: Finance
-              </button>
-            </div>
+            {/* Removed internal Role Switcher as District/Admin have their own protected dashboards now */}
 
             <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-200/50 px-6 py-4 rounded-2xl flex items-center tracking-widest shadow-inner shrink-0">
               <Clock className="w-5 h-5 mr-3" /> Pending Reviews: <span className="ml-2 font-black text-blue-700 text-lg">{queue.length}</span>
