@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Landmark, FileText, CheckCircle2, Bookmark, Compass, DollarSign, AlertTriangle } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
 
 export const DistrictOfficerDashboard: React.FC = () => {
-  const { applications, approveApplication } = useApp();
+  const { applications, approveApplication, setCurrentRole } = useApp();
+  const navigate = useNavigate();
   const [selectedAppId, setSelectedAppId] = useState<string>('');
   const [comment, setComment] = useState('');
 
@@ -54,8 +56,37 @@ export const DistrictOfficerDashboard: React.FC = () => {
             <h1 className="text-3xl font-bold text-slate-800 tracking-tight font-heading">District Sanction Desk</h1>
             <p className="text-sm text-slate-500 mt-2 font-medium">Authorize fiscal allocations, audit verifier comments, and sign off on scheduled welfare grant disbursements.</p>
           </div>
-          <div className="z-10 text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-100/50 px-6 py-4 rounded-xl flex items-center tracking-widest card-3d">
-            <Landmark className="w-5 h-5 mr-3 text-blue-600" /> Sanction Queue: <span className="ml-2 font-bold text-blue-700 text-lg">{queue.length}</span>
+          <div className="z-10 flex flex-col items-end gap-4">
+            {/* Sandbox Role Switcher - Restored for easy testing navigation! */}
+            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
+              <button 
+                onClick={() => {
+                  setCurrentRole('verifier');
+                  navigate('/verification/dashboard');
+                }}
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+              >
+                L1: Field
+              </button>
+              <button 
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm border border-slate-200/50"
+              >
+                L2: District
+              </button>
+              <button 
+                onClick={() => {
+                  setCurrentRole('admin');
+                  navigate('/admin/dashboard');
+                }}
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+              >
+                L3: Finance
+              </button>
+            </div>
+
+            <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-100/50 px-6 py-4 rounded-xl flex items-center tracking-widest">
+              <Landmark className="w-5 h-5 mr-3 text-blue-600" /> Sanction Queue: <span className="ml-2 font-bold text-blue-700 text-lg">{queue.length}</span>
+            </div>
           </div>
         </div>
 

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Scheme } from '../types';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2, Download, FileSpreadsheet, Map, AlertTriangle, CheckCircle2, Users, Lock, Unlock, ShieldAlert } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
-  const { schemes, installments, stats, addNewScheme, releaseInstallment, applications, approveApplication, users, updateUserStatus } = useApp();
+  const { schemes, installments, stats, addNewScheme, releaseInstallment, applications, approveApplication, users, updateUserStatus, setCurrentRole } = useApp();
+  const navigate = useNavigate();
   
   const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury' | 'compliance' | 'access_management'>('analytics');
   const [overridingAppId, setOverridingAppId] = useState<string | null>(null);
@@ -107,13 +109,43 @@ export const AdminDashboard: React.FC = () => {
       <div className="space-y-10">
         
         {/* Header */}
-        <div className="glass-card card-3d p-8 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8 border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white/40">
+        <div className="glass-card p-8 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-8 border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white/40">
           <div>
             <h1 className="font-heading text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-700">System Administrator</h1>
             <p className="text-slate-600 mt-2 font-medium">Configure welfare schemes, review general ledger stats, and authorize treasury direct transfer releases.</p>
           </div>
-
-          <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+          
+          <div className="flex flex-col items-end gap-4">
+            {/* Sandbox Role Switcher - Restored for easy testing navigation! */}
+            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
+              <button 
+                onClick={() => {
+                  setCurrentRole('verifier');
+                  navigate('/verification/dashboard');
+                }}
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+              >
+                L1: Field
+              </button>
+              <button 
+                onClick={() => {
+                  setCurrentRole('district_officer');
+                  navigate('/district/dashboard');
+                }}
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
+              >
+                L2: District
+              </button>
+              <button 
+                className="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm border border-slate-200/50"
+              >
+                L3: Finance
+              </button>
+            </div>
+          </div>
+          
+          {/* Tabs Container */}
+          <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
             <button
               onClick={() => setActiveTab('analytics')}
               className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
@@ -777,7 +809,6 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
         )}
-
       </div>
     </DashboardLayout>
   );
