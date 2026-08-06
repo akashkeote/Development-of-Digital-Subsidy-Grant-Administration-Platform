@@ -177,6 +177,19 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
 
+        {/* 3D Indian Leaders Graphic */}
+        <div className="absolute right-10 -bottom-20 opacity-40 pointer-events-none z-0 transform scale-[0.9] lg:scale-[1.1] hidden lg:block perspective-container mix-blend-multiply mask-image-bottom">
+          <motion.img 
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+            src="/src/assets/indian_leaders.jpg" 
+            className="w-[600px] rounded-[3rem] shadow-2xl"
+            style={{ transform: 'rotateY(-15deg) rotateX(10deg)', filter: 'contrast(1.1) saturate(1.2)' }}
+            alt="Indian Historical Leaders and Warriors"
+          />
+        </div>
+
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-[80px] animate-float z-0 pointer-events-none"></div>
         <div className="absolute top-40 right-20 w-96 h-96 bg-violet-400/20 rounded-full blur-[100px] animate-float-slow z-0 pointer-events-none"></div>
         
