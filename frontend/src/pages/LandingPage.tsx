@@ -6,51 +6,51 @@ import { CheckCircle, Search, ArrowRight, GraduationCap, Home as HomeIcon, MapPi
 import { motion } from 'motion/react';
 
 const ministers = [
-  { name: "Narendra Modi", role: "Prime Minister, Ministry of Personnel, Public Grievances and Pensions, Department of Atomic Energy, and Department of Space", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/The_official_portrait_of_Shri_Narendra_Modi%2C_the_Prime_Minister_of_the_Republic_of_India.jpg/330px-The_official_portrait_of_Shri_Narendra_Modi%2C_the_Prime_Minister_of_the_Republic_of_India.jpg" },
-  { name: "Rajnath Singh", role: "Minister of Defence", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Shri_Rajnath_Singh%2C_in_New_Delhi_on_May_09%2C_2023_%28cropped%29.jpg/330px-Shri_Rajnath_Singh%2C_in_New_Delhi_on_May_09%2C_2023_%28cropped%29.jpg" },
-  { name: "Amit Shah", role: "Minister of Home Affairs and Minister of Cooperation", image: "/src/assets/avatar_amit.jpg" },
-  { name: "Nitin Jairam Gadkari", role: "Minister of Road Transport and Highways", image: "/src/assets/avatar_nitin.jpg" },
-  { name: "Jagat Prakash Nadda", role: "Minister of Health and Family Welfare, and Minister of Chemicals and Fertilizers", image: "/src/assets/avatar_nadda.jpg" },
-  { name: "Shivraj Singh Chouhan", role: "Minister of Agriculture and Farmers Welfare, and Minister of Rural Development", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Shri_Shivraj_Singh_Chouhan.jpg/330px-Shri_Shivraj_Singh_Chouhan.jpg" },
-  { name: "Nirmala Sitharaman", role: "Minister of Finance and Minister of Corporate Affairs", image: "/src/assets/avatar_nirmala.jpg" },
-  { name: "S. Jaishankar", role: "Minister of External Affairs", image: "/src/assets/avatar_jaishankar.jpg" },
-  { name: "Manohar Lal", role: "Minister of Power and Minister of Housing and Urban Affairs", image: "/src/assets/avatar_manohar.jpg" },
-  { name: "Ashwini Vaishnaw", role: "Minister of Railways, Minister of Information and Broadcasting, and Minister of Electronics and Information Technology", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Ashwini_Vaishnaw_cropped.jpg/330px-Ashwini_Vaishnaw_cropped.jpg" },
-  { name: "Pralhad Joshi", role: "Minister of Education, Minister of New and Renewable Energy, and Minister of Consumer Affairs, Food and Public Distribution", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Prahlad_Joshi_%28cropped%29.jpg/330px-Prahlad_Joshi_%28cropped%29.jpg" }
+  { name: "Narendra Modi", role: "Prime Minister", image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/The_official_portrait_of_Shri_Narendra_Modi%2C_the_Prime_Minister_of_the_Republic_of_India.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
+  { name: "Rajnath Singh", role: "Minister of Defence", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Shri_Rajnath_Singh%2C_in_New_Delhi_on_May_09%2C_2023_%28cropped%29.jpg/500px-Shri_Rajnath_Singh%2C_in_New_Delhi_on_May_09%2C_2023_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Amit Shah", role: "Minister of Home Affairs", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Shri_Amit_Shah_in_Raigad.jpg/500px-Shri_Amit_Shah_in_Raigad.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Nitin Gadkari", role: "Minister of Road Transport", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Nitin_Jairam_Gadkari.jpg/500px-Nitin_Jairam_Gadkari.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Jagat Prakash Nadda", role: "Minister of Health", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Jagat_Prakash_Nadda_2023.jpg/500px-Jagat_Prakash_Nadda_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Shivraj Singh Chouhan", role: "Minister of Agriculture", image: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Shivraj_Singh_Chouhan_2025.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
+  { name: "Nirmala Sitharaman", role: "Minister of Finance", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Am_11._April_2025_empfing_Au%C3%9Fenministerin_Beate_Meinl-Reisinger_die_indische_Finanzministerin_Nirmala_Sitharaman_in_Wien_%2854445397025%29_%28cropped%29.jpg/500px-Am_11._April_2025_empfing_Au%C3%9Fenministerin_Beate_Meinl-Reisinger_die_indische_Finanzministerin_Nirmala_Sitharaman_in_Wien_%2854445397025%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "S. Jaishankar", role: "Minister of External Affairs", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/The_official_portrait_of_External_Minister_Subrahmanyam_Jaishankar.jpg/500px-The_official_portrait_of_External_Minister_Subrahmanyam_Jaishankar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Manohar Lal Khattar", role: "Minister of Power", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Manohar_Lal%2C_Minister_of_Power.jpg/500px-Manohar_Lal%2C_Minister_of_Power.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Ashwini Vaishnaw", role: "Minister of Railways", image: "https://upload.wikimedia.org/wikipedia/commons/3/35/Ashwini_Vaishnaw_cropped.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
+  { name: "Pralhad Joshi", role: "Minister of Education", image: "https://powerline.net.in/wp-content/uploads/2025/03/PL-54.jpg" },
 ];
 
 const chiefMinisters = [
-  { state: "Andhra Pradesh", name: "N. Chandrababu Naidu" },
-  { state: "Arunachal Pradesh", name: "Pema Khandu" },
-  { state: "Assam", name: "Himanta Biswa Sarma" },
-  { state: "Bihar", name: "Nitish Kumar" },
-  { state: "Chhattisgarh", name: "Vishnu Deo Sai" },
-  { state: "Goa", name: "Pramod Sawant" },
-  { state: "Gujarat", name: "Bhupendrabhai Patel" },
-  { state: "Haryana", name: "Nayab Singh Saini" },
-  { state: "Himachal Pradesh", name: "Sukhvinder Singh Sukhu" },
-  { state: "Jharkhand", name: "Hemant Soren" },
-  { state: "Karnataka", name: "D.K. Shivakumar" },
-  { state: "Kerala", name: "Pinarayi Vijayan" },
-  { state: "Madhya Pradesh", name: "Mohan Yadav" },
-  { state: "Maharashtra", name: "Devendra Fadnavis" },
-  { state: "Manipur", name: "Yumnam Khemchand Singh" },
-  { state: "Meghalaya", name: "Conrad Kongkal Sangma" },
-  { state: "Mizoram", name: "PU Lalduhoma" },
-  { state: "Nagaland", name: "Neiphiu Rio" },
-  { state: "Odisha", name: "Mohan Charan Majhi" },
-  { state: "Punjab", name: "Bhagwant Singh Mann" },
-  { state: "Rajasthan", name: "Bhajan Lal Sharma" },
-  { state: "Sikkim", name: "Prem Singh Tamang (P. S. Golay)" },
-  { state: "Tamil Nadu", name: "C. Joseph Vijay" },
-  { state: "Telangana", name: "A. Revanth Reddy" },
-  { state: "Tripura", name: "Manik Saha" },
-  { state: "Uttar Pradesh", name: "Yogi Adityanath" },
-  { state: "Uttarakhand", name: "Pushkar Singh Dhami" },
-  { state: "West Bengal", name: "Mamata Banerjee" },
-  { state: "Delhi (NCT)", name: "Rekha Gupta" },
-  { state: "Jammu & Kashmir", name: "Omar Abdullah" },
-  { state: "Puducherry", name: "N. Rangaswamy" }
+  { name: "N. Chandrababu Naidu", state: "Andhra Pradesh", image: "https://upload.wikimedia.org/wikipedia/commons/a/a8/The_portrait_of_CM_Shri_Nara_Chandrababu_Naidu.jpg" },
+  { name: "Pema Khandu", state: "Arunachal Pradesh", image: "https://images.bhaskarassets.com/web2images/1884/2025/12/03/honble-cm-shri-pema-khandu-ji-visited-the-people_1764716413.jpg" },
+  { name: "Himanta Biswa Sarma", state: "Assam", image: "https://upload.wikimedia.org/wikipedia/commons/5/54/Himanta_Biswa_Sarma_in_2025.jpg" },
+  { name: "Samrat Choudhary", state: "Bihar", image: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Samrat_Chaudhary_in_Rajgir.jpg" },
+  { name: "Vishnu Deo Sai", state: "Chhattisgarh", image: "https://joharcg.com/wp-content/uploads/2024/07/Vishnu-Deo-sai.png" },
+  { name: "Pramod Sawant", state: "Goa", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Pramod_Sawant_at_the_inauguration_of_the_Chhatrapati_Shivaji_Maharaj_Chair_in_Goa_University_%28cropped%29.jpg/330px-Pramod_Sawant_at_the_inauguration_of_the_Chhatrapati_Shivaji_Maharaj_Chair_in_Goa_University_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Bhupendrabhai Patel", state: "Gujarat", image: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Bhupendra_Patel_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
+  { name: "Nayab Singh Saini", state: "Haryana", image: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Nayab_Singh_Saini_October_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
+  { name: "Sukhvinder Singh Sukhu", state: "Himachal Pradesh", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Sukhvinder_Singh_Sukhu.jpg/330px-Sukhvinder_Singh_Sukhu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Hemant Soren", state: "Jharkhand", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hemant_Soren_01.jpg/330px-Hemant_Soren_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "D. K. Shivakumar", state: "Karnataka", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Dkshivakumar.png/330px-Dkshivakumar.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Pinarayi Vijayan", state: "Kerala", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Chief_Minister_Pinarayi_Vijayan_2023.jpg/330px-Chief_Minister_Pinarayi_Vijayan_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Mohan Yadav", state: "Madhya Pradesh", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Mohan_Yadav%2C_Chief_Minister_of_Madhya_Pradesh.jpg/330px-Mohan_Yadav%2C_Chief_Minister_of_Madhya_Pradesh.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Devendra Fadnavis", state: "Maharashtra", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Shri_Devendra_Gangadharrao_Fadnavis.jpg/330px-Shri_Devendra_Gangadharrao_Fadnavis.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "N. Biren Singh", state: "Manipur", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/The_Chief_Minister_of_Manipur%2C_Shri_Biren_Singh_calling_on_the_Vice_President%2C_Shri_M._Venkaiah_Naidu%2C_in_New_Delhi_on_September_06%2C_2017_%28cropped%29.jpg/330px-The_Chief_Minister_of_Manipur%2C_Shri_Biren_Singh_calling_on_the_Vice_President%2C_Shri_M._Venkaiah_Naidu%2C_in_New_Delhi_on_September_06%2C_2017_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Conrad Sangma", state: "Meghalaya", image: "https://upload.wikimedia.org/wikipedia/commons/0/04/Conrad_Sangma_%28cropped%29.jpg" },
+  { name: "Lalduhoma", state: "Mizoram", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lalduhoma.jpg/330px-Lalduhoma.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Neiphiu Rio", state: "Nagaland", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Neiphiu_Rio.jpg/330px-Neiphiu_Rio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Mohan Charan Majhi", state: "Odisha", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Shri_Mohan_Charan_Majhi.jpg/330px-Shri_Mohan_Charan_Majhi.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Bhagwant Mann", state: "Punjab", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Bhagwant_Mann_2026.jpg/330px-Bhagwant_Mann_2026.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Bhajan Lal Sharma", state: "Rajasthan", image: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Bhajan_Lal_Sharma_and_deputies_meets_VP_of_India.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
+  { name: "Prem Singh Tamang", state: "Sikkim", image: "https://upload.wikimedia.org/wikipedia/commons/7/72/Prem_Singh_Tamang%2C_Chief_Minister_of_Sikkim.jpg" },
+  { name: "C. Joseph Vijay", state: "Tamil Nadu", image: "https://upload.wikimedia.org/wikipedia/commons/d/d8/JosephVijay.jpg" },
+  { name: "A. Revanth Reddy", state: "Telangana", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Portrait_of_Telangana_CM_Revanth_Reddy.png/330px-Portrait_of_Telangana_CM_Revanth_Reddy.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Manik Saha", state: "Tripura", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Dr._Manik_Saha.jpg/330px-Dr._Manik_Saha.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Yogi Adityanath", state: "Uttar Pradesh", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Yogiji_in_2023.jpg/330px-Yogiji_in_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Pushkar Singh Dhami", state: "Uttarakhand", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Pushkar_Singh_Dhami%2C_Chief_Minister_of_Uttarakhand.jpg/330px-Pushkar_Singh_Dhami%2C_Chief_Minister_of_Uttarakhand.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "Suvendu Adhikari", state: "West Bengal", image: "https://upload.wikimedia.org/wikipedia/commons/2/24/Suvendu_Adhikari_May_2026_%28cropped%29.jpg" },
+  { name: "Rekha Gupta", state: "Delhi", image: "https://upload.wikimedia.org/wikipedia/commons/7/72/Chief_Minister_of_Delhi%2C_Smt._Rekha_Gupta.jpg" },
+  { name: "Omar Abdullah", state: "Jammu and Kashmir", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Omar_Abdullah%2C_Chief_Minister_of_Jammu_%26_Kashmir.jpg/330px-Omar_Abdullah%2C_Chief_Minister_of_Jammu_%26_Kashmir.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
+  { name: "N. Rangaswamy", state: "Puducherry", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/N._Rangaswamy_%28cropped%29.jpg/330px-N._Rangaswamy_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
 ];
 
 export const LandingPage: React.FC = () => {
@@ -394,34 +394,6 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Clean Light Stats Section */}
-      <section className="relative py-24 overflow-hidden bg-white border-t border-b border-slate-100">
-        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-blue-100/40 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-violet-100/40 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-          {[
-            { label: 'Disbursed (₹Cr)', value: `₹${(stats.totalDisbursedAmount / 10000000).toFixed(1)}` },
-            { label: 'Citizens Reached', value: stats.totalRegisteredCitizens.toLocaleString() },
-            { label: 'Active Schemes', value: stats.totalSchemesActive },
-            { label: 'Applications', value: stats.totalApplicationsReceived.toLocaleString() }
-          ].map((stat, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.15 }}
-              className="bg-white p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(79,70,229,0.1)] transition-shadow duration-300 relative group"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-violet-500 rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <p className="text-4xl md:text-5xl font-heading font-extrabold text-slate-800 mb-3">{stat.value}</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
       {/* Visionary Leaders Graphic Section */}
       <section className="relative py-32 bg-slate-50 overflow-hidden border-b border-slate-100">
         <div className="absolute inset-0 bg-mesh opacity-40 pointer-events-none"></div>
@@ -457,7 +429,7 @@ export const LandingPage: React.FC = () => {
             
             <div className="relative rounded-[2rem] overflow-hidden bg-slate-50 flex justify-center">
               <img 
-                src="/src/assets/indian_leaders_v2.jpg" 
+                src="/indian_leaders_v2.jpg" 
                 alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
                 className="w-full h-auto"
               />
@@ -473,6 +445,45 @@ export const LandingPage: React.FC = () => {
               <p className="text-sm text-blue-100 font-medium mt-1">Built for the people.</p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Central Ministers Marquee Section */}
+      <section className="py-16 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 mb-12 text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-heading font-extrabold text-slate-900 mb-4 tracking-tight">
+            Union Council of Ministers
+          </h2>
+          <p className="text-slate-500 font-medium max-w-2xl mx-auto">
+            The central leadership driving the nation's growth and development.
+          </p>
+        </div>
+        
+        <div className="w-full overflow-hidden marquee-container-h relative z-10 py-4">
+          <div className="marquee-horizontal flex gap-6 px-3" style={{ width: 'max-content' }}>
+            {[...ministers, ...ministers, ...ministers].map((minister, idx) => (
+              <div 
+                key={idx} 
+                className="w-80 shrink-0 bg-white p-5 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_8px_30px_rgba(37,99,235,0.1)] hover:border-blue-200 transition-all duration-300 cursor-pointer group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden shadow-md border-2 border-slate-50 relative group-hover:scale-105 transition-transform">
+                    {minister.image ? (
+                      <img src={minister.image} alt={minister.name} className="w-full h-full object-cover object-top" />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-50 text-blue-700 flex items-center justify-center font-heading font-bold text-xl">
+                        {minister.name.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-bold text-slate-900 text-base mb-0.5 group-hover:text-blue-600 transition-colors">{minister.name}</h4>
+                    <p className="text-xs font-medium text-slate-500 line-clamp-2">{minister.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -496,8 +507,29 @@ export const LandingPage: React.FC = () => {
                 className="w-80 shrink-0 bg-slate-50 p-5 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md hover:bg-white hover:-translate-y-1 transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-orange-100 to-orange-50 text-orange-600 flex items-center justify-center font-heading font-bold text-lg shadow-inner border border-orange-200">
-                    {cm.name.charAt(0)}
+                  <div className="w-12 h-12 shrink-0 rounded-full overflow-hidden shadow-inner border border-orange-200 bg-white group-hover:scale-105 transition-transform">
+                    {cm.image ? (
+                      <>
+                        <img 
+                          src={cm.image} 
+                          alt={cm.name} 
+                          className="w-full h-full object-cover object-top" 
+                          onError={(e) => {
+                            const img = e.currentTarget;
+                            img.style.display = 'none';
+                            const fallback = img.nextElementSibling as HTMLElement | null;
+                            if (fallback) fallback.style.display = 'flex';
+                          }} 
+                        />
+                        <div className="w-full h-full bg-gradient-to-br from-orange-100 to-orange-50 text-orange-600 items-center justify-center font-heading font-bold text-lg" style={{ display: 'none' }}>
+                          {cm.name.charAt(0)}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-orange-100 to-orange-50 text-orange-600 flex items-center justify-center font-heading font-bold text-lg">
+                        {cm.name.charAt(0)}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h4 className="font-heading font-bold text-slate-900 text-[15px] leading-tight mb-0.5">{cm.name}</h4>
@@ -516,8 +548,29 @@ export const LandingPage: React.FC = () => {
                 className="w-80 shrink-0 bg-slate-50 p-5 rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-md hover:bg-white hover:-translate-y-1 transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-green-100 to-green-50 text-green-700 flex items-center justify-center font-heading font-bold text-lg shadow-inner border border-green-200">
-                    {cm.name.charAt(0)}
+                  <div className="w-12 h-12 shrink-0 rounded-full overflow-hidden shadow-inner border border-green-200 bg-white group-hover:scale-105 transition-transform">
+                    {cm.image ? (
+                      <>
+                        <img 
+                          src={cm.image} 
+                          alt={cm.name} 
+                          className="w-full h-full object-cover object-top" 
+                          onError={(e) => {
+                            const img = e.currentTarget;
+                            img.style.display = 'none';
+                            const fallback = img.nextElementSibling as HTMLElement | null;
+                            if (fallback) fallback.style.display = 'flex';
+                          }} 
+                        />
+                        <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-50 text-green-700 items-center justify-center font-heading font-bold text-lg" style={{ display: 'none' }}>
+                          {cm.name.charAt(0)}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-50 text-green-700 flex items-center justify-center font-heading font-bold text-lg">
+                        {cm.name.charAt(0)}
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h4 className="font-heading font-bold text-slate-900 text-[15px] leading-tight mb-0.5">{cm.name}</h4>
@@ -527,6 +580,34 @@ export const LandingPage: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Clean Light Stats Section */}
+      <section className="relative py-24 overflow-hidden bg-white border-t border-b border-slate-100">
+        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-blue-100/40 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-violet-100/40 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          {[
+            { label: 'Disbursed (₹Cr)', value: `₹${(stats.totalDisbursedAmount / 10000000).toFixed(1)}` },
+            { label: 'Citizens Reached', value: stats.totalRegisteredCitizens.toLocaleString() },
+            { label: 'Active Schemes', value: stats.totalSchemesActive },
+            { label: 'Applications', value: stats.totalApplicationsReceived.toLocaleString() }
+          ].map((stat, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.15 }}
+              className="bg-white p-8 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_40px_rgba(79,70,229,0.1)] transition-shadow duration-300 relative group"
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-violet-500 rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <p className="text-4xl md:text-5xl font-heading font-extrabold text-slate-800 mb-3">{stat.value}</p>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest font-sans">{stat.label}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 

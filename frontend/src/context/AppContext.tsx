@@ -79,9 +79,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [schemes]);
 
-  // Fetch real schemes from JSON on mount
+  // Fetch real schemes from the live Render backend API on mount
   useEffect(() => {
-    fetch('/schemes.json')
+    fetch('https://infosys-springboard-7-0.onrender.com/api/subsidies?limit=100')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

@@ -4,6 +4,9 @@ import { useApp } from '../context/AppContext';
 import { Search, Compass, Sprout, GraduationCap, Sun, Home, HeartPulse, ChevronDown } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { SchemeCard } from '../components/SchemeCard';
+import { SchemeModal } from '../components/SchemeModal';
+import { Scheme } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 interface Option {
   value: string;
@@ -63,7 +66,9 @@ const CustomSelect = ({ value, onChange, options, className }: { value: string, 
 export const SchemeListingPage: React.FC = () => {
   const { schemes } = useApp();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedMinistry, setSelectedMinistry] = useState<string>('all');
 
@@ -156,10 +161,24 @@ export const SchemeListingPage: React.FC = () => {
             </div>
           ) : (
             filteredSchemes.slice(0, 50).map((scheme, idx) => (
-              <SchemeCard key={scheme.id} scheme={scheme} index={idx} />
+              <SchemeCard 
+                key={scheme.id} 
+                scheme={scheme} 
+                index={idx} 
+                onClick={() => setSelectedScheme(scheme)} 
+              />
             ))
           )}
         </div>
+        
+        {/* Scheme Modal Overlay */}
+        <SchemeModal 
+          scheme={selectedScheme} 
+          onClose={() => setSelectedScheme(null)} 
+          onApply={() => {
+            if (selectedScheme) navigate(`/schemes/${selectedScheme.id}/apply`);
+          }}
+        />
         
         {/* Pagination Reference */}
         {filteredSchemes.length > 50 && (

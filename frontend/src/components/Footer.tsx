@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, ArrowRight, ShieldCheck, Mail, MapPin, Phone } from 'lucide-react';
+import { Landmark, ArrowRight, ShieldCheck, Mail, MapPin, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const logos = [
@@ -43,10 +43,13 @@ export const Footer: React.FC = () => {
         {/* Brand Column */}
         <div className="col-span-1 md:col-span-1 flex flex-col space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-[14px] bg-white border-2 border-blue-500 flex items-center justify-center">
-               <Sparkles className="w-6 h-6 text-blue-500" />
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md">
+               <Landmark className="w-5 h-5" />
             </div>
-            <span className="text-3xl font-extrabold text-blue-500 tracking-tight">DigiGrant</span>
+            <div className="flex flex-col">
+              <span className="text-2xl font-extrabold text-blue-600 tracking-tight leading-none">DigiGrant</span>
+              <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest mt-0.5">Portal</span>
+            </div>
           </div>
           <p className="text-[15px] text-slate-500 leading-relaxed font-semibold">
             Next-generation Digital Grant Administration Platform empowering transparent, rapid, and secure disbursements.

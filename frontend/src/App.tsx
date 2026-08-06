@@ -9,7 +9,6 @@ import { LandingPage } from './pages/LandingPage';
 import { Login } from './pages/Login';
 import { Registration } from './pages/Registration';
 import { SchemeListingPage } from './pages/SchemeListingPage';
-import { SchemeDetailsPage } from './pages/SchemeDetailsPage';
 import { NodalAgenciesPage } from './pages/NodalAgenciesPage';
 import { GuidelinesPage } from './pages/GuidelinesPage';
 import { ApiDocsPage } from './pages/ApiDocsPage';
@@ -44,7 +43,6 @@ const AnimatedRoutes = () => {
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/register" element={<PageTransition><Registration /></PageTransition>} />
         <Route path="/schemes" element={<PageTransition><SchemeListingPage /></PageTransition>} />
-        <Route path="/schemes/:id" element={<PageTransition><SchemeDetailsPage /></PageTransition>} />
         <Route path="/nodal-agencies" element={<PageTransition><NodalAgenciesPage /></PageTransition>} />
         <Route path="/guidelines" element={<PageTransition><GuidelinesPage /></PageTransition>} />
         <Route path="/api-docs" element={<PageTransition><ApiDocsPage /></PageTransition>} />

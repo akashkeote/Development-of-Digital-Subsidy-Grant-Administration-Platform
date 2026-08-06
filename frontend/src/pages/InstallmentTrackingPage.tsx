@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Landmark, ShieldCheck, DollarSign, ExternalLink, Compass, CheckCircle2, RefreshCw } from 'lucide-react';
+import { Landmark, ShieldCheck, DollarSign, Compass, CheckCircle2 } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { InstallmentCard } from '../components/InstallmentCard';
+import { InstallmentModal } from '../components/InstallmentModal';
+import { Application } from '../types';
 
 export const InstallmentTrackingPage: React.FC = () => {
   const { citizenProfile, installments, applications } = useApp();
@@ -22,12 +25,12 @@ export const InstallmentTrackingPage: React.FC = () => {
     .filter(i => ['pending', 'processing'].includes(i.status))
     .reduce((sum, i) => sum + i.amount, 0);
 
-  const statusBadges: Record<string, string> = {
-    pending: 'bg-slate-100 text-slate-600 border-slate-200',
-    processing: 'bg-orange-50 text-orange-600 border-orange-200',
-    disbursed: 'bg-green-50 text-[#198754] border-green-200',
-    failed: 'bg-red-50 text-red-600 border-red-200'
-  };
+  const [selectedApp, setSelectedApp] = useState<Application | null>(null);
+
+  // Get installments for the selected application
+  const selectedInstallments = selectedApp 
+    ? userInstallments.filter(i => i.applicationId === selectedApp.id)
+    : [];
 
   return (
     <DashboardLayout>
@@ -83,7 +86,7 @@ export const InstallmentTrackingPage: React.FC = () => {
             <Compass className="w-4 h-4 mr-2 text-slate-400" /> Direct Disbursement Ledger
           </h2>
 
-          {userInstallments.length === 0 ? (
+          {userApps.length === 0 ? (
             <div className="text-center py-20">
               <div className="w-16 h-16 mx-auto bg-slate-50 rounded-2xl flex items-center justify-center mb-4 border border-slate-200">
                 <Landmark className="w-8 h-8 text-slate-400" />
@@ -91,51 +94,32 @@ export const InstallmentTrackingPage: React.FC = () => {
               <p className="text-slate-500 text-sm max-w-md mx-auto font-medium">No active disbursements found. Approve applications to trigger scheduled installments.</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm whitespace-nowrap">
-                <thead>
-                  <tr className="text-slate-500 uppercase tracking-widest text-[10px] font-bold border-b border-slate-100 bg-slate-50">
-                    <th className="py-4 pl-4 rounded-tl-lg">Scheme Name</th>
-                    <th className="py-4">Inst. No.</th>
-                    <th className="py-4">Amount</th>
-                    <th className="py-4">Release Status</th>
-                    <th className="py-4">Due/Release Date</th>
-                    <th className="py-4 pr-4 rounded-tr-lg">Transaction ID</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  {userInstallments.map((inst) => (
-                    <tr key={inst.id} className="hover:bg-slate-50 transition-colors duration-200">
-                      <td className="py-5 font-bold text-slate-800 pl-4 max-w-[200px] truncate">{inst.schemeTitle}</td>
-                      <td className="py-5 text-center sm:text-left text-slate-600 font-mono text-xs">{inst.installmentNumber}</td>
-                      <td className={`py-5 font-extrabold ${inst.status === 'disbursed' ? 'text-[#198754]' : 'text-slate-800'}`}>
-                        ₹{inst.amount.toLocaleString('en-IN')}
-                      </td>
-                      <td className="py-5">
-                        <span className={`inline-flex items-center justify-center text-[10px] px-3 py-1 rounded-md border font-bold uppercase tracking-wider ${statusBadges[inst.status]}`}>
-                          {inst.status}
-                        </span>
-                      </td>
-                      <td className="py-5 font-mono text-xs text-slate-600">
-                        {inst.disbursementDate || inst.dueDate}
-                      </td>
-                      <td className="py-5 font-mono text-xs text-slate-600 pr-4">
-                        {inst.transactionId ? (
-                          <span className="flex items-center text-[#00599f] font-bold hover:text-[#004a85] transition-colors cursor-pointer group">
-                            {inst.transactionId.slice(0, 10)}... 
-                            <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
-                          </span>
-                        ) : (
-                          <span className="text-slate-400">—</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {userApps.map((app, idx) => {
+                const appInstallments = userInstallments.filter(i => i.applicationId === app.id);
+                // Only show applications that actually have installments
+                if (appInstallments.length === 0) return null;
+                
+                return (
+                  <InstallmentCard 
+                    key={app.id} 
+                    application={app} 
+                    installments={appInstallments}
+                    index={idx}
+                    onClick={() => setSelectedApp(app)}
+                  />
+                );
+              })}
             </div>
           )}
         </div>
+
+        {/* Modal Overlay */}
+        <InstallmentModal 
+          application={selectedApp} 
+          installments={selectedInstallments} 
+          onClose={() => setSelectedApp(null)} 
+        />
 
         {/* Secure DBT Disclaimer */}
         <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-200 text-sm space-y-3 relative overflow-hidden shadow-sm">
