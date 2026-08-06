@@ -83,7 +83,7 @@ export const applicationService = {
         return {
           ...app,
           status: status as any,
-          verifierRemarks: remarks,
+          verifierComment: remarks,
           documents: app.documents.map(doc => {
             const approval = docApprovals.find(d => d.id === doc.id);
             if (approval) {
@@ -103,7 +103,7 @@ export const applicationService = {
     await delay(800);
     const applications = getStorage('mock_db_applications', INITIAL_APPLICATIONS);
     const updated = applications.map(app => 
-      app.id === appId ? { ...app, status: status as any, adminRemarks: remarks } : app
+      app.id === appId ? { ...app, status: status as any, districtOfficerComment: remarks } : app
     );
     setStorage('mock_db_applications', updated);
 
