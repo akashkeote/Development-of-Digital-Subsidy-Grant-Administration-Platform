@@ -271,7 +271,7 @@ export const VerificationOfficerDashboard: React.FC = () => {
                     const docComment = docComments[doc.id] || '';
 
                     return (
-                      <div key={doc.id} className="p-6 border border-white/60 rounded-2xl bg-white/50 space-y-6 hover:bg-white/80 transition-all duration-300 shadow-sm card-3d">
+                      <div key={doc.id} className="p-6 border border-white/60 rounded-2xl bg-white/50 space-y-6 hover:bg-white/80 transition-all duration-300 shadow-sm relative z-10">
                         <div className="flex flex-col 2xl:flex-row justify-between items-start 2xl:items-center gap-6">
                           <div className="flex gap-5 items-center w-full min-w-0">
                             <span className="w-14 h-14 bg-white shadow-md text-blue-600 rounded-2xl flex items-center justify-center border border-slate-100 flex-shrink-0 card-3d">
@@ -284,14 +284,14 @@ export const VerificationOfficerDashboard: React.FC = () => {
                           </div>
 
                           {/* Quick validation toggles */}
-                          <div className="flex gap-4 flex-wrap bg-white/60 p-2 rounded-2xl shadow-inner border border-slate-100 backdrop-blur-sm shrink-0">
+                          <div className="flex gap-4 flex-wrap bg-white/60 p-2 rounded-2xl shadow-inner border border-slate-100 backdrop-blur-sm shrink-0 relative z-20">
                             <button
                               type="button"
                               onClick={() => handleDocVerify(doc.id, 'verified')}
-                              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center space-x-2 cursor-pointer border btn-3d ${
+                              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center space-x-2 cursor-pointer border ${
                                 status === 'verified'
-                                  ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white border-transparent shadow-md'
-                                  : 'text-slate-600 hover:text-slate-800 hover:bg-white border-transparent bg-transparent'
+                                  ? 'bg-gradient-to-r from-emerald-500 to-green-500 text-white border-transparent shadow-md transform -translate-y-1'
+                                  : 'text-slate-600 hover:text-slate-800 hover:bg-white border-transparent bg-transparent hover:shadow-sm'
                               }`}
                             >
                               <CheckCircle2 className="w-4 h-4" />
@@ -300,10 +300,10 @@ export const VerificationOfficerDashboard: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => handleDocVerify(doc.id, 'rejected')}
-                              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center space-x-2 cursor-pointer border btn-3d ${
+                              className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 flex items-center space-x-2 cursor-pointer border ${
                                 status === 'rejected'
-                                  ? 'bg-gradient-to-r from-red-500 to-rose-500 text-white border-transparent shadow-md'
-                                  : 'text-slate-600 hover:text-slate-800 hover:bg-white border-transparent bg-transparent'
+                                  ? 'bg-gradient-to-r from-red-500 to-rose-500 text-white border-transparent shadow-md transform -translate-y-1'
+                                  : 'text-slate-600 hover:text-slate-800 hover:bg-white border-transparent bg-transparent hover:shadow-sm'
                               }`}
                             >
                               <XCircle className="w-4 h-4" />
