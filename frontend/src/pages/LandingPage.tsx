@@ -421,27 +421,29 @@ export const LandingPage: React.FC = () => {
               Guided by the principles of our great leaders, education reformers, peacemakers, and warriors.
             </p>
           </div>
+        </div>
 
+        {/* Full-bleed massive image container */}
+        <div className="w-full relative z-10 flex justify-center perspective-container px-0 md:px-6">
           <motion.div
-            initial={{ opacity: 0, y: 60, rotateX: 10, rotateY: -10 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 5, rotateY: -5 }}
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            style={{ transformStyle: 'preserve-3d' }}
-            className="w-full max-w-5xl relative group animate-float-slow"
+            className="w-full max-w-[100vw] lg:max-w-7xl relative group animate-float-slow"
           >
             <div className="relative flex justify-center w-full">
               <img 
                 src="/indian_leaders_v2.jpg" 
                 alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
-                className="w-full h-auto object-contain drop-shadow-2xl"
+                className="w-full lg:w-[110%] h-auto object-cover md:object-contain drop-shadow-2xl"
                 style={{ mixBlendMode: 'multiply' }}
               />
             </div>
             
             {/* 3D floating badge */}
             <div 
-              className="absolute bottom-10 -right-4 md:right-10 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 z-30 pointer-events-none"
+              className="absolute bottom-10 right-4 lg:right-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 z-30 pointer-events-none"
               style={{ transform: 'translateZ(50px) rotateY(-5deg)' }}
             >
               <p className="font-heading font-bold text-xl tracking-wide">Digital India 2026</p>
