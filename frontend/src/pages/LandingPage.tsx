@@ -423,31 +423,25 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 60, rotateX: 20, rotateY: -15 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 10, rotateY: -10 }}
+            initial={{ opacity: 0, y: 60, rotateX: 10, rotateY: -10 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 5, rotateY: -5 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             style={{ transformStyle: 'preserve-3d' }}
-            className="w-full max-w-5xl rounded-[2.5rem] bg-white p-4 shadow-[0_20px_50px_rgba(8,112,184,0.15)] border border-white relative group animate-float-slow"
+            className="w-full max-w-5xl relative group animate-float-slow"
           >
-            {/* Inner 3D border effect */}
-            <div 
-              className="absolute inset-0 rounded-[2.5rem] border-4 border-white/50 pointer-events-none z-20"
-              style={{ transform: 'translateZ(20px)' }}
-            ></div>
-            
-            <div className="relative rounded-[2rem] overflow-hidden bg-slate-50 flex justify-center">
+            <div className="relative flex justify-center w-full">
               <img 
                 src="/indian_leaders_v2.jpg" 
                 alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
-                className="w-full h-auto"
+                className="w-full h-auto object-contain drop-shadow-2xl"
+                style={{ mixBlendMode: 'multiply' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent pointer-events-none mix-blend-multiply"></div>
             </div>
             
             {/* 3D floating badge */}
             <div 
-              className="absolute -bottom-8 -right-8 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 z-30"
+              className="absolute bottom-10 -right-4 md:right-10 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 z-30 pointer-events-none"
               style={{ transform: 'translateZ(50px) rotateY(-5deg)' }}
             >
               <p className="font-heading font-bold text-xl tracking-wide">Digital India 2026</p>
