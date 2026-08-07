@@ -424,7 +424,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Full-bleed massive image container */}
-        <div className="w-full relative z-10 flex justify-center perspective-container px-0 md:px-6">
+        <div className="w-full relative flex justify-center perspective-container px-0 md:px-6">
           <motion.div
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -443,7 +443,7 @@ export const LandingPage: React.FC = () => {
             
             {/* 3D floating badge */}
             <div 
-              className="absolute bottom-10 right-4 lg:right-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 z-30 pointer-events-none"
+              className="absolute bottom-10 right-4 lg:right-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 pointer-events-none"
               style={{ transform: 'translateZ(50px) rotateY(-5deg)' }}
             >
               <p className="font-heading font-bold text-xl tracking-wide">Digital India 2026</p>
