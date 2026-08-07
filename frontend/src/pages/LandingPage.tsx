@@ -749,24 +749,26 @@ export const LandingPage: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1, type: "spring", stiffness: 100 }}
                 onClick={() => handleCategoryClick(cat.id)}
-                className="card-3d group relative flex flex-col items-center justify-center p-8 bg-white hover:bg-slate-50/80 rounded-[2rem] cursor-pointer border border-slate-200/60 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden"
+                className="card-3d group relative flex flex-col items-center justify-center p-8 bg-white/60 backdrop-blur-xl rounded-[2.5rem] cursor-pointer border border-white shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-2xl transition-all duration-500 overflow-hidden"
               >
                 {/* Colorful Glow Background on Hover */}
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br ${cat.color} transition-opacity duration-500 rounded-[2rem]`}></div>
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-br ${cat.color} transition-all duration-500`}></div>
                 
                 {/* The Floating Icon Block */}
-                <div className={`relative z-10 w-20 h-20 rounded-3xl ${cat.bg} flex items-center justify-center mb-6 transform group-hover:scale-110 group-hover:-translate-y-2 transition-all duration-500 group-hover:shadow-2xl ${cat.shadow}`}>
-                  <div className={`absolute inset-0 bg-gradient-to-br ${cat.color} rounded-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                  <div className="text-slate-600 group-hover:text-slate-900 transition-colors duration-300">
+                <div className={`relative z-10 w-24 h-24 rounded-[2rem] bg-white shadow-xl flex items-center justify-center mb-6 transform group-hover:scale-110 group-hover:-translate-y-4 group-hover:rotate-6 transition-all duration-500`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${cat.color} rounded-[2rem] opacity-5 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                  {/* Subtle inner shadow for 3D depth */}
+                  <div className="absolute inset-0 rounded-[2rem] border border-white/50 shadow-[inset_0_4px_10px_rgba(0,0,0,0.05)] pointer-events-none"></div>
+                  <div className={`text-slate-600 group-hover:text-slate-900 transition-colors duration-300 relative z-20`}>
                     {cat.icon}
                   </div>
                 </div>
                 
                 {/* Modern Typography */}
-                <span className="relative z-10 text-[15px] font-heading font-bold text-slate-600 group-hover:text-slate-900 transition-colors duration-300">{cat.label}</span>
+                <span className="relative z-10 text-lg font-heading font-extrabold text-slate-700 group-hover:text-white transition-colors duration-300 tracking-wide">{cat.label}</span>
                 
-                {/* Subtle bottom border accent */}
-                <div className={`absolute bottom-0 left-0 w-full h-1.5 opacity-0 group-hover:opacity-100 bg-gradient-to-r ${cat.color} transition-opacity duration-500 transform origin-left scale-x-0 group-hover:scale-x-100`}></div>
+                {/* Glossy reflection highlight */}
+                <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               </motion.div>
             ))}
           </div>
