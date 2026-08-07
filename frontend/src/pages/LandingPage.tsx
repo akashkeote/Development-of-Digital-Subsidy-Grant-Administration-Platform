@@ -314,12 +314,7 @@ export const LandingPage: React.FC = () => {
       <section className="relative pt-40 pb-28 lg:pt-52 lg:pb-36 px-6 mesh-bg min-h-screen flex items-center">
         {/* Massive 3D Background Flag */}
         <div className="absolute right-0 top-1/3 -translate-y-1/3 z-10 transform scale-[1.2] lg:scale-[1.3] -rotate-6 hidden md:block perspective-container pointer-events-none">
-          <img 
-            src="/salute.jpg" 
-            alt="Patriotic Salute" 
-            className="absolute -bottom-32 left-12 w-64 h-64 object-cover z-30" 
-            style={{ mixBlendMode: 'multiply', transform: 'rotateZ(6deg)' }}
-          />
+
           <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
             <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
             <div className="flag relative z-10" style={{width: '600px', height: '400px', borderRadius: '0 8px 8px 0'}}>
@@ -334,6 +329,14 @@ export const LandingPage: React.FC = () => {
 
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-[80px] animate-float z-0 pointer-events-none"></div>
         <div className="absolute top-40 right-20 w-96 h-96 bg-violet-400/20 rounded-full blur-[100px] animate-float-slow z-0 pointer-events-none"></div>
+        
+        {/* Placed as a direct child of the section to ensure mix-blend-mode: multiply blends with the section background */}
+        <img 
+          src="/salute.jpg" 
+          alt="Patriotic Salute" 
+          className="absolute bottom-10 right-32 w-72 h-72 lg:w-96 lg:h-96 object-contain z-20 pointer-events-none hidden md:block" 
+          style={{ mixBlendMode: 'multiply' }}
+        />
         
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10 w-full">
           <div className="lg:col-span-7 space-y-8 text-center lg:text-left perspective-container">
