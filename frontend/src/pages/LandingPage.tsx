@@ -650,71 +650,24 @@ export const LandingPage: React.FC = () => {
             </motion.p>
           </div>
 
-          <div className="monument-container w-full">
-            <div className="monument-base">
-              <div className="monument-floor"></div>
-              
-              {/* Farmer Pillar */}
-              <div className="pillar pillar-1 pillar-3d">
-                <div className="hologram-wrapper">
-                  <div className="hologram hologram-1">
-                    <div className="flex flex-col items-center justify-center">
-                      <Sprout size={36} strokeWidth={1.5} />
-                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Farmers</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="relative w-full flex justify-center lg:justify-end items-center perspective-container">
+            {/* Ambient glow behind the avatars */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-400/20 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-green-400/20 rounded-full blur-[80px] pointer-events-none"></div>
 
-              {/* Scientist / APJ Kalam Pillar */}
-              <div className="pillar pillar-2 pillar-3d">
-                <div className="hologram-wrapper">
-                  <div className="hologram hologram-2">
-                    <div className="flex flex-col items-center justify-center">
-                      <HeartPulse size={36} strokeWidth={1.5} />
-                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Scientists</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Peacemaker / Gandhi Pillar */}
-              <div className="pillar pillar-3 pillar-3d">
-                <div className="hologram-wrapper">
-                  <div className="hologram hologram-3">
-                    <div className="flex flex-col items-center justify-center">
-                      <HomeIcon size={36} strokeWidth={1.5} />
-                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Peace</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Warrior Pillar */}
-              <div className="pillar pillar-4 pillar-3d">
-                <div className="hologram-wrapper">
-                  <div className="hologram hologram-4">
-                    <div className="flex flex-col items-center justify-center">
-                      <ShieldCheck size={36} strokeWidth={1.5} />
-                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider">Warriors</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Education Reformer Pillar (Center) */}
-              <div className="pillar pillar-5 pillar-3d">
-                <div className="hologram-wrapper">
-                  <div className="hologram hologram-5">
-                    <div className="flex flex-col items-center justify-center text-center">
-                      <GraduationCap size={36} strokeWidth={1.5} />
-                      <span className="text-[9px] font-bold uppercase mt-1 tracking-wider leading-none">Education<br/>Reformers</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 60, rotateY: 15 }}
+              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="relative w-full max-w-xl animate-float-slow z-20"
+            >
+              <img 
+                src="/ministers_3d.jpg" 
+                alt="3D Avatars of Central Ministers" 
+                className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] mix-blend-multiply" 
+              />
+            </motion.div>
           </div>
           
         </div>
