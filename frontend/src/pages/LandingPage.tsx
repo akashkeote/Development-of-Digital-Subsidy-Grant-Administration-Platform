@@ -431,13 +431,13 @@ export const LandingPage: React.FC = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="w-full max-w-[100vw] lg:max-w-7xl relative group animate-float-slow"
+            style={{ mixBlendMode: 'multiply' }}
           >
             <div className="relative flex justify-center w-full">
               <img 
                 src="/indian_leaders_v2.jpg" 
                 alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
                 className="w-full lg:w-[110%] h-auto object-cover md:object-contain"
-                style={{ mixBlendMode: 'multiply' }}
               />
             </div>
             
@@ -661,12 +661,12 @@ export const LandingPage: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: "easeOut" }}
               className="relative w-full max-w-xl animate-float-slow"
+              style={{ mixBlendMode: 'multiply' }}
             >
               <img 
                 src="/ministers_3d.jpg" 
                 alt="3D Avatars of Central Ministers" 
                 className="w-full h-auto object-contain" 
-                style={{ mixBlendMode: 'multiply' }}
               />
             </motion.div>
           </div>
