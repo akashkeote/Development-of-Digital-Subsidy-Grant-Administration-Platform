@@ -319,8 +319,8 @@ export const LandingPage: React.FC = () => {
                 <img 
                   src="/salute.jpg" 
                   alt="Patriotic Salute" 
-                  className="absolute bottom-0 left-1/2 -translate-x-[40%] translate-y-16 w-80 h-80 object-cover z-30 drop-shadow-2xl" 
-                  style={{ mixBlendMode: 'multiply', transform: 'rotateY(20deg) rotateX(-10deg)' }}
+                  className="absolute left-1/2 -translate-x-[40%] w-80 h-80 object-cover z-30 drop-shadow-2xl" 
+                  style={{ bottom: '150px', mixBlendMode: 'multiply', transform: 'rotateY(20deg) rotateX(-10deg) scale(1.2)' }}
                 />
             </div>
             <div className="flag relative z-10" style={{width: '600px', height: '400px', borderRadius: '0 8px 8px 0'}}>
