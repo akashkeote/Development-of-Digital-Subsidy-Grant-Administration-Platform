@@ -55,34 +55,56 @@ const chiefMinisters = [
 
 const HologramCycler: React.FC = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const avatars = [1, 2, 3, 4];
   
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % avatars.length);
+      setCurrentIndex((prev) => (prev + 1) % ministers.length);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 md:w-64 z-30 pointer-events-none" style={{ mixBlendMode: 'multiply' }}>
+    <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-56 md:w-64 z-30 pointer-events-none">
       <div className="relative w-full h-full animate-float">
         {/* Holographic glowing base shadow */}
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-6 bg-blue-500/60 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-40 h-6 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
         
-        <div className="relative w-full aspect-[3/4]">
-          {avatars.map((num, idx) => (
-            <img 
-              key={idx}
-              src={`/cm_avatar_${num}.jpg`} 
-              alt={`Central Minister Avatar ${num}`} 
-              className={`absolute top-0 left-0 w-full h-full object-contain z-10 transition-opacity duration-1000 ${currentIndex === idx ? 'opacity-100' : 'opacity-0'}`}
-            />
-          ))}
+        <div className="relative w-full aspect-square flex items-center justify-center">
+          {ministers.map((minister, idx) => {
+            const isActive = currentIndex === idx;
+            return (
+              <div 
+                key={idx}
+                className={`absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center transition-all duration-1000
+                  ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'}`}
+              >
+                {/* Premium Glassmorphism Circular Avatar */}
+                <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full p-2 bg-white/40 backdrop-blur-md border border-white/60 shadow-[0_20px_40px_rgba(0,0,0,0.1)]">
+                  <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/80 bg-slate-100 shadow-inner">
+                    <img 
+                      src={minister.image} 
+                      alt={minister.name} 
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  
+                  {/* Glowing orbital rings for futuristic feel */}
+                  <div className="absolute inset-0 rounded-full border border-blue-400/30 animate-[spin_10s_linear_infinite]"></div>
+                  <div className="absolute inset-[-8px] rounded-full border-t-2 border-r-2 border-blue-500/40 animate-[spin_6s_linear_infinite_reverse]"></div>
+                </div>
+                
+                {/* Floating Label */}
+                <div className="absolute -bottom-10 w-[150%] text-center z-30 transition-transform duration-500 transform translate-y-0">
+                  <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-3 px-5 border border-slate-200/80 shadow-[0_15px_35px_rgba(37,99,235,0.15)] inline-block relative">
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/95 rotate-45 border-t border-l border-slate-200/80"></div>
+                    <p className="text-slate-900 font-extrabold text-sm md:text-base tracking-wider uppercase relative z-10">{minister.name}</p>
+                    <p className="text-blue-600 text-xs md:text-sm font-semibold mt-1 relative z-10">{minister.role || minister.state}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-        
-        {/* Hologram scanline effect over avatar */}
-        <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(59,130,246,0.15)_50%)] bg-[size:100%_4px] mix-blend-overlay z-20 opacity-70"></div>
       </div>
     </div>
   );
