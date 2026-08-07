@@ -313,7 +313,7 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-40 pb-28 lg:pt-52 lg:pb-36 px-6 mesh-bg min-h-screen flex items-center">
         {/* Massive 3D Background Flag */}
-        <div className="absolute right-0 top-1/3 -translate-y-1/3 z-10 transform scale-[1.2] lg:scale-[1.3] -rotate-6 hidden md:block perspective-container pointer-events-none">
+        <div className="absolute -right-20 lg:-right-10 top-1/3 -translate-y-1/3 z-0 transform scale-[1.2] lg:scale-[1.3] -rotate-6 hidden md:block perspective-container pointer-events-none opacity-90">
 
           <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
             <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
@@ -334,11 +334,11 @@ export const LandingPage: React.FC = () => {
         <img 
           src="/salute.jpg" 
           alt="Patriotic Salute" 
-          className="absolute bottom-10 right-32 w-72 h-72 lg:w-96 lg:h-96 object-contain z-20 pointer-events-none hidden md:block" 
+          className="absolute bottom-10 right-10 lg:right-24 w-72 h-72 lg:w-96 lg:h-96 object-contain z-10 pointer-events-none hidden md:block" 
           style={{ mixBlendMode: 'multiply' }}
         />
         
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10 w-full">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-30 w-full">
           <div className="lg:col-span-7 space-y-8 text-center lg:text-left perspective-container">
             <motion.div 
               initial={{ opacity: 0, y: 30, rotateX: 20 }}
