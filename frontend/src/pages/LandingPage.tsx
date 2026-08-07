@@ -619,7 +619,7 @@ export const LandingPage: React.FC = () => {
       {/* Pillars of India 3D CSS Monument Section */}
       <section className="relative py-24 bg-gradient-to-b from-white to-slate-50 overflow-hidden border-b border-slate-100">
         <div className="absolute inset-0 bg-mesh opacity-30 pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-6 relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
           <div className="text-center lg:text-left space-y-6">
             <motion.div 
@@ -660,7 +660,7 @@ export const LandingPage: React.FC = () => {
               whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: "easeOut" }}
-              className="relative w-full max-w-xl animate-float-slow z-20"
+              className="relative w-full max-w-xl animate-float-slow"
             >
               <img 
                 src="/ministers_3d.jpg" 
