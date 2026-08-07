@@ -315,7 +315,14 @@ export const LandingPage: React.FC = () => {
         {/* Massive 3D Background Flag */}
         <div className="absolute right-0 top-1/3 -translate-y-1/3 z-10 transform scale-[1.2] lg:scale-[1.3] -rotate-6 hidden md:block perspective-container pointer-events-none">
           <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
-            <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
+            <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}>
+                <img 
+                  src="/salute.jpg" 
+                  alt="Patriotic Salute" 
+                  className="absolute bottom-0 left-1/2 -translate-x-[40%] translate-y-16 w-80 h-80 object-cover z-30 drop-shadow-2xl" 
+                  style={{ mixBlendMode: 'multiply', transform: 'rotateY(20deg) rotateX(-10deg)' }}
+                />
+            </div>
             <div className="flag relative z-10" style={{width: '600px', height: '400px', borderRadius: '0 8px 8px 0'}}>
               <div className="flag-saffron"></div>
               <div className="flag-white">
