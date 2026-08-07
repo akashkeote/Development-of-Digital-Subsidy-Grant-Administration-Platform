@@ -656,18 +656,27 @@ export const LandingPage: React.FC = () => {
             <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-green-400/20 rounded-full blur-[80px] pointer-events-none"></div>
 
             <motion.div
-              initial={{ opacity: 0, x: 60, rotateY: 15 }}
-              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: "easeOut" }}
-              className="relative w-full max-w-xl animate-float-slow"
-              style={{ mixBlendMode: 'multiply' }}
+              className="relative w-full max-w-2xl overflow-hidden py-8"
+              style={{ 
+                mixBlendMode: 'multiply',
+                maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
+              }}
             >
-              <img 
-                src="/ministers_3d.jpg" 
-                alt="3D Avatars of Central Ministers" 
-                className="w-full h-auto object-contain" 
-              />
+              <div className="marquee-horizontal flex gap-8 items-center hover:[animation-play-state:paused]" style={{ width: 'max-content' }}>
+                {[1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4].map((num, idx) => (
+                  <img 
+                    key={idx}
+                    src={`/cm_avatar_${num}.jpg`} 
+                    alt={`Central Minister 3D Avatar ${num}`} 
+                    className="w-48 md:w-64 h-auto object-contain transform transition-transform duration-500 hover:-translate-y-4 cursor-pointer" 
+                  />
+                ))}
+              </div>
             </motion.div>
           </div>
           
