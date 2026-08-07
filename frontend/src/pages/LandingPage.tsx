@@ -665,7 +665,8 @@ export const LandingPage: React.FC = () => {
               <img 
                 src="/ministers_3d.jpg" 
                 alt="3D Avatars of Central Ministers" 
-                className="w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] mix-blend-multiply" 
+                className="w-full h-auto object-contain" 
+                style={{ mixBlendMode: 'multiply' }}
               />
             </motion.div>
           </div>
