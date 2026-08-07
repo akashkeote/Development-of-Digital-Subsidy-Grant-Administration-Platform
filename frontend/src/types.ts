@@ -1,4 +1,4 @@
-export type UserRole = 'citizen' | 'verifier' | 'district_officer' | 'admin';
+export type UserRole = 'citizen' | 'vle' | 'l1_officer' | 'l2_officer' | 'l3_officer' | 'admin';
 
 export interface UserProfile {
   id: string;

@@ -1,20 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Landmark, ArrowRight, ShieldCheck, Mail, MapPin, Phone } from 'lucide-react';
+import { Landmark, ArrowRight, ShieldCheck, Mail, MapPin, Phone, CheckCircle2 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
   const logos = [
-    { name: 'MyScheme', icon: 'my', color: 'text-emerald-500' },
-    { name: 'DBT Bharat', icon: '₹', color: 'text-amber-500' },
-    { name: 'Aadhaar', icon: '🪪', color: 'text-blue-500' },
-    { name: 'PFMS', icon: '🏛', color: 'text-slate-500' },
-    { name: 'India.gov.in', icon: '🌐', color: 'text-sky-500' },
-    { name: 'myGov', icon: 'm', color: 'text-rose-500' },
-    { name: 'MeitY', icon: '⚙', color: 'text-slate-400' },
+    { name: 'MyScheme', icon: 'my', color: 'text-emerald-500', url: 'https://www.myscheme.gov.in' },
+    { name: 'DBT Bharat', icon: '₹', color: 'text-amber-500', url: 'https://dbtbharat.gov.in' },
+    { name: 'Aadhaar', icon: '🪪', color: 'text-blue-500', url: 'https://uidai.gov.in' },
+    { name: 'PFMS', icon: '🏛', color: 'text-slate-500', url: 'https://pfms.nic.in' },
+    { name: 'India.gov.in', icon: '🌐', color: 'text-sky-500', url: 'https://www.india.gov.in' },
+    { name: 'myGov', icon: 'm', color: 'text-rose-500', url: 'https://www.mygov.in' },
+    { name: 'MeitY', icon: '⚙', color: 'text-slate-400', url: 'https://www.meity.gov.in' },
   ];
 
   // Duplicate logos to create a seamless infinite scrolling effect
   const marqueeLogos = [...logos, ...logos, ...logos, ...logos];
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim() !== '') {
+      setIsSubmitting(true);
+      
+      // Simulate API call at frontend level
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubscribed(true);
+        setEmail('');
+        
+        // Reset success state after a few seconds
+        setTimeout(() => {
+          setIsSubscribed(false);
+        }, 3000);
+      }, 1200);
+    }
+  };
 
   return (
     <footer className="w-full mt-12 bg-white/50 backdrop-blur-xl border-t border-slate-200/60 shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.05)] text-slate-600 font-sans flex flex-col z-20 relative">
@@ -26,14 +49,20 @@ export const Footer: React.FC = () => {
         
         <div className="animate-marquee flex gap-12 px-4 items-center">
           {marqueeLogos.map((logo, idx) => (
-            <div key={idx} className="flex items-center gap-3 px-2 py-1 rounded-lg hover:bg-white/60 transition-colors cursor-pointer group">
+            <a 
+              href={logo.url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              key={idx} 
+              className="flex items-center gap-3 px-2 py-1 rounded-lg hover:bg-white/60 transition-colors cursor-pointer group"
+            >
               <div className="w-9 h-9 rounded-xl bg-white border border-slate-200/60 flex items-center justify-center font-extrabold group-hover:scale-105 group-hover:-rotate-3 transition-transform shadow-sm">
                 <span className={logo.color}>{logo.icon}</span>
               </div>
               <span className="text-[13px] font-bold text-slate-400 group-hover:text-blue-500 transition-colors whitespace-nowrap tracking-wide">
                 {logo.name}
               </span>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -56,7 +85,7 @@ export const Footer: React.FC = () => {
           </p>
           <div className="flex items-center gap-2 text-sm font-bold text-slate-400 pt-2">
              <ShieldCheck className="w-5 h-5 text-emerald-500" />
-             Secured by <span className="text-blue-500">India Stack</span>
+             Secured by <a href="https://indiastack.org" target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">India Stack</a>
           </div>
         </div>
 
@@ -88,24 +117,42 @@ export const Footer: React.FC = () => {
           <p className="text-sm text-slate-500 font-medium leading-relaxed">
              Subscribe for scheme updates and notifications.
           </p>
-          <div className="flex gap-2">
+          <form onSubmit={handleSubscribe} className="flex gap-2">
             <input 
               type="email" 
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting || isSubscribed}
               placeholder="Email address..." 
-              className="w-full px-3 py-2 rounded-xl border border-slate-200/60 bg-white/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-slate-600 placeholder-slate-400"
+              className="w-full px-4 py-3 rounded-[14px] border border-slate-200/60 bg-blue-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-slate-800 placeholder-slate-400 font-medium disabled:opacity-70 transition-all"
             />
-            <button className="pastel-btn px-4 py-2 rounded-xl text-sm font-bold shadow-sm whitespace-nowrap">
-              Subscribe
+            <button 
+              type="submit"
+              disabled={isSubmitting || isSubscribed}
+              className={`px-5 py-3 rounded-[14px] text-sm font-bold shadow-sm whitespace-nowrap flex items-center justify-center gap-2 transition-all min-w-[110px] ${
+                isSubscribed 
+                  ? 'bg-emerald-500 text-white' 
+                  : 'bg-[#3b82f6] hover:bg-[#2563eb] text-white disabled:opacity-70'
+              }`}
+            >
+              {isSubmitting ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              ) : isSubscribed ? (
+                <><CheckCircle2 className="w-4 h-4" /> Subscribed</>
+              ) : (
+                'Subscribe'
+              )}
             </button>
-          </div>
-          <div className="flex items-center gap-3 pt-2">
-             <a href="#" className="w-8 h-8 rounded-lg pastel-card flex items-center justify-center text-slate-400 hover:text-blue-500 transition-colors shadow-sm">
+          </form>
+          <div className="flex items-center gap-4 pt-4">
+             <a href="mailto:support@digigrant.gov.in" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:border-blue-300 hover:shadow-md transition-all" title="Email Support">
                 <Mail className="w-4 h-4" />
              </a>
-             <a href="#" className="w-8 h-8 rounded-lg pastel-card flex items-center justify-center text-slate-400 hover:text-blue-500 transition-colors shadow-sm">
+             <a href="https://maps.google.com/?q=New+Delhi,+India" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:border-blue-300 hover:shadow-md transition-all" title="Location">
                 <MapPin className="w-4 h-4" />
              </a>
-             <a href="#" className="w-8 h-8 rounded-lg pastel-card flex items-center justify-center text-slate-400 hover:text-blue-500 transition-colors shadow-sm">
+             <a href="tel:1800111555" className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:border-blue-300 hover:shadow-md transition-all" title="Toll-Free Support">
                 <Phone className="w-4 h-4" />
              </a>
           </div>
@@ -133,11 +180,11 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-xs font-bold text-blue-500/80">
-              <a href="#" className="hover:text-blue-600 hover:underline transition-colors">Terms of Use</a>
+              <Link to="/terms" className="hover:text-blue-600 hover:underline transition-colors">Terms of Use</Link>
               <span className="text-slate-300 font-normal">•</span>
-              <a href="#" className="hover:text-blue-600 hover:underline transition-colors">Privacy Policy</a>
+              <Link to="/privacy" className="hover:text-blue-600 hover:underline transition-colors">Privacy Policy</Link>
               <span className="text-slate-300 font-normal">•</span>
-              <a href="#" className="hover:text-blue-600 hover:underline transition-colors">Accessibility</a>
+              <Link to="/accessibility" className="hover:text-blue-600 hover:underline transition-colors">Accessibility</Link>
             </div>
         </div>
       </div>

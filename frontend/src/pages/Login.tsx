@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { UserRole } from '../types';
-import { ArrowRight, Shield, Lock, Eye, Users, CheckCircle2, FileText, Activity, Building, ArrowLeft, Sun, AlertCircle } from 'lucide-react';
+import { ArrowRight, Shield, Lock, Eye, Users, CheckCircle2, FileText, Activity, Building, ArrowLeft, Sun, AlertCircle, Landmark } from 'lucide-react';
 
 export const Login: React.FC = () => {
   const { setCurrentRole } = useApp();
   const navigate = useNavigate();
-  const [step, setStep] = useState<'role_selection' | 'login_form'>('role_selection');
+  const [step, setStep] = useState<'main_selection' | 'officer_selection' | 'login_form'>('main_selection');
   const [selectedRole, setSelectedRole] = useState<UserRole>('citizen');
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('password123');
@@ -22,10 +22,14 @@ export const Login: React.FC = () => {
     
     if (role === 'citizen') {
       setUserId('CIT-1092');
-    } else if (role === 'verifier') {
+    } else if (role === 'vle') {
+      setUserId('VLE-9901');
+    } else if (role === 'l1_officer') {
       setUserId('VER-4011');
-    } else if (role === 'district_officer') {
+    } else if (role === 'l2_officer') {
       setUserId('DST-GORAKHPUR');
+    } else if (role === 'l3_officer') {
+      setUserId('SNO-PFMS-01');
     } else if (role === 'admin') {
       setUserId('ADMIN-ROOT');
     }
@@ -43,20 +47,32 @@ export const Login: React.FC = () => {
       setCurrentRole(selectedRole);
       setIsLoading(false);
       if (selectedRole === 'citizen') navigate('/citizen/dashboard');
-      else if (selectedRole === 'verifier') navigate('/verification/dashboard');
-      else if (selectedRole === 'district_officer') navigate('/district/dashboard');
+      else if (selectedRole === 'vle') navigate('/vle/dashboard');
+      else if (selectedRole === 'l1_officer') navigate('/l1-verification/dashboard');
+      else if (selectedRole === 'l2_officer') navigate('/l2-sanction/dashboard');
+      else if (selectedRole === 'l3_officer') navigate('/l3-finance/dashboard');
       else if (selectedRole === 'admin') navigate('/admin/dashboard');
     }, 800);
   };
 
   const rolesConfig: { id: UserRole; label: string; desc: string; icon: any; color: string; bg: string }[] = [
     { id: 'citizen', label: 'Citizen', desc: 'Beneficiary / Applicant Portal', icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { id: 'verifier', label: 'VLE', desc: 'Village Level Entrepreneur (CSC)', icon: Building, color: 'text-teal-600', bg: 'bg-teal-100' },
-    { id: 'district_officer', label: 'Officer', desc: 'Government Officer Portal', icon: Shield, color: 'text-orange-500', bg: 'bg-orange-100' },
+    { id: 'vle', label: 'VLE', desc: 'Village Level Entrepreneur (CSC)', icon: Building, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+    { id: 'l1_officer', label: 'L1: Field Verifier', desc: 'Document & Field Inspection', icon: FileText, color: 'text-teal-600', bg: 'bg-teal-100' },
+    { id: 'l2_officer', label: 'L2: Sanction Officer', desc: 'District Nodal Officer (DNO)', icon: Shield, color: 'text-orange-500', bg: 'bg-orange-100' },
+    { id: 'l3_officer', label: 'L3: Finance Officer', desc: 'State Nodal Officer (PFMS/DBT)', icon: Landmark, color: 'text-emerald-600', bg: 'bg-emerald-100' },
     { id: 'admin', label: 'System Admin', desc: 'Central Control Portal', icon: Activity, color: 'text-rose-600', bg: 'bg-rose-100' }
   ];
 
   const currentRoleConfig = rolesConfig.find(r => r.id === selectedRole) || rolesConfig[0];
+
+  const mainCategories = [
+    { id: 'citizen', label: 'Citizen', desc: 'Beneficiary & Applicant Portal', icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
+    { id: 'vle', label: 'VLE Partner', desc: 'Village Level Entrepreneur (CSC)', icon: Building, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+    { id: 'officials', label: 'Government Official', desc: 'Officers & System Administrators', icon: Shield, color: 'text-blue-600', bg: 'bg-blue-100' }
+  ];
+
+  const officialRoles = rolesConfig.filter(r => ['l1_officer', 'l2_officer', 'l3_officer', 'admin'].includes(r.id));
 
   return (
     <div className="min-h-screen flex flex-col w-full font-sans bg-white overflow-hidden relative">
@@ -127,49 +143,95 @@ export const Login: React.FC = () => {
         <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col justify-center items-center px-6 py-12 relative bg-white min-h-screen md:min-h-0">
           <div className="w-full max-w-[440px] relative z-10 transition-all duration-500">
             
-            {step === 'role_selection' ? (
+            {step === 'main_selection' && (
               <div className="animate-in fade-in slide-in-from-right-4 duration-500">
                 <div className="mb-10">
                   <h2 className="text-3xl font-black text-slate-800 tracking-tight font-heading mb-2">Select Your Portal</h2>
-                  <p className="text-sm font-medium text-slate-500">Choose your role to continue to the dashboard</p>
+                  <p className="text-sm font-medium text-slate-500">Choose your portal to continue to the dashboard</p>
                 </div>
 
                 <div className="space-y-4">
-                  {rolesConfig.map(r => {
+                  {mainCategories.map(cat => {
+                    const Icon = cat.icon;
+                    return (
+                      <button 
+                        key={cat.id}
+                        onClick={() => {
+                          if (cat.id === 'officials') {
+                            setStep('officer_selection');
+                          } else {
+                            handleRoleSelect(cat.id as UserRole);
+                          }
+                        }}
+                        className="w-full bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-900/5 transition-all duration-300 flex items-center gap-5 text-left group"
+                      >
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${cat.bg} ${cat.color} group-hover:scale-110 transition-transform duration-300`}>
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <div className="text-base font-extrabold text-slate-800 group-hover:text-blue-600 transition-colors">{cat.label}</div>
+                          <div className="text-xs font-medium text-slate-500 mt-0.5">{cat.desc}</div>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-slate-300 ml-auto group-hover:text-blue-500 transition-colors" />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {step === 'officer_selection' && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500">
+                <button 
+                  onClick={() => setStep('main_selection')}
+                  className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mb-8 transition-colors group"
+                >
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Main Portals
+                </button>
+
+                <div className="mb-8">
+                  <h2 className="text-3xl font-black text-slate-800 tracking-tight font-heading mb-2">Government Officials</h2>
+                  <p className="text-sm font-medium text-slate-500">Select your authorized nodal level</p>
+                </div>
+
+                <div className="space-y-3">
+                  {officialRoles.map(r => {
                     const Icon = r.icon;
                     return (
                       <button 
                         key={r.id}
                         onClick={() => handleRoleSelect(r.id)}
-                        className="w-full bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:shadow-blue-900/5 transition-all duration-300 flex items-center gap-5 text-left group"
+                        className="w-full bg-slate-50 p-4 rounded-2xl border border-slate-200 hover:border-blue-300 hover:bg-white hover:shadow-lg hover:shadow-blue-900/5 transition-all duration-300 flex items-center gap-4 text-left group"
                       >
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${r.bg} ${r.color} group-hover:scale-110 transition-transform duration-300`}>
-                          <Icon className="w-6 h-6" />
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${r.bg} ${r.color} group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
+                          <Icon className="w-5 h-5" />
                         </div>
                         <div>
-                          <div className="text-lg font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{r.label}</div>
-                          <div className="text-xs font-medium text-slate-500">{r.desc}</div>
+                          <div className="text-[14px] font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{r.label}</div>
+                          <div className="text-[11px] font-medium text-slate-500">{r.desc}</div>
                         </div>
                       </button>
                     );
                   })}
                 </div>
               </div>
-            ) : (
+            )}
+
+            {step === 'login_form' && (
               <div className="animate-in fade-in slide-in-from-left-4 duration-500">
                 <button 
-                  onClick={() => setStep('role_selection')}
+                  onClick={() => setStep(officialRoles.find(r => r.id === selectedRole) ? 'officer_selection' : 'main_selection')}
                   className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 mb-8 transition-colors group"
                 >
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to role selection
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to roles
                 </button>
 
                 <div className="flex items-center gap-4 mb-8">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${currentRoleConfig.bg} ${currentRoleConfig.color}`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${currentRoleConfig.bg} ${currentRoleConfig.color} shadow-sm`}>
                     <currentRoleConfig.icon className="w-7 h-7" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-black text-slate-800 tracking-tight font-heading leading-tight">{currentRoleConfig.label} Login</h2>
+                    <h2 className="text-3xl font-black text-slate-800 tracking-tight font-heading leading-tight">{currentRoleConfig.label}</h2>
                     <p className="text-sm font-medium text-slate-500">{currentRoleConfig.desc}</p>
                   </div>
                 </div>
@@ -190,7 +252,7 @@ export const Login: React.FC = () => {
                       type="text" 
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
-                      className="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-300"
+                      className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-300 placeholder:font-medium"
                       placeholder={`Enter your ${currentRoleConfig.label} ID`}
                     />
                   </div>
@@ -204,7 +266,7 @@ export const Login: React.FC = () => {
                         type="password" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-300"
+                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-300 placeholder:font-medium"
                         placeholder="Enter password"
                       />
                       <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors outline-none">
@@ -216,7 +278,7 @@ export const Login: React.FC = () => {
                   <button 
                     type="submit" 
                     disabled={isLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-blue-600/20"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-blue-600/20 text-[15px]"
                   >
                     {isLoading ? (
                       <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

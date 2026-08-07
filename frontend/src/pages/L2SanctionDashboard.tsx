@@ -4,9 +4,8 @@ import { useApp } from '../context/AppContext';
 import { Landmark, FileText, CheckCircle2, Bookmark, Compass, DollarSign, AlertTriangle } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
 
-export const DistrictOfficerDashboard: React.FC = () => {
-  const { applications, approveApplication, setCurrentRole } = useApp();
-  const navigate = useNavigate();
+export const L2SanctionDashboard: React.FC = () => {
+  const { applications, approveApplication } = useApp();
   const [selectedAppId, setSelectedAppId] = useState<string>('');
   const [comment, setComment] = useState('');
 
@@ -57,33 +56,6 @@ export const DistrictOfficerDashboard: React.FC = () => {
             <p className="text-sm text-slate-500 mt-2 font-medium">Authorize fiscal allocations, audit verifier comments, and sign off on scheduled welfare grant disbursements.</p>
           </div>
           <div className="z-10 flex flex-col items-end gap-4">
-            {/* Sandbox Role Switcher - Restored for easy testing navigation! */}
-            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
-              <button 
-                onClick={() => {
-                  setCurrentRole('verifier');
-                  navigate('/verification/dashboard');
-                }}
-                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
-              >
-                L1: Field
-              </button>
-              <button 
-                className="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm border border-slate-200/50"
-              >
-                L2: District
-              </button>
-              <button 
-                onClick={() => {
-                  setCurrentRole('admin');
-                  navigate('/admin/dashboard');
-                }}
-                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
-              >
-                L3: Finance
-              </button>
-            </div>
-
             <div className="text-sm font-bold text-blue-700 bg-blue-50/80 border border-blue-100/50 px-6 py-4 rounded-xl flex items-center tracking-widest">
               <Landmark className="w-5 h-5 mr-3 text-blue-600" /> Sanction Queue: <span className="ml-2 font-bold text-blue-700 text-lg">{queue.length}</span>
             </div>
@@ -156,7 +128,11 @@ export const DistrictOfficerDashboard: React.FC = () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-8 text-sm font-medium">
                   <div>
-                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">FullName:</p>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">Scheme Name:</p>
+                    <p className="text-blue-700 font-bold text-base line-clamp-2">{activeApp.schemeTitle}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mb-2 uppercase">Applicant Name:</p>
                     <p className="text-slate-800 font-bold text-base">{activeApp.personalDetails.fullName}</p>
                   </div>
                   <div>

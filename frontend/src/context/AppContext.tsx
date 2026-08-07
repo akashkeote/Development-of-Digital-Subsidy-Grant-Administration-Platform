@@ -53,7 +53,15 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentRole, setCurrentRole] = useState<UserRole>('citizen');
+  const [currentRole, setCurrentRole] = useState<UserRole>(() => {
+    const savedRole = localStorage.getItem('gov_auth_role');
+    return (savedRole as UserRole) || 'citizen';
+  });
+  
+  useEffect(() => {
+    localStorage.setItem('gov_auth_role', currentRole);
+  }, [currentRole]);
+
   const [citizenProfile, setCitizenProfile] = useState<UserProfile>(() => {
     const saved = localStorage.getItem('gov_citizen_profile');
     return saved ? JSON.parse(saved) : DEFAULT_CITIZEN;

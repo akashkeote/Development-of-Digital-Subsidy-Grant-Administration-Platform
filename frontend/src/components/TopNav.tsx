@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { 
-  Bell, User, Landmark, Settings, LogOut, Menu, X, ShieldCheck 
+  Bell, User, Landmark, Settings, LogOut, Menu, X, ShieldCheck,
+  Home, Briefcase, Compass, FileText, DollarSign, Users
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserRole } from '../types';
@@ -19,41 +20,50 @@ export const TopNav: React.FC = () => {
   const handleRoleChange = (role: UserRole) => {
     setCurrentRole(role);
     setShowProfileDropdown(false);
-    setMobileMenuOpen(false);
+    
+    // Quick redirect helper for dev sandbox
     if (role === 'citizen') navigate('/citizen/dashboard');
-    else if (role === 'verifier') navigate('/verification/dashboard');
-    else if (role === 'district_officer') navigate('/district/dashboard');
+    else if (role === 'vle') navigate('/vle/dashboard');
+    else if (role === 'l1_officer') navigate('/l1-verification/dashboard');
+    else if (role === 'l2_officer') navigate('/l2-sanction/dashboard');
+    else if (role === 'l3_officer') navigate('/l3-finance/dashboard');
     else if (role === 'admin') navigate('/admin/dashboard');
   };
 
-  const getLinks = () => {
-    switch (currentRole) {
-      case 'verifier': return [
-        { to: '/verification/dashboard', label: 'Review Queue' },
-        { to: '/schemes', label: 'View Schemes' },
-        { to: '/notifications', label: 'System Alerts' },
+  const getRoleLinks = () => {
+    switch(currentRole) {
+      case 'citizen': return [
+        { name: 'My Dashboard', to: '/citizen/dashboard', icon: Home },
+        { name: 'Apply for Scheme', to: '/schemes', icon: Briefcase },
+        { name: 'Track Application', to: '/citizen/tracking', icon: Compass },
+        { name: 'My Profile', to: '/profile', icon: User }
       ];
-      case 'district_officer': return [
-        { to: '/district/dashboard', label: 'Sanctioning Dashboard' },
-        { to: '/schemes', label: 'View Schemes' },
-        { to: '/notifications', label: 'System Alerts' },
+      case 'vle': return [
+        { name: 'VLE Dashboard', to: '/vle/dashboard', icon: Home },
+        { name: 'New Application', to: '/schemes', icon: Briefcase },
+        { name: 'Track Applications', to: '/citizen/tracking', icon: Compass },
+        { name: 'Commission Ledger', to: '/vle/ledger', icon: DollarSign }
+      ];
+      case 'l1_officer': return [
+        { name: 'Verification Desk', to: '/l1-verification/dashboard', icon: ShieldCheck },
+        { name: 'Inspection History', to: '/l1-verification/history', icon: FileText }
+      ];
+      case 'l2_officer': return [
+        { name: 'Sanction Desk', to: '/l2-sanction/dashboard', icon: Landmark },
+        { name: 'District Reports', to: '/l2-sanction/reports', icon: FileText }
+      ];
+      case 'l3_officer': return [
+        { name: 'Finance Desk', to: '/l3-finance/dashboard', icon: DollarSign },
+        { name: 'Disbursement Logs', to: '/l3-finance/logs', icon: FileText }
       ];
       case 'admin': return [
-        { to: '/admin/dashboard', label: 'Admin Analytics' },
-        { to: '/schemes', label: 'Manage Schemes' },
-        { to: '/notifications', label: 'System Logs' },
+        { name: 'Control Center', to: '/admin/dashboard', icon: Settings }
       ];
-      case 'citizen':
-      default: return [
-        { to: '/citizen/dashboard', label: 'Dashboard' },
-        { to: '/schemes', label: 'Explore Schemes' },
-        { to: '/citizen/tracking', label: 'Track Applications' },
-        { to: '/citizen/installments', label: 'Installments' },
-      ];
+      default: return [];
     }
   };
 
-  const links = getLinks();
+  const links = getRoleLinks();
   const isCitizen = currentRole === 'citizen';
 
   return (
@@ -73,20 +83,24 @@ export const TopNav: React.FC = () => {
 
         {/* Center: Desktop Navigation Links */}
         <div className="hidden lg:flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) => `
-                px-4 py-2 rounded-full text-[13px] transition-all whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-                ${isActive 
-                  ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20' 
-                  : 'text-slate-600 font-semibold hover:bg-slate-100/80 hover:text-slate-900'}
-              `}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+          {links.map((link) => {
+            const Icon = link.icon;
+            return (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) => `
+                  px-4 py-2 rounded-full text-[13px] transition-all whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-blue-500 flex items-center gap-2
+                  ${isActive 
+                    ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20' 
+                    : 'text-slate-600 font-semibold hover:bg-slate-100/80 hover:text-slate-900'}
+                `}
+              >
+                {Icon && <Icon size={14} />}
+                {link.name}
+              </NavLink>
+            );
+          })}
         </div>
 
         {/* Right Side: Actions & Profile */}
@@ -180,26 +194,7 @@ export const TopNav: React.FC = () => {
                   </div>
 
                   <div className="p-2 space-y-1">
-                    {/* Sandbox Role Switcher hidden in dropdown for cleanliness */}
-                    <div className="px-2 pt-2 pb-1 bg-slate-50 border border-slate-100 rounded-xl mb-2">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-2">Sandbox Roles</p>
-                      {(['citizen', 'verifier', 'district_officer', 'admin'] as UserRole[]).map((role) => (
-                        <button
-                          key={role}
-                          onClick={() => handleRoleChange(role)}
-                          className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium capitalize flex items-center transition-colors ${
-                            currentRole === role ? 'bg-blue-100 text-blue-700 font-bold' : 'text-slate-600 hover:bg-slate-200/50'
-                          }`}
-                        >
-                          {currentRole === role ? <ShieldCheck size={14} className="mr-2 text-blue-600" /> : <div className="w-[14px] mr-2" />}
-                          {role.replace('_', ' ')}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="h-px bg-slate-100 my-1 mx-2" />
-
-                    {isCitizen && (
+                    {(isCitizen || currentRole === 'vle') && (
                       <button onClick={() => { setShowProfileDropdown(false); navigate('/profile'); }} className="w-full text-left px-3 py-2.5 text-slate-700 hover:bg-slate-50 rounded-xl transition text-xs font-medium flex items-center">
                         <User size={14} className="mr-3 text-slate-400" /> My Profile
                       </button>
@@ -241,21 +236,25 @@ export const TopNav: React.FC = () => {
           >
             <div className="flex flex-col gap-2">
               <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-3 mb-1">Navigation</p>
-              {links.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={({ isActive }) => `
-                    px-4 py-3 rounded-xl text-sm transition-all
-                    ${isActive 
-                      ? 'bg-blue-50 text-blue-700 font-bold' 
-                      : 'text-slate-600 font-medium hover:bg-slate-50'}
-                  `}
-                >
-                  {link.label}
-                </NavLink>
-              ))}
+              {links.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={({ isActive }) => `
+                      px-4 py-3 rounded-xl text-sm transition-all flex items-center gap-3
+                      ${isActive 
+                        ? 'bg-blue-50 text-blue-700 font-bold' 
+                        : 'text-slate-600 font-medium hover:bg-slate-50'}
+                    `}
+                  >
+                    {Icon && <Icon size={16} className={({ isActive }: any) => isActive ? 'text-blue-600' : 'text-slate-400'} />}
+                    {link.name}
+                  </NavLink>
+                );
+              })}
             </div>
           </motion.div>
         )}

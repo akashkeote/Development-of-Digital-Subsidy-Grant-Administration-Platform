@@ -115,90 +115,79 @@ export const AdminDashboard: React.FC = () => {
             <p className="text-slate-600 mt-2 font-medium">Configure welfare schemes, review general ledger stats, and authorize treasury direct transfer releases.</p>
           </div>
           
-          <div className="flex flex-col items-end gap-4">
-            {/* Sandbox Role Switcher - Restored for easy testing navigation! */}
-            <div className="bg-slate-100 p-1.5 rounded-xl flex items-center shadow-inner border border-slate-200/50 shrink-0">
-              <button 
-                onClick={() => {
-                  setCurrentRole('verifier');
-                  navigate('/verification/dashboard');
-                }}
-                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
-              >
-                L1: Field
-              </button>
-              <button 
-                onClick={() => {
-                  setCurrentRole('district_officer');
-                  navigate('/district/dashboard');
-                }}
-                className="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
-              >
-                L2: District
-              </button>
-              <button 
-                className="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-white text-blue-600 shadow-sm border border-slate-200/50"
-              >
-                L3: Finance
-              </button>
+          <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
+            {/* Real-time Queue Monitor instead of Role Switcher */}
+            <div className="bg-white/80 p-4 rounded-2xl flex items-center gap-6 shadow-sm border border-slate-200/50">
+              <div className="text-center">
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">L1 Queue</p>
+                <p className="text-xl font-black text-blue-600">{applications.filter(app => app.status === 'submitted').length}</p>
+              </div>
+              <div className="text-center border-l border-slate-200 pl-6">
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">L2 Queue</p>
+                <p className="text-xl font-black text-amber-500">{applications.filter(app => app.status === 'documents_verified').length}</p>
+              </div>
+              <div className="text-center border-l border-slate-200 pl-6">
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">L3 Queue</p>
+                <p className="text-xl font-black text-emerald-500">{installments.filter(inst => inst.status === 'pending').length}</p>
+              </div>
             </div>
           </div>
-          
-          {/* Tabs Container */}
-          <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
-            <button
-              onClick={() => setActiveTab('analytics')}
-              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
-                activeTab === 'analytics' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
-                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
-              }`}
-            >
-              System Analytics
-            </button>
-            <button
-              onClick={() => setActiveTab('treasury')}
-              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
-                activeTab === 'treasury' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
-                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
-              }`}
-            >
-              Treasury Desk
-            </button>
-            <button
-              onClick={() => setActiveTab('compliance')}
-              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
-                activeTab === 'compliance' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
-                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
-              }`}
-            >
-              Compliance Desk
-            </button>
-            <button
-              onClick={() => setActiveTab('access_management')}
-              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
-                activeTab === 'access_management' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
-                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
-              }`}
-            >
-              <Users className="w-4 h-4" />
-              <span>Access Management</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('create_scheme')}
-              className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
-                activeTab === 'create_scheme' 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
-                  : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
-              }`}
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>Launch Scheme</span>
-            </button>
-          </div>
+        </div>
+
+        {/* Tabs Container */}
+        <div className="flex gap-4 w-full overflow-x-auto pb-4 hide-scrollbar">
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+              activeTab === 'analytics' 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+            }`}
+          >
+            System Analytics
+          </button>
+          <button
+            onClick={() => setActiveTab('treasury')}
+            className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+              activeTab === 'treasury' 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+            }`}
+          >
+            Treasury Desk
+          </button>
+          <button
+            onClick={() => setActiveTab('compliance')}
+            className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+              activeTab === 'compliance' 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+            }`}
+          >
+            Compliance Desk
+          </button>
+          <button
+            onClick={() => setActiveTab('access_management')}
+            className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+              activeTab === 'access_management' 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+            }`}
+          >
+            <Users className="w-4 h-4" />
+            <span>Access Management</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('create_scheme')}
+            className={`btn-3d px-6 py-3 text-sm font-bold rounded-xl transition-all whitespace-nowrap flex items-center space-x-2 ${
+              activeTab === 'create_scheme' 
+                ? 'bg-gradient-to-r from-blue-600 to-blue-600 text-white shadow-lg shadow-blue-500/30 border-t border-white/20' 
+                : 'glass-card bg-white/60 text-slate-700 hover:text-blue-600 border border-white/60 hover:bg-white/80'
+            }`}
+          >
+            <PlusCircle className="w-4 h-4" />
+            <span>Launch Scheme</span>
+          </button>
         </div>
 
         {/* 1. SYSTEM ANALYTICS VIEW */}

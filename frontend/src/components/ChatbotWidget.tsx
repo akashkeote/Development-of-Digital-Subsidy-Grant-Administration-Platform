@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Minus, X } from 'lucide-react';
 
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -26,59 +28,100 @@ export const ChatbotWidget: React.FC = () => {
 
   const openBot = () => {
     setIsOpen(true);
+    setIsMinimized(false);
+  };
+
+  const toggleMinimize = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMinimized(!isMinimized);
   };
 
   return (
     <>
-      {/* Floating Button (matches UMANG HTML snippet) */}
+      {/* Modern Floating Trigger Pill */}
       {!isOpen && (
-        <div 
+        <button 
           onClick={openBot}
-          className="fixed bottom-5 right-0 h-[80px] bg-white border border-slate-100 cursor-pointer z-[9999] flex items-center justify-center pr-5 shadow-[0_4px_12px_rgba(0,0,0,0.1)] rounded-l-full hover:pr-6 transition-all hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] group"
+          className="fixed bottom-6 right-6 h-[60px] bg-white border border-slate-200 cursor-pointer z-[9999] flex items-center justify-center pl-2 pr-6 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-full hover:scale-105 hover:shadow-[0_8px_30px_rgb(0,0,0,0.16)] transition-all duration-300 group"
         >
           <img 
             src="https://cdngovai.myscheme.in/64b15bf4c3a58e12cb335ec0/68108e5af2c4864461329009/logos/icon_2-icon.png" 
             alt="UMANG" 
-            className="w-[50px] h-[50px] object-contain bg-white rounded-full p-1 ml-2 group-hover:scale-105 transition-transform"
+            className="w-11 h-11 object-contain p-1"
           />
-          <span className="text-sm m-0 pl-3 pr-2 text-[#00599f] whitespace-nowrap font-bold">
+          <span className="text-[15px] font-extrabold text-slate-700 ml-3">
             Ask UMANG
           </span>
-        </div>
+        </button>
       )}
 
-      {/* Chatbot Window (matches UMANG HTML snippet sizing & behavior) */}
+      {/* Floating Chatbot Window */}
       {isOpen && (
         <div 
-          className="fixed bottom-0 bg-[#D0E2F5] overflow-hidden overscroll-contain z-[9999] rounded-t-2xl shadow-2xl flex flex-col border border-slate-200"
-          style={{
-            right: isMobile ? '2vw' : '2vw',
-            width: isMobile ? '96vw' : '400px',
-            height: isMobile ? '90dvh' : '600px',
+          className={`fixed bg-white overflow-hidden z-[9999] shadow-2xl flex flex-col border border-slate-200 transition-all duration-300 ease-in-out ${
+            isMinimized 
+              ? 'h-[60px] bottom-6 cursor-pointer hover:bg-slate-50 rounded-full' 
+              : 'rounded-2xl'
+          }`}
+          style={!isMinimized ? {
+            bottom: isMobile ? '10px' : '24px',
+            right: isMobile ? '10px' : '24px',
+            width: isMobile ? 'calc(100vw - 20px)' : '400px',
+            height: isMobile ? 'calc(100dvh - 20px)' : '650px',
             maxHeight: '85vh',
+          } : {
+            bottom: '24px',
+            right: '24px',
+            width: '280px',
           }}
+          onClick={isMinimized ? () => setIsMinimized(false) : undefined}
         >
-          <div className="bg-white w-full p-3 flex justify-between items-center border-b border-slate-200">
-            <div className="flex items-center gap-2">
+          {/* Header */}
+          <div className={`w-full flex justify-between items-center shrink-0 ${isMinimized ? 'h-full px-4 bg-white' : 'p-4 bg-gradient-to-r from-blue-600 to-indigo-600'}`}>
+            <div className="flex items-center gap-3">
                <img 
                 src="https://cdngovai.myscheme.in/64b15bf4c3a58e12cb335ec0/68108e5af2c4864461329009/logos/icon_2-icon.png" 
                 alt="UMANG" 
-                className="w-6 h-6 object-contain"
+                className={`object-contain bg-white rounded-full ${isMinimized ? 'w-9 h-9 p-0.5' : 'w-8 h-8 p-1 shadow-sm'}`}
               />
-              <span className="font-bold text-sm text-slate-800">UMANG AI Assistant</span>
+              <span className={`font-bold text-[15px] ${isMinimized ? 'text-slate-800' : 'text-white'}`}>
+                UMANG Assistant
+              </span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 p-1.5 rounded-full transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            </button>
+            
+            <div className="flex items-center gap-1.5">
+              {!isMinimized && (
+                <button 
+                  onClick={toggleMinimize} 
+                  className="text-white/80 hover:text-white hover:bg-white/20 p-1.5 rounded-lg transition-colors outline-none"
+                  title="Minimize"
+                >
+                  <Minus size={18} strokeWidth={2.5} />
+                </button>
+              )}
+              <button 
+                onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} 
+                className={`${isMinimized ? 'text-slate-400 hover:text-slate-700 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/20'} p-1.5 rounded-lg transition-colors outline-none`}
+                title="Close"
+              >
+                <X size={18} strokeWidth={2.5} />
+              </button>
+            </div>
           </div>
-          <iframe 
-            id="chatbot-iframe"
-            allow="clipboard-write; microphone"
-            src="https://chatbot.umangapp.in/"
-            className="w-full h-full border-none overflow-hidden flex-1 bg-white"
-            scrolling="no"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-          ></iframe>
+          
+          {/* Iframe content */}
+          {!isMinimized && (
+            <div className="flex-1 w-full bg-slate-50 relative">
+              <iframe 
+                id="chatbot-iframe"
+                allow="clipboard-write; microphone"
+                src="https://chatbot.umangapp.in/"
+                className="absolute inset-0 w-full h-full border-none"
+                scrolling="no"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+              ></iframe>
+            </div>
+          )}
         </div>
       )}
     </>
