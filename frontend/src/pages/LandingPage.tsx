@@ -436,7 +436,7 @@ export const LandingPage: React.FC = () => {
               <img 
                 src="/indian_leaders_v2.jpg" 
                 alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
-                className="w-full lg:w-[110%] h-auto object-cover md:object-contain drop-shadow-2xl"
+                className="w-full lg:w-[110%] h-auto object-cover md:object-contain"
                 style={{ mixBlendMode: 'multiply' }}
               />
             </div>
