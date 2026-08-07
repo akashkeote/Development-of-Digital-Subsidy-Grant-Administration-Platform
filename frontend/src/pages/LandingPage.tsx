@@ -650,34 +650,63 @@ export const LandingPage: React.FC = () => {
             </motion.p>
           </div>
 
-          <div className="relative w-full flex justify-center lg:justify-end items-center perspective-container">
-            {/* Ambient glow behind the avatars */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-400/20 rounded-full blur-[80px] pointer-events-none"></div>
-            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-green-400/20 rounded-full blur-[80px] pointer-events-none"></div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          <div className="relative w-full aspect-square md:aspect-video perspective-container flex items-center justify-center mt-12 lg:mt-0">
+            {/* 3D Isometric Base Floor */}
+            <motion.div 
+              initial={{ opacity: 0, rotateX: 60, rotateZ: -30, y: 50 }}
+              whileInView={{ opacity: 1, rotateX: 60, rotateZ: -45, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="relative w-full max-w-2xl overflow-hidden py-8"
-              style={{ 
-                mixBlendMode: 'multiply',
-                maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
-              }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+              className="absolute w-[85%] h-[85%] max-h-[500px] bg-white/40 border-2 border-white/80 rounded-[3rem] shadow-[0_40px_80px_rgba(37,99,235,0.1)] backdrop-blur-sm"
+              style={{ transformStyle: 'preserve-3d' }}
             >
-              <div className="marquee-horizontal flex gap-8 items-center hover:[animation-play-state:paused]" style={{ width: 'max-content' }}>
-                {[1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4].map((num, idx) => (
-                  <img 
-                    key={idx}
-                    src={`/cm_avatar_${num}.jpg`} 
-                    alt={`Central Minister 3D Avatar ${num}`} 
-                    className="w-48 md:w-64 h-auto object-contain transform transition-transform duration-500 hover:-translate-y-4 cursor-pointer" 
-                  />
-                ))}
-              </div>
+              {/* Floor Grid Lines */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:40px_40px] opacity-40 rounded-[3rem]"></div>
+              
+              {/* Center Hologram Emitter */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl animate-pulse"></div>
             </motion.div>
+
+            {/* 4 Avatars floating on top */}
+            {[
+              { num: 1, top: '20%', left: '50%', delay: '0s', z: 10 },
+              { num: 2, top: '45%', left: '25%', delay: '0.5s', z: 20 },
+              { num: 3, top: '45%', left: '75%', delay: '1s', z: 20 },
+              { num: 4, top: '75%', left: '50%', delay: '1.5s', z: 30 }
+            ].map((pos, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.5 + i * 0.2 }}
+                className="absolute w-36 md:w-52"
+                style={{ 
+                  top: pos.top, 
+                  left: pos.left,
+                  transform: 'translate(-50%, -50%)',
+                  mixBlendMode: 'multiply',
+                  zIndex: pos.z
+                }}
+              >
+                <div 
+                  className="relative w-full h-full animate-float-slow"
+                  style={{ animationDelay: pos.delay }}
+                >
+                  {/* Holographic glowing base shadow */}
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-20 h-4 bg-blue-500/40 rounded-full blur-md animate-pulse"></div>
+                  
+                  <img 
+                    src={`/cm_avatar_${pos.num}.jpg`} 
+                    alt={`Central Minister Avatar ${pos.num}`} 
+                    className="w-full h-auto object-contain relative z-10"
+                  />
+                  
+                  {/* Hologram scanline effect over avatar */}
+                  <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(59,130,246,0.15)_50%)] bg-[size:100%_4px] pointer-events-none mix-blend-overlay z-20 opacity-60"></div>
+                </div>
+              </motion.div>
+            ))}
           </div>
           
         </div>
