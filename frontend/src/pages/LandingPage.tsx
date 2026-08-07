@@ -53,6 +53,41 @@ const chiefMinisters = [
   { name: "N. Rangaswamy", state: "Puducherry", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/N._Rangaswamy_%28cropped%29.jpg/330px-N._Rangaswamy_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail" },
 ];
 
+const HologramCycler: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const avatars = [1, 2, 3, 4];
+  
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % avatars.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 md:w-64 z-30 pointer-events-none" style={{ mixBlendMode: 'multiply' }}>
+      <div className="relative w-full h-full animate-float">
+        {/* Holographic glowing base shadow */}
+        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-32 h-6 bg-blue-500/60 rounded-full blur-xl animate-pulse"></div>
+        
+        <div className="relative w-full aspect-[3/4]">
+          {avatars.map((num, idx) => (
+            <img 
+              key={idx}
+              src={`/cm_avatar_${num}.jpg`} 
+              alt={`Central Minister Avatar ${num}`} 
+              className={`absolute top-0 left-0 w-full h-full object-contain z-10 transition-opacity duration-1000 ${currentIndex === idx ? 'opacity-100' : 'opacity-0'}`}
+            />
+          ))}
+        </div>
+        
+        {/* Hologram scanline effect over avatar */}
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(59,130,246,0.15)_50%)] bg-[size:100%_4px] mix-blend-overlay z-20 opacity-70"></div>
+      </div>
+    </div>
+  );
+};
+
 export const LandingPage: React.FC = () => {
   const { schemes, stats } = useApp();
   const navigate = useNavigate();
@@ -664,49 +699,10 @@ export const LandingPage: React.FC = () => {
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] bg-[size:40px_40px] opacity-40 rounded-[3rem]"></div>
               
               {/* Center Hologram Emitter */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl animate-pulse"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
             </motion.div>
 
-            {/* 4 Avatars floating on top */}
-            {[
-              { num: 1, top: '20%', left: '50%', delay: '0s', z: 10 },
-              { num: 2, top: '45%', left: '25%', delay: '0.5s', z: 20 },
-              { num: 3, top: '45%', left: '75%', delay: '1s', z: 20 },
-              { num: 4, top: '75%', left: '50%', delay: '1.5s', z: 30 }
-            ].map((pos, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.5 + i * 0.2 }}
-                className="absolute w-36 md:w-52"
-                style={{ 
-                  top: pos.top, 
-                  left: pos.left,
-                  transform: 'translate(-50%, -50%)',
-                  mixBlendMode: 'multiply',
-                  zIndex: pos.z
-                }}
-              >
-                <div 
-                  className="relative w-full h-full animate-float-slow"
-                  style={{ animationDelay: pos.delay }}
-                >
-                  {/* Holographic glowing base shadow */}
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-20 h-4 bg-blue-500/40 rounded-full blur-md animate-pulse"></div>
-                  
-                  <img 
-                    src={`/cm_avatar_${pos.num}.jpg`} 
-                    alt={`Central Minister Avatar ${pos.num}`} 
-                    className="w-full h-auto object-contain relative z-10"
-                  />
-                  
-                  {/* Hologram scanline effect over avatar */}
-                  <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(59,130,246,0.15)_50%)] bg-[size:100%_4px] pointer-events-none mix-blend-overlay z-20 opacity-60"></div>
-                </div>
-              </motion.div>
-            ))}
+            <HologramCycler />
           </div>
           
         </div>
