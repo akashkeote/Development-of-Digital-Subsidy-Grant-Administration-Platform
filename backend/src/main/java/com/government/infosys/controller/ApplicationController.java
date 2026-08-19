@@ -19,43 +19,73 @@ public class ApplicationController {
 
     /**
      * POST /api/applications
-     * Submit a new scheme application (saves to Supabase PostgreSQL).
-     * Body: { schemeId, schemeTitle, applicantName, applicantAadhar, applicantState, applicantIncome }
+     * Submit a new scheme application.
      */
     @PostMapping
-    public ResponseEntity<?> submitApplication(@RequestBody Application application) {
+    public ResponseEntity<?> submitApplication(
+            @RequestBody Application application) {
+
         try {
-            Application saved = applicationService.submitApplication(application);
+            Application saved =
+                    applicationService.submitApplication(application);
+
             return ResponseEntity.ok(saved);
+
         } catch (Exception e) {
+
             return ResponseEntity.internalServerError().body(
-                Map.of("error", "Error submitting application: " + e.getMessage())
+                    Map.of(
+                            "error",
+                            "Error submitting application: "
+                                    + e.getMessage()
+                    )
             );
         }
     }
 
     /**
      * GET /api/applications?aadhar={aadhar}
-     * Fetch all applications for a given Aadhar number (user's history).
+     * Fetch all applications for a given Aadhaar number.
      */
     @GetMapping
     public ResponseEntity<List<Application>> getApplicationsByAadhar(
-            @RequestParam(name = "aadhar", required = false) String aadhar) {
-        List<Application> apps = applicationService.getApplicationsByAadhar(aadhar);
-        return ResponseEntity.ok(apps);
+            @RequestParam(
+                    name = "aadhar",
+                    required = false
+            ) String aadhar) {
+
+        List<Application> applications =
+                applicationService.getApplicationsByAadhar(aadhar);
+
+        return ResponseEntity.ok(applications);
     }
 
     /**
      * PATCH /api/applications/{id}/status
      * Update the status of an application.
-     * Body: { "status": "APPROVED" }
+     *
+     * Body:
+     * {
+     *     "status": "APPROVED"
+     * }
      */
     @PatchMapping("/{id}/status")
-    public ResponseEntity<?> updateStatus(@PathVariable String id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<?> updateStatus(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+
         try {
-            Application updated = applicationService.updateStatus(id, body.get("status"));
+
+            Application updated =
+                    applicationService.updateStatus(
+                            id,
+                            body.get("status")
+                    );
+
             return ResponseEntity.ok(updated);
+
         } catch (Exception e) {
+
             return ResponseEntity.notFound().build();
         }
     }
@@ -65,11 +95,18 @@ public class ApplicationController {
      * Get a single application by ID.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable String id) {
+    public ResponseEntity<?> getById(
+            @PathVariable Long id) {
+
         try {
-            Application app = applicationService.getById(id);
-            return ResponseEntity.ok(app);
+
+            Application application =
+                    applicationService.getById(id);
+
+            return ResponseEntity.ok(application);
+
         } catch (Exception e) {
+
             return ResponseEntity.notFound().build();
         }
     }

@@ -2,18 +2,19 @@ package com.government.infosys.repository;
 
 import com.government.infosys.entity.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-/**
- * JPA Repository backed by Supabase PostgreSQL.
- * Handles CRUD for user applications only.
- * Schemes are NOT stored here — they live in local JSON.
- */
-@Repository
-public interface ApplicationJpaRepository extends JpaRepository<Application, String> {
-    List<Application> findByApplicantAadhar(String aadhar);
-    List<Application> findBySchemeId(String schemeId);
-    List<Application> findByStatus(String status);
+public interface ApplicationJpaRepository extends JpaRepository<Application, Long> {
+
+    List<Application> findByCitizenId(Long citizenId);
+
+    List<Application> findBySchemeId(Long schemeId);
+
+    List<Application> findByCurrentStatusId(Long statusId);
+
+    List<Application> findByApprovalStatusId(Long statusId);
+
+    Optional<Application> findByCitizen_User_AadharNumber(String aadharNumber);
 }

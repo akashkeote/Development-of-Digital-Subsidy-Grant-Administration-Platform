@@ -1,13 +1,14 @@
 package com.government.infosys.service;
 
 import com.government.infosys.entity.Application;
+import com.government.infosys.entity.Status;
 import com.government.infosys.repository.ApplicationRepository;
+import com.government.infosys.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.List;
 
 @Service
 public class ApplicationService {
@@ -15,46 +16,73 @@ public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
 
+    @Autowired
+    private StatusRepository statusRepository;
+
     /**
      * Submit a new application.
-     * Generates a UUID, sets status to PENDING, and records the timestamp.
      */
     public Application submitApplication(Application application) {
-        application.setId(UUID.randomUUID().toString());
-        application.setStatus("PENDING");
-        application.setSubmittedAt(
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-        );
+
+        if (application.getSubmittedAt() == null) {
+            application.setSubmittedAt(LocalDateTime.now());
+        }
+
+        if (application.getCurrentStatus() == null) {
+            Status pendingStatus = statusRepository.findByCode("PENDING")
+                    .orElseThrow(() ->
+                            new RuntimeException("PENDING application status not found"));
+
+            application.setCurrentStatus(pendingStatus);
+        }
+
         return applicationRepository.save(application);
     }
 
     /**
-     * Fetch all applications for a given Aadhar number.
-     * Returns all if aadhar is null/empty (admin use).
+     * Fetch all applications for a given Aadhaar number.
+     * Returns all applications if Aadhaar is null/empty.
      */
     public List<Application> getApplicationsByAadhar(String aadhar) {
+
         if (aadhar == null || aadhar.isBlank()) {
             return applicationRepository.findAll();
         }
+
         return applicationRepository.findByApplicantAadhar(aadhar);
     }
 
     /**
-     * Update the status of an application.
-     * Valid statuses: PENDING, UNDER_REVIEW, APPROVED, REJECTED
+     * Update application status.
      */
-    public Application updateStatus(String id, String status) {
+    public Application updateStatus(Long id, String statusCode) {
+
         Application app = applicationRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Application not found: " + id));
-        app.setStatus(status != null ? status.toUpperCase() : "PENDING");
+                .orElseThrow(() ->
+                        new RuntimeException("Application not found: " + id));
+
+        String code = statusCode != null
+                ? statusCode.toUpperCase()
+                : "PENDING";
+
+        Status status = statusRepository.findByCode(code)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Application status not found: " + code
+                        ));
+
+        app.setCurrentStatus(status);
+
         return applicationRepository.save(app);
     }
 
     /**
      * Get a single application by ID.
      */
-    public Application getById(String id) {
+    public Application getById(Long id) {
+
         return applicationRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Application not found: " + id));
+                .orElseThrow(() ->
+                        new RuntimeException("Application not found: " + id));
     }
 }

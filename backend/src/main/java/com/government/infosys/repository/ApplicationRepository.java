@@ -1,19 +1,18 @@
 package com.government.infosys.repository;
 
 import com.government.infosys.entity.Application;
+import com.government.infosys.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 /**
- * Enterprise Application Repository:
+ * Application Repository Service.
  *
- *   PRIMARY   → Supabase PostgreSQL (via JPA)  — persistent, queryable
- *
- * NOTE: Schemes are NOT in this repo. They live in SubsidyRepository (local JSON).
+ * Uses ApplicationJpaRepository for persistent database operations.
  */
 @Service
 public class ApplicationRepository {
@@ -22,64 +21,61 @@ public class ApplicationRepository {
     private ApplicationJpaRepository jpaRepo;
 
     /**
-     * Save application to Supabase (primary).
+     * Save application to the database.
      */
     public Application save(Application application) {
-        // Assign ID + defaults
-        if (application.getId() == null || application.getId().isEmpty()) {
-            application.setId(UUID.randomUUID().toString());
-        }
-        if (application.getStatus() == null) {
-            application.setStatus("PENDING");
-        }
+
         if (application.getSubmittedAt() == null) {
-            application.setSubmittedAt(Instant.now().toString());
+            application.setSubmittedAt(LocalDateTime.now());
         }
 
-        // 1. PRIMARY: Save to Supabase (PostgreSQL)
-        Application saved = jpaRepo.save(application);
-        System.out.println("[Supabase] Application saved: " + saved.getId());
-
-        return saved;
+        return jpaRepo.save(application);
     }
 
     /**
-     * Fetch all from Supabase.
+     * Fetch all applications.
      */
     public List<Application> findAll() {
         return jpaRepo.findAll();
     }
 
     /**
-     * Find by ID from Supabase.
+     * Find application by database ID.
      */
-    public java.util.Optional<Application> findById(String id) {
+    public Optional<Application> findById(Long id) {
         return jpaRepo.findById(id);
     }
 
     /**
-     * Find by Aadhaar number (user's application history).
+     * Find applications belonging to a citizen using Aadhaar number.
      */
     public List<Application> findByApplicantAadhar(String aadhar) {
-        return jpaRepo.findByApplicantAadhar(aadhar);
+
+        return jpaRepo.findByCitizen_User_AadharNumber(aadhar)
+                .map(List::of)
+                .orElse(List.of());
     }
 
     /**
      * Find all applications for a scheme.
      */
-    public List<Application> findBySchemeId(String schemeId) {
+    public List<Application> findBySchemeId(Long schemeId) {
         return jpaRepo.findBySchemeId(schemeId);
     }
 
     /**
-     * Update application status (admin action).
+     * Update application status.
      */
-    public Application updateStatus(String id, String newStatus) {
-        return jpaRepo.findById(id).map(app -> {
-            app.setStatus(newStatus);
-            Application updated = jpaRepo.save(app);
+    public Application updateStatus(Long id, Status newStatus) {
 
-            return updated;
-        }).orElseThrow(() -> new RuntimeException("Application not found: " + id));
+        return jpaRepo.findById(id)
+                .map(application -> {
+
+                    application.setCurrentStatus(newStatus);
+
+                    return jpaRepo.save(application);
+                })
+                .orElseThrow(() ->
+                        new RuntimeException("Application not found: " + id));
     }
 }
