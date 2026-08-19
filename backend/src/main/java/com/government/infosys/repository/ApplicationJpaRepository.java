@@ -16,5 +16,5 @@ public interface ApplicationJpaRepository extends JpaRepository<Application, Lon
 
     List<Application> findByApprovalStatusId(Long statusId);
 
-    Optional<Application> findByCitizen_User_AadharNumber(String aadharNumber);
+    List<Application> findByCitizen_User_AadharNumber(String aadharNumber);
 }

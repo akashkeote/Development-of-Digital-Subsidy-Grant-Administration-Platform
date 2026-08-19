@@ -51,9 +51,7 @@ public class ApplicationRepository {
      */
     public List<Application> findByApplicantAadhar(String aadhar) {
 
-        return jpaRepo.findByCitizen_User_AadharNumber(aadhar)
-                .map(List::of)
-                .orElse(List.of());
+        return jpaRepo.findByCitizen_User_AadharNumber(aadhar);
     }
 
     /**
