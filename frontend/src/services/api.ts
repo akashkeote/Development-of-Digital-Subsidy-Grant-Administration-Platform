@@ -144,8 +144,14 @@ export const applicationService = {
   },
   
   getApplications: async (): Promise<Application[]> => {
-    await delay(600);
-    return getStorage('mock_db_applications', INITIAL_APPLICATIONS);
+    try {
+      const { data } = await apiClient.get<any[]>('/applications');
+      return data;
+    } catch (error) {
+      console.error("Backend failed, falling back to mock:", error);
+      await delay(600);
+      return getStorage('mock_db_applications', INITIAL_APPLICATIONS);
+    }
   },
   
   verifyApplication: async (appId: string, status: string, remarks: string, docApprovals: any[], officerName?: string): Promise<Application> => {
