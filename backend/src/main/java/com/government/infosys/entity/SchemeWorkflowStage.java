@@ -18,7 +18,7 @@ public class SchemeWorkflowStage {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="scheme_id")
-    private Subsidy scheme;
+    private Scheme scheme;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="workflow_stage_id")

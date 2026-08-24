@@ -18,7 +18,7 @@ public class SchemeDocumentRequirement {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="scheme_id")
-    private Subsidy scheme;
+    private Scheme scheme;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="document_type_id")
