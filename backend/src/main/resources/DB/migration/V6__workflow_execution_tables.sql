@@ -1,102 +1,102 @@
-CREATE TABLE field_verifications (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    application_id BIGINT NOT NULL,
-    officer_id BIGINT NOT NULL,
-    assigned_date DATETIME,
-    visit_date DATETIME,
-    verification_status_id BIGINT NOT NULL,
-    remarks TEXT,
-    recommendation VARCHAR(30),
-    latitude DECIMAL(10,8),
-    longitude DECIMAL(11,8),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fv_application
-        FOREIGN KEY (application_id)
-            REFERENCES applications(id),
-
-    CONSTRAINT fk_fv_officer
-        FOREIGN KEY (officer_id)
-            REFERENCES users(id),
-
-    CONSTRAINT fk_fv_status
-        FOREIGN KEY (verification_status_id)
-            REFERENCES statuses(id)
-);
-
-CREATE TABLE district_decisions (
-
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    application_id BIGINT NOT NULL,
-    district_officer_id BIGINT NOT NULL,
-    decision_status_id BIGINT NOT NULL,
-    decision_date DATETIME,
-    remarks TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_dd_application
-        FOREIGN KEY(application_id)
-            REFERENCES applications(id),
-
-    CONSTRAINT fk_dd_officer
-        FOREIGN KEY(district_officer_id)
-            REFERENCES users(id),
-
-    CONSTRAINT fk_dd_status
-        FOREIGN KEY(decision_status_id)
-            REFERENCES statuses(id)
-);
-
-CREATE TABLE finance_approvals (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    application_id BIGINT NOT NULL,
-    finance_officer_id BIGINT NOT NULL,
-    approval_status_id BIGINT NOT NULL,
-    budget_verified BOOLEAN DEFAULT FALSE,
-    sanction_number VARCHAR(100),
-    sanction_date DATE,
-    remarks TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_fa_application
-        FOREIGN KEY(application_id)
-            REFERENCES applications(id),
-
-    CONSTRAINT fk_fa_officer
-        FOREIGN KEY(finance_officer_id)
-            REFERENCES users(id),
-
-    CONSTRAINT fk_fa_status
-        FOREIGN KEY(approval_status_id)
-            REFERENCES statuses(id)
-);
-
-CREATE TABLE finance_installments (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    application_id BIGINT NOT NULL,
-    installment_number INT NOT NULL,
-    amount DECIMAL(15,2) NOT NULL,
-    payment_status_id BIGINT NOT NULL,
-    transaction_reference VARCHAR(100),
-    payment_date DATE,
-    remarks TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_installment_application
-        FOREIGN KEY(application_id)
-            REFERENCES applications(id),
-
-    CONSTRAINT fk_installment_status
-        FOREIGN KEY(payment_status_id)
-            REFERENCES statuses(id)
-);
-
-CREATE INDEX idx_fv_application
-    ON field_verifications(application_id);
-
-CREATE INDEX idx_dd_application
-    ON district_decisions(application_id);
-
-CREATE INDEX idx_fa_application
-    ON finance_approvals(application_id);
-
-CREATE INDEX idx_installment_application
-    ON finance_installments(application_id);
+"C"R"E"A"T"E" "T"A"B"L"E" "f"i"e"l"d"_"v"e"r"i"f"i"c"a"t"i"o"n"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "a"p"p"l"i"c"a"t"i"o"n"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "o"f"f"i"c"e"r"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "a"s"s"i"g"n"e"d"_"d"a"t"e" "T"I"M"E"S"T"A"M"P","
+" " " " "v"i"s"i"t"_"d"a"t"e" "T"I"M"E"S"T"A"M"P","
+" " " " "v"e"r"i"f"i"c"a"t"i"o"n"_"s"t"a"t"u"s"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "r"e"m"a"r"k"s" "T"E"X"T","
+" " " " "r"e"c"o"m"m"e"n"d"a"t"i"o"n" "V"A"R"C"H"A"R"("3"0")","
+" " " " "l"a"t"i"t"u"d"e" "D"E"C"I"M"A"L"("1"0","8")","
+" " " " "l"o"n"g"i"t"u"d"e" "D"E"C"I"M"A"L"("1"1","8")","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "u"p"d"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P"
+" " " " ","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"f"v"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y" "("a"p"p"l"i"c"a"t"i"o"n"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "a"p"p"l"i"c"a"t"i"o"n"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"f"v"_"o"f"f"i"c"e"r"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y" "("o"f"f"i"c"e"r"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"f"v"_"s"t"a"t"u"s"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y" "("v"e"r"i"f"i"c"a"t"i"o"n"_"s"t"a"t"u"s"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "s"t"a"t"u"s"e"s"("i"d")"
+")";"
+"
+"C"R"E"A"T"E" "T"A"B"L"E" "d"i"s"t"r"i"c"t"_"d"e"c"i"s"i"o"n"s" "("
+"
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "a"p"p"l"i"c"a"t"i"o"n"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "d"i"s"t"r"i"c"t"_"o"f"f"i"c"e"r"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "d"e"c"i"s"i"o"n"_"s"t"a"t"u"s"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "d"e"c"i"s"i"o"n"_"d"a"t"e" "T"I"M"E"S"T"A"M"P","
+" " " " "r"e"m"a"r"k"s" "T"E"X"T","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"d"d"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "a"p"p"l"i"c"a"t"i"o"n"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"d"d"_"o"f"f"i"c"e"r"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("d"i"s"t"r"i"c"t"_"o"f"f"i"c"e"r"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"d"d"_"s"t"a"t"u"s"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("d"e"c"i"s"i"o"n"_"s"t"a"t"u"s"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "s"t"a"t"u"s"e"s"("i"d")"
+")";"
+"
+"C"R"E"A"T"E" "T"A"B"L"E" "f"i"n"a"n"c"e"_"a"p"p"r"o"v"a"l"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "a"p"p"l"i"c"a"t"i"o"n"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "f"i"n"a"n"c"e"_"o"f"f"i"c"e"r"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "a"p"p"r"o"v"a"l"_"s"t"a"t"u"s"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "b"u"d"g"e"t"_"v"e"r"i"f"i"e"d" "B"O"O"L"E"A"N" "D"E"F"A"U"L"T" "F"A"L"S"E","
+" " " " "s"a"n"c"t"i"o"n"_"n"u"m"b"e"r" "V"A"R"C"H"A"R"("1"0"0")","
+" " " " "s"a"n"c"t"i"o"n"_"d"a"t"e" "D"A"T"E","
+" " " " "r"e"m"a"r"k"s" "T"E"X"T","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"f"a"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "a"p"p"l"i"c"a"t"i"o"n"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"f"a"_"o"f"f"i"c"e"r"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("f"i"n"a"n"c"e"_"o"f"f"i"c"e"r"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"f"a"_"s"t"a"t"u"s"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("a"p"p"r"o"v"a"l"_"s"t"a"t"u"s"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "s"t"a"t"u"s"e"s"("i"d")"
+")";"
+"
+"C"R"E"A"T"E" "T"A"B"L"E" "f"i"n"a"n"c"e"_"i"n"s"t"a"l"l"m"e"n"t"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "a"p"p"l"i"c"a"t"i"o"n"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "i"n"s"t"a"l"l"m"e"n"t"_"n"u"m"b"e"r" "I"N"T" "N"O"T" "N"U"L"L","
+" " " " "a"m"o"u"n"t" "D"E"C"I"M"A"L"("1"5","2")" "N"O"T" "N"U"L"L","
+" " " " "p"a"y"m"e"n"t"_"s"t"a"t"u"s"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "t"r"a"n"s"a"c"t"i"o"n"_"r"e"f"e"r"e"n"c"e" "V"A"R"C"H"A"R"("1"0"0")","
+" " " " "p"a"y"m"e"n"t"_"d"a"t"e" "D"A"T"E","
+" " " " "r"e"m"a"r"k"s" "T"E"X"T","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"i"n"s"t"a"l"l"m"e"n"t"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "a"p"p"l"i"c"a"t"i"o"n"s"("i"d")","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"i"n"s"t"a"l"l"m"e"n"t"_"s"t"a"t"u"s"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("p"a"y"m"e"n"t"_"s"t"a"t"u"s"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "s"t"a"t"u"s"e"s"("i"d")"
+")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"f"v"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " "O"N" "f"i"e"l"d"_"v"e"r"i"f"i"c"a"t"i"o"n"s"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"d"d"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " "O"N" "d"i"s"t"r"i"c"t"_"d"e"c"i"s"i"o"n"s"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"f"a"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " "O"N" "f"i"n"a"n"c"e"_"a"p"p"r"o"v"a"l"s"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"i"n"s"t"a"l"l"m"e"n"t"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " "O"N" "f"i"n"a"n"c"e"_"i"n"s"t"a"l"l"m"e"n"t"s"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")";"

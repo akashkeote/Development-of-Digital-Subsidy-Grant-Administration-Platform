@@ -1,43 +1,43 @@
-CREATE TABLE utilization_submissions (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    application_id BIGINT NOT NULL,
-    submitted_by BIGINT NOT NULL,
-    submission_date DATETIME,
-    utilization_status_id BIGINT NOT NULL,
-    total_amount_used DECIMAL(15,2),
-    remarks TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_us_application
-        FOREIGN KEY(application_id)
-            REFERENCES applications(id),
-    CONSTRAINT fk_us_user
-        FOREIGN KEY(submitted_by)
-            REFERENCES users(id),
-    CONSTRAINT fk_us_status
-        FOREIGN KEY(utilization_status_id)
-            REFERENCES statuses(id)
-);
-
-CREATE TABLE utilization_documents (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    utilization_submission_id BIGINT NOT NULL,
-    document_type_id BIGINT NOT NULL,
-    file_name VARCHAR(255),
-    file_path VARCHAR(500),
-    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_ud_submission
-        FOREIGN KEY(utilization_submission_id)
-            REFERENCES utilization_submissions(id)
-                ON DELETE CASCADE,
-
-    CONSTRAINT fk_ud_document
-        FOREIGN KEY(document_type_id)
-            REFERENCES document_types(id)
-);
-
-CREATE INDEX idx_us_application
-    ON utilization_submissions(application_id);
-
-CREATE INDEX idx_ud_submission
-    ON utilization_documents(utilization_submission_id);
+"C"R"E"A"T"E" "T"A"B"L"E" "u"t"i"l"i"z"a"t"i"o"n"_"s"u"b"m"i"s"s"i"o"n"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "a"p"p"l"i"c"a"t"i"o"n"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "s"u"b"m"i"t"t"e"d"_"b"y" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "s"u"b"m"i"s"s"i"o"n"_"d"a"t"e" "T"I"M"E"S"T"A"M"P","
+" " " " "u"t"i"l"i"z"a"t"i"o"n"_"s"t"a"t"u"s"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "t"o"t"a"l"_"a"m"o"u"n"t"_"u"s"e"d" "D"E"C"I"M"A"L"("1"5","2")","
+" " " " "r"e"m"a"r"k"s" "T"E"X"T","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"s"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "a"p"p"l"i"c"a"t"i"o"n"s"("i"d")","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"s"_"u"s"e"r"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("s"u"b"m"i"t"t"e"d"_"b"y")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"s"_"s"t"a"t"u"s"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("u"t"i"l"i"z"a"t"i"o"n"_"s"t"a"t"u"s"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "s"t"a"t"u"s"e"s"("i"d")"
+")";"
+"
+"C"R"E"A"T"E" "T"A"B"L"E" "u"t"i"l"i"z"a"t"i"o"n"_"d"o"c"u"m"e"n"t"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "u"t"i"l"i"z"a"t"i"o"n"_"s"u"b"m"i"s"s"i"o"n"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "d"o"c"u"m"e"n"t"_"t"y"p"e"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "f"i"l"e"_"n"a"m"e" "V"A"R"C"H"A"R"("2"5"5")","
+" " " " "f"i"l"e"_"p"a"t"h" "V"A"R"C"H"A"R"("5"0"0")","
+" " " " "u"p"l"o"a"d"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"d"_"s"u"b"m"i"s"s"i"o"n"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("u"t"i"l"i"z"a"t"i"o"n"_"s"u"b"m"i"s"s"i"o"n"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "u"t"i"l"i"z"a"t"i"o"n"_"s"u"b"m"i"s"s"i"o"n"s"("i"d")"
+" " " " " " " " " " " " " " " " "O"N" "D"E"L"E"T"E" "C"A"S"C"A"D"E","
+"
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"d"_"d"o"c"u"m"e"n"t"
+" " " " " " " " "F"O"R"E"I"G"N" "K"E"Y"("d"o"c"u"m"e"n"t"_"t"y"p"e"_"i"d")"
+" " " " " " " " " " " " "R"E"F"E"R"E"N"C"E"S" "d"o"c"u"m"e"n"t"_"t"y"p"e"s"("i"d")"
+")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"u"s"_"a"p"p"l"i"c"a"t"i"o"n"
+" " " " "O"N" "u"t"i"l"i"z"a"t"i"o"n"_"s"u"b"m"i"s"s"i"o"n"s"("a"p"p"l"i"c"a"t"i"o"n"_"i"d")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"u"d"_"s"u"b"m"i"s"s"i"o"n"
+" " " " "O"N" "u"t"i"l"i"z"a"t"i"o"n"_"d"o"c"u"m"e"n"t"s"("u"t"i"l"i"z"a"t"i"o"n"_"s"u"b"m"i"s"s"i"o"n"_"i"d")";"

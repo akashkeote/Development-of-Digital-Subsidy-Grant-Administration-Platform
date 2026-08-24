@@ -1,73 +1,73 @@
-CREATE TABLE scheme_budget_allocations (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    scheme_id BIGINT NOT NULL,
-    financial_year VARCHAR(9) NOT NULL,
-    allocated_amount DECIMAL(15,2) NOT NULL,
-    revised_amount DECIMAL(15,2),
-    utilized_amount DECIMAL(15,2) DEFAULT 0.00,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_budget_scheme
-    FOREIGN KEY (scheme_id)
-    REFERENCES schemes(id)
-    ON DELETE CASCADE,
-    CONSTRAINT uk_scheme_financial_year
-    UNIQUE (scheme_id, financial_year)
-);
-
-CREATE TABLE eligibility_criteria_master (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    code VARCHAR(50) NOT NULL,
-    name VARCHAR(150) NOT NULL,
-    data_type VARCHAR(20) NOT NULL,
-    unit VARCHAR(30),
-    description VARCHAR(500),
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT uk_eligibility_code
-    UNIQUE(code)
-);
-
-CREATE TABLE scheme_eligibility_rules (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    scheme_id BIGINT NOT NULL,
-    criteria_id BIGINT NOT NULL,
-    operator VARCHAR(20) NOT NULL,
-    value_from VARCHAR(100),
-    value_to VARCHAR(100),
-    logical_group INT DEFAULT 1,
-    logical_join VARCHAR(10) DEFAULT 'AND',
-    is_mandatory BOOLEAN DEFAULT TRUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_rule_scheme
-    FOREIGN KEY (scheme_id)
-    REFERENCES schemes(id)
-    ON DELETE CASCADE,
-    CONSTRAINT fk_rule_criteria
-    FOREIGN KEY (criteria_id)
-    REFERENCES eligibility_criteria_master(id)
-    ON DELETE CASCADE
-);
-
-CREATE INDEX idx_budget_scheme
-    ON scheme_budget_allocations(scheme_id);
-
-CREATE INDEX idx_rule_scheme
-    ON scheme_eligibility_rules(scheme_id);
-
-CREATE INDEX idx_rule_criteria
-    ON scheme_eligibility_rules(criteria_id);
-
-
-INSERT INTO eligibility_criteria_master
-(code,name,data_type,unit,description)
-VALUES
-    ('AGE','Age','NUMBER','Years','Applicant age'),
-    ('INCOME','Annual Income','DECIMAL','INR','Annual family income'),
-    ('AADHAAR_VERIFIED','Aadhaar Verification','BOOLEAN',NULL,'Aadhaar verification status'),
-    ('PAN_VERIFIED','PAN Verification','BOOLEAN',NULL,'PAN verification status'),
-    ('GENDER','Gender','STRING',NULL,'Applicant gender'),
-    ('CASTE','Caste','STRING',NULL,'Social category'),
-    ('RESIDENCY','Residency','STRING',NULL,'State residency'),
-    ('LAND_HOLDING','Land Holding','DECIMAL','Acres','Agricultural land owned'),
-    ('BANK_ACCOUNT','Bank Account Linked','BOOLEAN',NULL,'Bank account verification'),
-    ('BUSINESS_REGISTERED','Business Registered','BOOLEAN',NULL,'Business registration status');
+"C"R"E"A"T"E" "T"A"B"L"E" "s"c"h"e"m"e"_"b"u"d"g"e"t"_"a"l"l"o"c"a"t"i"o"n"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "s"c"h"e"m"e"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "f"i"n"a"n"c"i"a"l"_"y"e"a"r" "V"A"R"C"H"A"R"("9")" "N"O"T" "N"U"L"L","
+" " " " "a"l"l"o"c"a"t"e"d"_"a"m"o"u"n"t" "D"E"C"I"M"A"L"("1"5","2")" "N"O"T" "N"U"L"L","
+" " " " "r"e"v"i"s"e"d"_"a"m"o"u"n"t" "D"E"C"I"M"A"L"("1"5","2")","
+" " " " "u"t"i"l"i"z"e"d"_"a"m"o"u"n"t" "D"E"C"I"M"A"L"("1"5","2")" "D"E"F"A"U"L"T" "0"."0"0","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"b"u"d"g"e"t"_"s"c"h"e"m"e"
+" " " " "F"O"R"E"I"G"N" "K"E"Y" "("s"c"h"e"m"e"_"i"d")"
+" " " " "R"E"F"E"R"E"N"C"E"S" "s"c"h"e"m"e"s"("i"d")"
+" " " " "O"N" "D"E"L"E"T"E" "C"A"S"C"A"D"E","
+" " " " "C"O"N"S"T"R"A"I"N"T" "u"k"_"s"c"h"e"m"e"_"f"i"n"a"n"c"i"a"l"_"y"e"a"r"
+" " " " "U"N"I"Q"U"E" "("s"c"h"e"m"e"_"i"d"," "f"i"n"a"n"c"i"a"l"_"y"e"a"r")"
+")";"
+"
+"C"R"E"A"T"E" "T"A"B"L"E" "e"l"i"g"i"b"i"l"i"t"y"_"c"r"i"t"e"r"i"a"_"m"a"s"t"e"r" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "c"o"d"e" "V"A"R"C"H"A"R"("5"0")" "N"O"T" "N"U"L"L","
+" " " " "n"a"m"e" "V"A"R"C"H"A"R"("1"5"0")" "N"O"T" "N"U"L"L","
+" " " " "d"a"t"a"_"t"y"p"e" "V"A"R"C"H"A"R"("2"0")" "N"O"T" "N"U"L"L","
+" " " " "u"n"i"t" "V"A"R"C"H"A"R"("3"0")","
+" " " " "d"e"s"c"r"i"p"t"i"o"n" "V"A"R"C"H"A"R"("5"0"0")","
+" " " " "i"s"_"a"c"t"i"v"e" "B"O"O"L"E"A"N" "D"E"F"A"U"L"T" "T"R"U"E","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "u"k"_"e"l"i"g"i"b"i"l"i"t"y"_"c"o"d"e"
+" " " " "U"N"I"Q"U"E"("c"o"d"e")"
+")";"
+"
+"C"R"E"A"T"E" "T"A"B"L"E" "s"c"h"e"m"e"_"e"l"i"g"i"b"i"l"i"t"y"_"r"u"l"e"s" "("
+" " " " "i"d" "B"I"G"I"N"T" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y" "P"R"I"M"A"R"Y" "K"E"Y","
+" " " " "s"c"h"e"m"e"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "c"r"i"t"e"r"i"a"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
+" " " " "o"p"e"r"a"t"o"r" "V"A"R"C"H"A"R"("2"0")" "N"O"T" "N"U"L"L","
+" " " " "v"a"l"u"e"_"f"r"o"m" "V"A"R"C"H"A"R"("1"0"0")","
+" " " " "v"a"l"u"e"_"t"o" "V"A"R"C"H"A"R"("1"0"0")","
+" " " " "l"o"g"i"c"a"l"_"g"r"o"u"p" "I"N"T" "D"E"F"A"U"L"T" "1","
+" " " " "l"o"g"i"c"a"l"_"j"o"i"n" "V"A"R"C"H"A"R"("1"0")" "D"E"F"A"U"L"T" "'"A"N"D"'","
+" " " " "i"s"_"m"a"n"d"a"t"o"r"y" "B"O"O"L"E"A"N" "D"E"F"A"U"L"T" "T"R"U"E","
+" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"r"u"l"e"_"s"c"h"e"m"e"
+" " " " "F"O"R"E"I"G"N" "K"E"Y" "("s"c"h"e"m"e"_"i"d")"
+" " " " "R"E"F"E"R"E"N"C"E"S" "s"c"h"e"m"e"s"("i"d")"
+" " " " "O"N" "D"E"L"E"T"E" "C"A"S"C"A"D"E","
+" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"r"u"l"e"_"c"r"i"t"e"r"i"a"
+" " " " "F"O"R"E"I"G"N" "K"E"Y" "("c"r"i"t"e"r"i"a"_"i"d")"
+" " " " "R"E"F"E"R"E"N"C"E"S" "e"l"i"g"i"b"i"l"i"t"y"_"c"r"i"t"e"r"i"a"_"m"a"s"t"e"r"("i"d")"
+" " " " "O"N" "D"E"L"E"T"E" "C"A"S"C"A"D"E"
+")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"b"u"d"g"e"t"_"s"c"h"e"m"e"
+" " " " "O"N" "s"c"h"e"m"e"_"b"u"d"g"e"t"_"a"l"l"o"c"a"t"i"o"n"s"("s"c"h"e"m"e"_"i"d")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"r"u"l"e"_"s"c"h"e"m"e"
+" " " " "O"N" "s"c"h"e"m"e"_"e"l"i"g"i"b"i"l"i"t"y"_"r"u"l"e"s"("s"c"h"e"m"e"_"i"d")";"
+"
+"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"r"u"l"e"_"c"r"i"t"e"r"i"a"
+" " " " "O"N" "s"c"h"e"m"e"_"e"l"i"g"i"b"i"l"i"t"y"_"r"u"l"e"s"("c"r"i"t"e"r"i"a"_"i"d")";"
+"
+"
+"I"N"S"E"R"T" "I"N"T"O" "e"l"i"g"i"b"i"l"i"t"y"_"c"r"i"t"e"r"i"a"_"m"a"s"t"e"r"
+"("c"o"d"e","n"a"m"e","d"a"t"a"_"t"y"p"e","u"n"i"t","d"e"s"c"r"i"p"t"i"o"n")"
+"V"A"L"U"E"S"
+" " " " "("'"A"G"E"'","'"A"g"e"'","'"N"U"M"B"E"R"'","'"Y"e"a"r"s"'","'"A"p"p"l"i"c"a"n"t" "a"g"e"'")","
+" " " " "("'"I"N"C"O"M"E"'","'"A"n"n"u"a"l" "I"n"c"o"m"e"'","'"D"E"C"I"M"A"L"'","'"I"N"R"'","'"A"n"n"u"a"l" "f"a"m"i"l"y" "i"n"c"o"m"e"'")","
+" " " " "("'"A"A"D"H"A"A"R"_"V"E"R"I"F"I"E"D"'","'"A"a"d"h"a"a"r" "V"e"r"i"f"i"c"a"t"i"o"n"'","'"B"O"O"L"E"A"N"'","N"U"L"L","'"A"a"d"h"a"a"r" "v"e"r"i"f"i"c"a"t"i"o"n" "s"t"a"t"u"s"'")","
+" " " " "("'"P"A"N"_"V"E"R"I"F"I"E"D"'","'"P"A"N" "V"e"r"i"f"i"c"a"t"i"o"n"'","'"B"O"O"L"E"A"N"'","N"U"L"L","'"P"A"N" "v"e"r"i"f"i"c"a"t"i"o"n" "s"t"a"t"u"s"'")","
+" " " " "("'"G"E"N"D"E"R"'","'"G"e"n"d"e"r"'","'"S"T"R"I"N"G"'","N"U"L"L","'"A"p"p"l"i"c"a"n"t" "g"e"n"d"e"r"'")","
+" " " " "("'"C"A"S"T"E"'","'"C"a"s"t"e"'","'"S"T"R"I"N"G"'","N"U"L"L","'"S"o"c"i"a"l" "c"a"t"e"g"o"r"y"'")","
+" " " " "("'"R"E"S"I"D"E"N"C"Y"'","'"R"e"s"i"d"e"n"c"y"'","'"S"T"R"I"N"G"'","N"U"L"L","'"S"t"a"t"e" "r"e"s"i"d"e"n"c"y"'")","
+" " " " "("'"L"A"N"D"_"H"O"L"D"I"N"G"'","'"L"a"n"d" "H"o"l"d"i"n"g"'","'"D"E"C"I"M"A"L"'","'"A"c"r"e"s"'","'"A"g"r"i"c"u"l"t"u"r"a"l" "l"a"n"d" "o"w"n"e"d"'")","
+" " " " "("'"B"A"N"K"_"A"C"C"O"U"N"T"'","'"B"a"n"k" "A"c"c"o"u"n"t" "L"i"n"k"e"d"'","'"B"O"O"L"E"A"N"'","N"U"L"L","'"B"a"n"k" "a"c"c"o"u"n"t" "v"e"r"i"f"i"c"a"t"i"o"n"'")","
+" " " " "("'"B"U"S"I"N"E"S"S"_"R"E"G"I"S"T"E"R"E"D"'","'"B"u"s"i"n"e"s"s" "R"e"g"i"s"t"e"r"e"d"'","'"B"O"O"L"E"A"N"'","N"U"L"L","'"B"u"s"i"n"e"s"s" "r"e"g"i"s"t"r"a"t"i"o"n" "s"t"a"t"u"s"'")";"

@@ -31,8 +31,9 @@ public class Application {
      *
      * For now this field maps directly to the database foreign key.
      */
-    @Column(name = "scheme_id", nullable = false)
-    private Long schemeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scheme_id", nullable = false)
+    private Scheme scheme;
 
     @Column(name = "submitted_at", nullable = false)
     private LocalDateTime submittedAt;
