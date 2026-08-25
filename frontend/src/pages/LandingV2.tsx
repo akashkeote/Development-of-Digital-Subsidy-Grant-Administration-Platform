@@ -29,15 +29,18 @@ export const LandingV2: React.FC = () => {
       let offsetX = 0;
       let offsetY = 0;
 
+      // Use CONTAIN logic to show the entire 3D model without cropping
       if (canvasRatio > imgRatio) {
-        drawWidth = canvas.width;
-        drawHeight = canvas.width / imgRatio;
-        offsetY = (canvas.height - drawHeight) / 2;
-      } else {
         drawHeight = canvas.height;
         drawWidth = canvas.height * imgRatio;
         offsetX = (canvas.width - drawWidth) / 2;
+      } else {
+        drawWidth = canvas.width;
+        drawHeight = canvas.width / imgRatio;
+        offsetY = (canvas.height - drawHeight) / 2;
       }
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     };
@@ -91,15 +94,18 @@ export const LandingV2: React.FC = () => {
       let offsetX = 0;
       let offsetY = 0;
 
+      // Use CONTAIN logic to show the entire 3D model without cropping
       if (canvasRatio > imgRatio) {
-        drawWidth = canvas.width;
-        drawHeight = canvas.width / imgRatio;
-        offsetY = (canvas.height - drawHeight) / 2;
-      } else {
         drawHeight = canvas.height;
         drawWidth = canvas.height * imgRatio;
         offsetX = (canvas.width - drawWidth) / 2;
+      } else {
+        drawWidth = canvas.width;
+        drawHeight = canvas.width / imgRatio;
+        offsetY = (canvas.height - drawHeight) / 2;
       }
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
@@ -122,8 +128,8 @@ export const LandingV2: React.FC = () => {
       
       {/* Pinned 3D Background */}
       <div className="fixed inset-0 z-0">
-        <canvas ref={canvasRef} className="w-full h-full object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90 pointer-events-none" />
+        <canvas ref={canvasRef} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-black/40 to-black/90 pointer-events-none" />
       </div>
 
       {/* Content Layer (Scrolls normally over the pinned canvas) */}
