@@ -72,8 +72,9 @@ const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
-    <ScrollToTop />
-    <AnimatePresence mode="wait">
+    <> 
+      <ScrollToTop /> 
+      <AnimatePresence mode="wait">
       {/* @ts-ignore React Router v6 typings don't include key on Routes but AnimatePresence needs it */}
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
@@ -118,6 +119,7 @@ const AnimatedRoutes = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AnimatePresence>
+    </>
   );
 };
 
@@ -135,4 +137,5 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+
 
