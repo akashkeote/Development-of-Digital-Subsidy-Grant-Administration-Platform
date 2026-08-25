@@ -136,7 +136,7 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans relative overflow-hidden" id="landing_page_root">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans relative" id="landing_page_root">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
         .font-heading { font-family: 'Space Grotesk', sans-serif; }
