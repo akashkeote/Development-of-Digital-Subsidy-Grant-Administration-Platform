@@ -79,7 +79,7 @@ export const Registration: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col w-full font-sans bg-white overflow-hidden relative">
+    <div className="min-h-screen flex flex-col w-full font-sans bg-white overflow-x-hidden relative">
       
       {/* Top Banner (Full Width) */}
       <div className="w-full h-10 bg-slate-900 z-50 flex items-center justify-between px-6 shrink-0 shadow-md">
@@ -105,7 +105,8 @@ export const Registration: React.FC = () => {
 
       <div className="flex flex-col md:flex-row flex-1">
         {/* Left side - Dark Panel with Circles */}
-        <div className="w-full md:w-[45%] lg:w-[40%] relative overflow-hidden flex flex-col justify-center px-8 lg:px-14 py-16 bg-blue-700 md:min-h-full">
+        <div className="w-full md:w-[45%] lg:w-[40%] relative bg-blue-700 md:min-h-full">
+          <div className="md:sticky md:top-10 w-full flex flex-col justify-center h-auto md:h-[calc(100vh-40px)] relative overflow-hidden px-8 lg:px-14 py-16">
           {/* Overlapping Circles Background */}
           <div className="absolute top-[-15%] right-[-20%] w-[500px] h-[500px] rounded-full bg-blue-600/50 mix-blend-overlay pointer-events-none"></div>
           <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-800/40 mix-blend-overlay pointer-events-none"></div>
@@ -142,6 +143,8 @@ export const Registration: React.FC = () => {
             </div>
           </div>
         </div>
+
+          </div>
 
         {/* Right side - Registration Flow */}
         <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col items-center px-4 sm:px-6 py-12 relative bg-slate-50 min-h-screen md:min-h-0 md:overflow-y-auto">
