@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Footer } from '../components/Footer';
-import { CheckCircle, Search, ArrowRight, GraduationCap, Home as HomeIcon, MapPin, Building2, Leaf, ShieldCheck, HeartPulse, FileText, ChevronRight, Activity, Users, Database, Compass, Sun, Sprout, Landmark } from 'lucide-react';
+import { BarChart, Target, Zap, CheckCircle, Search, ArrowRight, GraduationCap, Home as HomeIcon, MapPin, Building2, Leaf, ShieldCheck, HeartPulse, FileText, ChevronRight, Activity, Users, Database, Compass, Sun, Sprout, Landmark } from 'lucide-react';
 import { motion } from 'motion/react';
 
 const ministers = [
@@ -111,6 +111,86 @@ const HologramCycler: React.FC = () => {
 };
 
 export const LandingPage: React.FC = () => {
+
+  // Scrollytelling Canvas State
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [activeSection, setActiveSection] = useState(0);
+  const activeSectionRef = useRef(0);
+  const totalFrames = 480;
+
+  // Preload frames
+  useEffect(() => {
+    const imgArray: HTMLImageElement[] = [];
+    const drawInitial = (img: HTMLImageElement) => {
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext('2d');
+      if (!canvas || !ctx) return;
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    };
+
+    for (let i = 0; i < totalFrames; i++) {
+      const img = new Image();
+      img.src = `/anim-v2/frame_${i}.webp`;
+      img.onload = () => {
+        if (i === 0) drawInitial(img);
+      };
+      imgArray.push(img);
+    }
+    setImages(imgArray);
+  }, []);
+
+  // Scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      if (images.length === 0) return;
+      const html = document.documentElement;
+      const scrollTop = html.scrollTop;
+      
+      // We calculate progress relative to the 500vh container (approx 5 window heights)
+      // Max scroll for the sticky section is 4 * innerHeight
+      const maxScrollTop = window.innerHeight * 4;
+      const scrollFraction = maxScrollTop > 0 ? (scrollTop / maxScrollTop) : 0;
+      
+      const frameIndex = Math.min(totalFrames - 1, Math.max(0, Math.floor(scrollFraction * totalFrames)));
+      const img = images[frameIndex];
+      
+      if (img && img.complete) {
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext('2d');
+        if (canvas && ctx) {
+          canvas.width = img.naturalWidth || img.width;
+          canvas.height = img.naturalHeight || img.height;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0);
+        }
+      }
+
+      let newSection = 0;
+      if (scrollFraction < 0.20) newSection = 0;
+      else if (scrollFraction < 0.45) newSection = 1;
+      else if (scrollFraction < 0.70) newSection = 2;
+      else if (scrollFraction < 0.90) newSection = 3;
+      else newSection = 4;
+
+      if (newSection !== activeSectionRef.current) {
+        activeSectionRef.current = newSection;
+        setActiveSection(newSection);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [images]);
   const { schemes, stats } = useApp();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -368,100 +448,142 @@ export const LandingPage: React.FC = () => {
         </header>
       </div>
 
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-28 lg:pt-52 lg:pb-36 px-6 mesh-bg min-h-screen flex items-center">
-        {/* Massive 3D Background Flag */}
-        <div className="absolute -right-20 lg:-right-32 xl:-right-10 top-1/3 -translate-y-1/3 z-0 transform translate-x-[1.5%] scale-75 lg:scale-90 xl:scale-110 2xl:scale-[1.2] -rotate-6 hidden lg:block perspective-container pointer-events-none opacity-90">
-
-          <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
-            <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
-            <div className="flag relative z-10" style={{width: '600px', height: '400px', borderRadius: '0 8px 8px 0'}}>
-              <div className="flag-saffron"></div>
-              <div className="flag-white">
-                <div className="center-emblem" style={{width: '90px', height: '90px', borderRadius: '50%', border: 'none'}}></div>
-              </div>
-              <div className="flag-green"></div>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400/20 rounded-full blur-[80px] animate-float z-0 pointer-events-none"></div>
-        <div className="absolute top-40 right-20 w-96 h-96 bg-violet-400/20 rounded-full blur-[100px] animate-float-slow z-0 pointer-events-none"></div>
+      
+      {/* Scrollytelling Hero Section (Replacing old Hero) */}
+      <section className="relative h-[500vh] bg-[#050505] text-white selection:bg-[#0050FF] selection:text-white">
         
-        {/* Placed as a direct child of the section to ensure mix-blend-mode: multiply blends with the section background */}
-        <img 
-          src="/salute.jpg" 
-          alt="Patriotic Salute" 
-          className="absolute bottom-4 right-4 lg:right-10 xl:right-24 w-60 h-60 lg:w-72 lg:h-72 xl:w-96 xl:h-96 object-contain z-10 pointer-events-none hidden lg:block opacity-60" 
-          style={{ mixBlendMode: 'multiply' }}
-        />
-        
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-30 w-full">
-          <div className="lg:col-span-7 xl:col-span-7 space-y-8 text-center lg:text-left perspective-container lg:pr-12 xl:pr-0 relative z-40">
-            <motion.div 
-              initial={{ opacity: 0, y: 30, rotateX: 20 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass border border-blue-100/60 animate-pulse-glow"
-            >
-              <span className="text-lg">🇮🇳</span>
-              <span className="text-xs font-bold text-blue-700 uppercase tracking-wider font-heading">Digital India Initiative 2026</span>
-            </motion.div>
+        {/* Sticky Canvas Container */}
+        <div className="sticky top-0 h-screen w-full overflow-hidden z-0 bg-[#050505]">
+          <canvas ref={canvasRef} className="w-full h-full object-cover transform-gpu origin-center" />
+          <div className="absolute inset-0 bg-black/50 pointer-events-none backdrop-blur-[2px]" />
 
-            <motion.h1 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-              className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight text-slate-900 leading-[1.1]"
-            >
-              Empowering Citizens Through <br />
-              <span className="text-blue-600">
-                Digital Welfare.
-              </span>
-            </motion.h1>
+          {/* Robust Storytelling Text Overlays */}
+          <div className="absolute inset-0 pointer-events-none">
+            <AnimatePresence mode="wait">
+              
+              {activeSection === 0 && (
+                <motion.div 
+                  key="hero"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
+                >
+                  <div className="max-w-4xl mx-auto flex flex-col items-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 text-sm font-bold tracking-widest uppercase mb-8 backdrop-blur-md">
+                      <Zap className="w-4 h-4" /> The Future of Subsidy Delivery
+                    </div>
+                    <h1 className="text-5xl md:text-7xl font-heading font-extrabold text-white tracking-tight leading-[1.1] mb-8 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+                      Transparent. Secure. <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 drop-shadow-sm">
+                        Instant Disbursement.
+                      </span>
+                    </h1>
+                    <p className="text-lg md:text-xl text-slate-200 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+                      Experience the next generation of government grant distribution. Powered by real-time DBT, automated KYC, and multi-tier verification.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
-            <motion.p 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium"
-            >
-              DigiGrant is the next-generation 3D platform to effortlessly discover grants, verify documents instantly, and receive DBT assistance securely.
-            </motion.p>
+              {activeSection === 1 && (
+                <motion.div 
+                  key="f1"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-y-0 left-0 md:left-[10%] flex flex-col justify-center px-6 w-full md:w-1/3"
+                >
+                  <div className="flex flex-col">
+                    <Target className="w-12 h-12 text-blue-400 mb-6 drop-shadow-lg" />
+                    <h3 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-white mb-6 leading-[1.1] drop-shadow-lg">
+                      Precision Targeting
+                    </h3>
+                    <p className="text-xl text-slate-200 leading-relaxed drop-shadow-md font-medium">
+                      AI-driven beneficiary matching ensures funds reach the exact intended citizens without leakage. Aadhaar-linked KYC guarantees absolute accuracy.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
-            <motion.form 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              onSubmit={handleSearch} 
-              className="max-w-xl mx-auto lg:mx-0 glass p-2.5 rounded-2xl shadow-[inset_0_2px_4px_rgba(255,255,255,0.6),0_10px_40px_rgba(79,70,229,0.1)] flex flex-col sm:flex-row gap-3 transform-gpu"
-            >
-              <div className="relative flex-1 flex items-center px-4">
-                <Search className="text-blue-400 shrink-0" size={22} />
-                <input 
-                  type="text" 
-                  placeholder="Search 'Housing' or 'Agriculture'..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-transparent border-none text-slate-700 placeholder-slate-400 font-medium h-12 focus:outline-none focus:ring-0 ml-3"
-                />
-              </div>
-              <button 
-                type="submit" 
-                className="btn-3d bg-gradient-to-r from-blue-600 to-blue-600 text-white font-bold px-8 py-3.5 rounded-xl flex items-center justify-center gap-2 font-heading tracking-wide"
-              >
-                Search <ArrowRight size={18} />
-              </button>
-            </motion.form>
-          </div>
+              {activeSection === 2 && (
+                <motion.div 
+                  key="f2"
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 30 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-y-0 right-0 md:right-[10%] flex flex-col justify-center px-6 w-full md:w-1/3 text-left"
+                >
+                  <div className="flex flex-col">
+                    <BarChart className="w-12 h-12 text-emerald-400 mb-6 drop-shadow-lg" />
+                    <h3 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-white mb-6 leading-[1.1] drop-shadow-lg">
+                      Real-time Analytics
+                    </h3>
+                    <p className="text-xl text-slate-200 leading-relaxed drop-shadow-md font-medium">
+                      Live dashboards for all nodal officers to track disbursement metrics, ledger history, and fund utilization instantly across districts.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
 
-          <div className="lg:col-span-5 relative hidden md:block h-[500px]">
-            {/* Empty space on the right, since the flag and avatars are now absolutely positioned on the screen right */}
+              {activeSection === 3 && (
+                <motion.div 
+                  key="f3"
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-y-0 left-0 md:left-[10%] flex flex-col justify-center px-6 w-full md:w-1/3"
+                >
+                  <div className="flex flex-col">
+                    <FileText className="w-12 h-12 text-purple-400 mb-6 drop-shadow-lg" />
+                    <h3 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight text-white mb-6 leading-[1.1] drop-shadow-lg">
+                      Paperless Pipeline
+                    </h3>
+                    <p className="text-xl text-slate-200 leading-relaxed drop-shadow-md font-medium">
+                      100% digital verification pipeline. Middlemen and delays fade away as transactions are processed end-to-end via our secure portal.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeSection === 4 && (
+                <motion.div 
+                  key="cta"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
+                >
+                  <div className="max-w-4xl flex flex-col items-center pointer-events-auto">
+                    <h2 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight text-white mb-6 drop-shadow-xl leading-[1.1]">
+                      Track everything. <br/> <span className="text-white/50">Lose nothing.</span>
+                    </h2>
+                    <p className="text-2xl text-blue-200 mb-10 max-w-2xl mx-auto drop-shadow-lg font-medium">
+                      Designed for governance, crafted for citizens. Join the digital revolution in subsidy distribution today.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <button 
+                        onClick={() => navigate('/login')}
+                        className="px-10 py-4 bg-white text-[#050505] rounded-full font-bold text-xl hover:bg-slate-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)] font-heading"
+                      >
+                        Access Dashboard
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              
+            </AnimatePresence>
           </div>
         </div>
       </section>
 
-      {/* Visionary Leaders Graphic Section */}
+{/* Visionary Leaders Graphic Section */}
       <section className="relative py-32 bg-slate-50 overflow-hidden border-b border-slate-100">
         <div className="absolute inset-0 bg-mesh opacity-40 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center perspective-container">
