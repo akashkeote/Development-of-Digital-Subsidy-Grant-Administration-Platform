@@ -63,6 +63,7 @@ export interface Application {
   schemeTitle: string;
   citizenId: string;
   citizenName: string;
+  submittedByRole?: 'citizen' | 'vle';
   appliedDate: string;
   status: ApplicationStatus;
   currentStep: number; // 1: Submitted, 2: Verification, 3: Sanctioning, 4: Disbursement
@@ -125,3 +126,4 @@ export interface SystemStats {
   totalSanctionedAmount: number;
   totalDisbursedAmount: number;
 }
+

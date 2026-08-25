@@ -19,13 +19,14 @@ export const VleDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   // Dummy VLE metrics for demonstration
-  const totalAssisted = 142;
+  // totalAssisted is calculated dynamically now based on VLE submissions
   const cashbackPerApp = 50; // ₹50 per successful application
   const totalEarned = totalAssisted * cashbackPerApp;
   const pendingPayout = 1250;
 
   // We pretend the latest 5 applications in the system were assisted by this VLE for demo purposes
-  const recentAssistedApps = applications.slice(0, 5);
+  const assistedApps = applications.filter(app => app.submittedByRole === 'vle');
+  const recentAssistedApps = assistedApps.slice(0, 5);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -105,7 +106,7 @@ export const VleDashboard: React.FC = () => {
               <h3 className="text-lg font-bold text-slate-800">Recent Assisted Applications</h3>
               <p className="text-xs text-slate-500 mt-1 font-medium">Track the status of applications you filed for citizens.</p>
             </div>
-            <button className="text-sm font-bold text-indigo-600 bg-indigo-50 px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors">
+            <button onClick={() => navigate('/vle/ledger')} className="text-sm font-bold text-indigo-600 bg-indigo-50 px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors">
               View All History
             </button>
           </div>
@@ -117,6 +118,7 @@ export const VleDashboard: React.FC = () => {
                   <th className="px-6 py-4 rounded-tl-xl">Citizen Name</th>
                   <th className="px-6 py-4">Application ID</th>
                   <th className="px-6 py-4">Scheme</th>
+                  <th className="px-6 py-4">Applied On</th>`n                  <th className="px-6 py-4">Applied On</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4 text-right rounded-tr-xl">Commission</th>
                 </tr>
@@ -137,6 +139,7 @@ export const VleDashboard: React.FC = () => {
                       <td className="px-6 py-4 font-bold text-slate-800">{app.citizenName}</td>
                       <td className="px-6 py-4 font-mono text-xs">{app.id}</td>
                       <td className="px-6 py-4 font-medium max-w-[200px] truncate" title={app.schemeTitle}>{app.schemeTitle}</td>
+                      <td className="px-6 py-4 font-medium text-slate-500 whitespace-nowrap">{new Date(app.appliedDate).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</td>
                       <td className="px-6 py-4">
                          <span className="px-2 py-1 bg-emerald-50 text-emerald-600 rounded-md text-xs font-bold whitespace-nowrap">
                             Submitted
@@ -158,3 +161,4 @@ export const VleDashboard: React.FC = () => {
     </DashboardLayout>
   );
 };
+

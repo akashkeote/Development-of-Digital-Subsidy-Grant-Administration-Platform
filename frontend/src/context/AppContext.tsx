@@ -141,6 +141,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       schemeTitle: scheme ? scheme.title : 'Government Scheme',
       citizenId: citizenProfile.id,
       citizenName: citizenProfile.name,
+      submittedByRole: currentRole === 'vle' ? 'vle' : 'citizen',
       personalDetails,
       bankDetails,
       documents: files.map((f, idx) => ({
@@ -317,3 +318,4 @@ export const useApp = () => {
   }
   return context;
 };
+
