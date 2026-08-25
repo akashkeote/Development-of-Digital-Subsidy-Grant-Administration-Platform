@@ -128,8 +128,8 @@ export const LandingV2: React.FC = () => {
       
       {/* Pinned 3D Background */}
       <div className="fixed inset-0 z-0">
-        <canvas ref={canvasRef} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-black/40 to-black/90 pointer-events-none" />
+        <canvas ref={canvasRef} className="w-full h-screen object-contain scale-[0.85] transform-gpu origin-center" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none backdrop-blur-[2px]" />
       </div>
 
       {/* Content Layer (Scrolls normally over the pinned canvas) */}
@@ -163,7 +163,7 @@ export const LandingV2: React.FC = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-bold tracking-widest uppercase mb-8">
               <Zap className="w-4 h-4" /> Scroll to experience
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-8 drop-shadow-2xl">
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-8 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
               Transparent. Secure. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
                 Instant Disbursement.
