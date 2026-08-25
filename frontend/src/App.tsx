@@ -58,10 +58,21 @@ const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode,
   return <>{children}</>;
 };
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
   return (
+    <ScrollToTop />
     <AnimatePresence mode="wait">
       {/* @ts-ignore React Router v6 typings don't include key on Routes but AnimatePresence needs it */}
       <Routes location={location} key={location.pathname}>
@@ -124,3 +135,4 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+
