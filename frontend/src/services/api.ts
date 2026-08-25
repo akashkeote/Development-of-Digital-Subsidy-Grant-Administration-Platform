@@ -218,27 +218,38 @@ export const treasuryService = {
     return getStorage('mock_db_installments', INITIAL_INSTALLMENTS);
   },
   
-  releaseFunds: async (installmentId: string, officerName?: string): Promise<Installment> => {
-    // REAL IMPLEMENTATION FOR BACKEND TEAM:
-    // const { data } = await apiClient.post<Installment>(`/installments/${installmentId}/release`, { officerName });
-    // return data;
-
+    releaseFunds: async (installmentId: string, officerName?: string): Promise<Installment> => {
     await delay(1200);
     const installments = getStorage('mock_db_installments', INITIAL_INSTALLMENTS);
     const updated = installments.map(inst => 
       inst.id === installmentId 
-        ? { ...inst, status: 'disbursed' as const, processedDate: new Date().toISOString(), transactionRef: `TXN-${Date.now()}` } 
+        ? { ...inst, status: 'disbursed' as const, disbursementDate: new Date().toISOString(), transactionId: `TXN-${Date.now()}` } 
         : inst
     );
     setStorage('mock_db_installments', updated);
     
-    // Also update the application with finance officer name
-    const app = getStorage('mock_db_applications', INITIAL_APPLICATIONS).find((a: Application) => a.id === updated.find(i => i.id === installmentId)?.applicationId);
-    if (app) {
+    // Find the target installment to get the applicationId
+    const targetInst = updated.find(i => i.id === installmentId);
+    if (targetInst) {
       const apps = getStorage('mock_db_applications', INITIAL_APPLICATIONS);
-      const updatedApps = apps.map((a: Application) => a.id === app.id ? { ...a, financeOfficerName: officerName || 'Finance Dept' } : a);
+      
+      // Check if ALL installments for this application are now disbursed
+      const appInstallments = updated.filter(i => i.applicationId === targetInst.applicationId);
+      const allDisbursed = appInstallments.length > 0 && appInstallments.every(i => i.status === 'disbursed');
+      
+      const updatedApps = apps.map((a: any) => {
+        if (a.id === targetInst.applicationId) {
+          return { 
+            ...a, 
+            financeOfficerName: officerName || 'Finance Dept',
+            status: allDisbursed ? 'completed' : 'disbursing'
+          };
+        }
+        return a;
+      });
       setStorage('mock_db_applications', updatedApps);
     }
+    
     return updated.find(i => i.id === installmentId)!;
   }
 };
