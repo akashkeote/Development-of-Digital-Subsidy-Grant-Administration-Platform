@@ -42,8 +42,7 @@ export const Registration: React.FC = () => {
       return;
     }
     // Set mock data based on official Aadhaar registry response
-    setFullName('Rajesh Kumar Sharma');
-    setPhone('+91 98765 43210');
+    
     setStep(3);
   };
 
@@ -55,10 +54,10 @@ export const Registration: React.FC = () => {
       // Create new profile
       const newProfile = {
         id: `CIT-${Math.floor(1000 + Math.random() * 9000)}`,
-        name: fullName || 'Rajesh Kumar Sharma',
-        email: email || 'rajesh.sharma@email.com',
-        phone: phone || '+91 98765 43210',
-        aadhaar: aadhaar || '5432-8765-1092',
+        name: fullName,
+        email: email,
+        phone: phone,
+        aadhaar: aadhaar,
         pan: 'ABCPS1234D',
         income,
         category,
@@ -66,8 +65,8 @@ export const Registration: React.FC = () => {
         state,
         district,
         bankName,
-        bankAccount: bankAccount || '30291827461',
-        ifsc: ifsc || 'SBIN0001234',
+        bankAccount: bankAccount,
+        ifsc: ifsc,
         isBankVerified: true,
         isAadhaarVerified: true
       };
