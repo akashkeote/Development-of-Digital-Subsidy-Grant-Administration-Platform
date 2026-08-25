@@ -117,7 +117,7 @@ export const ScrollytellingSection: React.FC = () => {
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 text-xs font-semibold tracking-[0.2em] uppercase mb-8 backdrop-blur-md shadow-[0_0_15px_rgba(0,214,255,0.15)]">
                     <Zap className="w-4 h-4" /> The Future of Subsidy Delivery
                   </div>
-                  <h1 className="text-6xl md:text-8xl font-sans font-bold text-white/90 tracking-tighter leading-[1.05] mb-6 drop-shadow-2xl">
+                  <h1 className="text-6xl md:text-8xl font-heading font-extrabold text-white/90 tracking-tight leading-[1.05] mb-6 drop-shadow-2xl">
                     Transparent. Secure. <br />
                     <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-[#00D6FF] drop-shadow-lg">
                       Instant Disbursement.
@@ -142,7 +142,7 @@ export const ScrollytellingSection: React.FC = () => {
               >
                 <div className="flex flex-col">
                   <Target className="w-12 h-12 text-[#00D6FF] mb-6 drop-shadow-lg" />
-                  <h3 className="text-5xl md:text-6xl font-sans font-bold tracking-tighter text-white/90 mb-6 leading-[1.1] drop-shadow-xl">
+                  <h3 className="text-5xl md:text-6xl font-heading font-extrabold tracking-tight text-white/90 mb-6 leading-[1.1] drop-shadow-xl">
                     Precision Targeting
                   </h3>
                   <p className="text-lg md:text-xl text-white/60 leading-relaxed font-medium tracking-wide">
@@ -164,7 +164,7 @@ export const ScrollytellingSection: React.FC = () => {
               >
                 <div className="flex flex-col">
                   <BarChart className="w-12 h-12 text-[#00D6FF] mb-6 drop-shadow-lg" />
-                  <h3 className="text-5xl md:text-6xl font-sans font-bold tracking-tighter text-white/90 mb-6 leading-[1.1] drop-shadow-xl">
+                  <h3 className="text-5xl md:text-6xl font-heading font-extrabold tracking-tight text-white/90 mb-6 leading-[1.1] drop-shadow-xl">
                     Real-time Analytics
                   </h3>
                   <p className="text-lg md:text-xl text-white/60 leading-relaxed font-medium tracking-wide">
@@ -186,7 +186,7 @@ export const ScrollytellingSection: React.FC = () => {
               >
                 <div className="flex flex-col">
                   <FileText className="w-12 h-12 text-[#00D6FF] mb-6 drop-shadow-lg" />
-                  <h3 className="text-5xl md:text-6xl font-sans font-bold tracking-tighter text-white/90 mb-6 leading-[1.1] drop-shadow-xl">
+                  <h3 className="text-5xl md:text-6xl font-heading font-extrabold tracking-tight text-white/90 mb-6 leading-[1.1] drop-shadow-xl">
                     Paperless Pipeline
                   </h3>
                   <p className="text-lg md:text-xl text-white/60 leading-relaxed font-medium tracking-wide">
@@ -207,7 +207,7 @@ export const ScrollytellingSection: React.FC = () => {
                 className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
               >
                 <div className="max-w-4xl flex flex-col items-center pointer-events-auto">
-                  <h2 className="text-6xl md:text-8xl font-sans font-bold tracking-tighter text-white/90 mb-6 drop-shadow-2xl leading-[1.05]">
+                  <h2 className="text-6xl md:text-8xl font-heading font-extrabold tracking-tight text-white/90 mb-6 drop-shadow-2xl leading-[1.05]">
                     Track everything. <br/> <span className="text-white/50">Lose nothing.</span>
                   </h2>
                   <p className="text-xl md:text-2xl text-white/60 mb-10 max-w-2xl mx-auto tracking-wide font-medium">
@@ -216,7 +216,7 @@ export const ScrollytellingSection: React.FC = () => {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <button 
                       onClick={() => navigate('/login')}
-                      className="px-10 py-4 bg-white text-[#050505] rounded-full font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(0,214,255,0.3)] font-sans tracking-tight"
+                      className="px-10 py-4 bg-white text-[#050505] rounded-full font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(0,214,255,0.3)] font-heading"
                     >
                       Access Dashboard
                     </button>
