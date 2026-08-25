@@ -370,7 +370,7 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-40 pb-28 lg:pt-52 lg:pb-36 px-6 mesh-bg min-h-screen flex items-center">
         {/* Massive 3D Background Flag */}
-        <div className="absolute -right-20 lg:-right-32 xl:-right-10 top-1/3 -translate-y-1/3 z-0 transform translate-x-[1.5%] scale-75 lg:scale-90 xl:scale-110 2xl:scale-[1.2] -rotate-6 hidden lg:block perspective-container pointer-events-none opacity-90">
+        <div className="absolute -right-20 lg:-right-32 xl:-right-10 bottom-0 z-0 transform translate-x-[1.5%] scale-75 lg:scale-90 xl:scale-110 2xl:scale-[1.2] -rotate-6 hidden lg:block perspective-container pointer-events-none opacity-90">
 
           <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
             <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
