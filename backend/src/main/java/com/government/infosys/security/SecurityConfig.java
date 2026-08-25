@@ -26,7 +26,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/auth/**", "/api/subsidies/**").permitAll()
+                .requestMatchers("/api/v1/auth/**", "/api/subsidies/**", "/api/chat/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -45,4 +45,5 @@ public class SecurityConfig {
         return source;
     }
 }
+
 
