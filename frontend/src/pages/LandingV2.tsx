@@ -10,7 +10,7 @@ export const LandingV2: React.FC = () => {
   const [navVisible, setNavVisible] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
   const activeSectionRef = useRef(0);
-  const totalFrames = 240;
+  const totalFrames = 480;
 
   // Preload frames aggressively
   useEffect(() => {
