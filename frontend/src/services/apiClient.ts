@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // The backend team will provide this URL via environment variables.
 // During development, it falls back to the current render API or a local instance.
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://subsidy-backend-4jzy.onrender.com/api/v1';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://subsidy-backend-4jzy.onrender.com/api';
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -42,4 +42,5 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
