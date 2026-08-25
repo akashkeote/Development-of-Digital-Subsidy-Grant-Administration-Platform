@@ -370,7 +370,7 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative pt-40 pb-28 lg:pt-52 lg:pb-36 px-6 mesh-bg min-h-screen flex items-center">
         {/* Massive 3D Background Flag */}
-        <div className="absolute -right-20 lg:-right-10 top-1/3 -translate-y-1/3 z-0 transform translate-x-[1.5%] scale-[1.2] lg:scale-[1.3] -rotate-6 hidden md:block perspective-container pointer-events-none opacity-90">
+        <div className="absolute -right-20 lg:-right-32 xl:-right-10 top-1/3 -translate-y-1/3 z-0 transform translate-x-[1.5%] scale-75 lg:scale-90 xl:scale-110 2xl:scale-[1.2] -rotate-6 hidden lg:block perspective-container pointer-events-none opacity-90">
 
           <div className="flag-container relative" style={{ transform: 'rotateY(-20deg) rotateX(10deg)' }}>
             <div className="flag-pole relative z-20" style={{height: '600px', width: '8px', background: 'linear-gradient(180deg, #a8a29e, #78716c)'}}></div>
@@ -391,12 +391,12 @@ export const LandingPage: React.FC = () => {
         <img 
           src="/salute.jpg" 
           alt="Patriotic Salute" 
-          className="absolute bottom-10 right-10 lg:right-24 w-72 h-72 lg:w-96 lg:h-96 object-contain z-10 pointer-events-none hidden md:block opacity-60" 
+          className="absolute bottom-4 right-4 lg:right-10 xl:right-24 w-60 h-60 lg:w-72 lg:h-72 xl:w-96 xl:h-96 object-contain z-10 pointer-events-none hidden lg:block opacity-60" 
           style={{ mixBlendMode: 'multiply' }}
         />
         
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-30 w-full">
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left perspective-container">
+          <div className="lg:col-span-7 xl:col-span-7 space-y-8 text-center lg:text-left perspective-container lg:pr-12 xl:pr-0 relative z-40">
             <motion.div 
               initial={{ opacity: 0, y: 30, rotateX: 20 }}
               animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -797,5 +797,6 @@ export const LandingPage: React.FC = () => {
     </div>
   );
 };
+
 
 
