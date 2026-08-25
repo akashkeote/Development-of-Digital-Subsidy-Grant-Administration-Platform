@@ -249,6 +249,7 @@ export const L1VerificationDashboard: React.FC = () => {
                             <div className="leading-none text-left min-w-0 overflow-hidden">
                               <p className="text-base font-bold text-slate-800 font-heading truncate">{doc.type}</p>
                               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-2 font-mono truncate">File: {doc.name}</p>
+{doc.url !== '#' && <a href={doc.url} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-blue-600 hover:underline mt-1 inline-block">View Document</a>}
                             </div>
                           </div>
 

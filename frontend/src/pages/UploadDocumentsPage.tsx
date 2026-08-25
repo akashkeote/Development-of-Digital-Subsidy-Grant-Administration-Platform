@@ -43,35 +43,37 @@ export const UploadDocumentsPage: React.FC = () => {
     );
   }
 
-  // Simulate progress uploading
-  const handleFileChange = (docType: string, fileName: string) => {
-    // Set initial uploading state
-    setUploads(prev => ({
-      ...prev,
-      [docType]: { name: fileName, progress: 10, uploaded: false }
-    }));
-
-    // Trigger progressive tick up
-    const interval = setInterval(() => {
-      setUploads(prev => {
-        const current = prev[docType];
-        if (!current) {
-          clearInterval(interval);
-          return prev;
-        }
-        if (current.progress >= 100) {
-          clearInterval(interval);
+  const handleFileChange = (docType: string, file: File) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      setUploads(prev => ({
+        ...prev,
+        [docType]: { name: file.name, progress: 10, uploaded: false, dataUrl }
+      }));
+      
+      const interval = setInterval(() => {
+        setUploads(prev => {
+          const current = prev[docType];
+          if (!current) {
+            clearInterval(interval);
+            return prev;
+          }
+          if (current.progress >= 100) {
+            clearInterval(interval);
+            return {
+              ...prev,
+              [docType]: { ...current, progress: 100, uploaded: true }
+            };
+          }
           return {
             ...prev,
-            [docType]: { ...current, progress: 100, uploaded: true }
+            [docType]: { ...current, progress: current.progress + 30 }
           };
-        }
-        return {
-          ...prev,
-          [docType]: { ...current, progress: current.progress + 30 }
-        };
-      });
-    }, 200);
+        });
+      }, 200);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleDelete = (docType: string) => {
@@ -100,7 +102,7 @@ export const UploadDocumentsPage: React.FC = () => {
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
-      handleFileChange(docType, file.name);
+      handleFileChange(docType, file);
     }
   };
 
@@ -135,7 +137,8 @@ export const UploadDocumentsPage: React.FC = () => {
 
       const filesList = scheme.requiredDocuments.map(doc => ({
         name: uploads[doc].name,
-        type: doc
+        type: doc,
+        url: uploads[doc].dataUrl
       }));
 
       // Apply
@@ -220,7 +223,7 @@ export const UploadDocumentsPage: React.FC = () => {
                             className="hidden"
                             onChange={(e) => {
                               if (e.target.files && e.target.files[0]) {
-                                handleFileChange(docType, e.target.files[0].name);
+                                handleFileChange(docType, e.target.files[0]);
                               }
                             }}
                           />

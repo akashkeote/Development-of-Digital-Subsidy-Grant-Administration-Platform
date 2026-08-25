@@ -29,7 +29,7 @@ interface AppContextType {
     schemeId: string, 
     personalDetails: Application['personalDetails'], 
     bankDetails: Application['bankDetails'], 
-    files: { name: string; type: string }[]
+    files: { name: string; type: string; url?: string }[]
   ) => Promise<string>;
   verifyApplication: (
     appId: string, 
@@ -132,7 +132,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     schemeId: string, 
     personalDetails: Application['personalDetails'], 
     bankDetails: Application['bankDetails'], 
-    files: { name: string; type: string }[]
+    files: { name: string; type: string; url?: string }[]
   ): Promise<string> => {
     const scheme = schemes.find(s => s.id === schemeId);
     
