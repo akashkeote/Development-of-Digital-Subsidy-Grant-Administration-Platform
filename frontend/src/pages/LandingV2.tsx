@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Footer } from '../components/Footer';
 import { Zap, Target, BarChart, FileText } from 'lucide-react';
 
 export const LandingV2: React.FC = () => {
@@ -86,7 +87,10 @@ export const LandingV2: React.FC = () => {
   }, [images]);
 
   return (
-    <div className="bg-[#050505] min-h-[500vh] text-white font-sans selection:bg-[#0050FF] selection:text-white">
+    <div className="bg-[#050505] text-white font-sans selection:bg-[#0050FF] selection:text-white">
+      
+      {/* SCROLLYTELLING CONTAINER */}
+      <div className="relative h-[500vh] w-full">
       
       {/* Navbar */}
       <motion.nav 
@@ -252,6 +256,63 @@ export const LandingV2: React.FC = () => {
         </div>
 
       </div>
+      
+      {/* END SCROLLYTELLING CONTAINER */}
+      </div>
+
+
+      {/* Spacer to push content below the 500vh scroll block */}
+      <div className="relative z-20">
+        {/* Visionary Leaders Graphic Section */}
+        <section className="relative py-32 bg-slate-50 overflow-hidden border-t border-slate-200">
+          <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center perspective-container">
+            <div className="text-center max-w-3xl mb-12">
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight"
+              >
+                Honoring Our <span className="text-blue-600">Visionaries.</span>
+              </motion.h2>
+              <p className="text-lg md:text-xl text-slate-600 font-medium">
+                Guided by the principles of our great leaders, education reformers, peacemakers, and warriors.
+              </p>
+            </div>
+          </div>
+  
+          {/* Full-bleed massive image container */}
+          <div className="w-full relative flex justify-center perspective-container px-0 md:px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 60, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="w-full max-w-[100vw] lg:max-w-7xl relative group animate-float-slow"
+              style={{ mixBlendMode: 'multiply' }}
+            >
+              <div className="relative flex justify-center w-full">
+                <img 
+                  src="/indian_leaders_v2.jpg" 
+                  alt="Visionary Leaders of India: Gandhiji, Nehru, APJ Kalam, Shivaji, Dr. Ambedkar" 
+                  className="w-full lg:w-[110%] h-auto object-cover md:object-contain"
+                />
+              </div>
+              
+              {/* 3D floating badge */}
+              <div 
+                className="absolute bottom-10 right-4 lg:right-20 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-2xl shadow-2xl border-2 border-white/20 pointer-events-none"
+                style={{ transform: 'translateZ(50px) rotateY(-5deg)' }}
+              >
+                <p className="font-bold text-xl tracking-wide">Digital India 2026</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+
     </div>
   );
 };
