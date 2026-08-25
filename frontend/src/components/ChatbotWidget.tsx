@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Minus, X } from 'lucide-react';
+import { Minus, X, Bot } from 'lucide-react';
 
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,11 +46,11 @@ export const ChatbotWidget: React.FC = () => {
         >
           <img 
             src="https://cdngovai.myscheme.in/64b15bf4c3a58e12cb335ec0/68108e5af2c4864461329009/logos/icon_2-icon.png" 
-            alt="UMANG" 
+            alt="DigiGrant" 
             className="w-11 h-11 object-contain p-1"
           />
           <span className="text-[15px] font-extrabold text-slate-700 ml-3">
-            Ask UMANG
+            Ask DigiGrant
           </span>
         </button>
       )}
@@ -81,11 +81,11 @@ export const ChatbotWidget: React.FC = () => {
             <div className="flex items-center gap-3">
                <img 
                 src="https://cdngovai.myscheme.in/64b15bf4c3a58e12cb335ec0/68108e5af2c4864461329009/logos/icon_2-icon.png" 
-                alt="UMANG" 
+                alt="DigiGrant" 
                 className={`object-contain bg-white rounded-full ${isMinimized ? 'w-9 h-9 p-0.5' : 'w-8 h-8 p-1 shadow-sm'}`}
               />
               <span className={`font-bold text-[15px] ${isMinimized ? 'text-slate-800' : 'text-white'}`}>
-                UMANG Assistant
+                DigiGrant Assistant
               </span>
             </div>
             
@@ -127,3 +127,4 @@ export const ChatbotWidget: React.FC = () => {
     </>
   );
 };
+
