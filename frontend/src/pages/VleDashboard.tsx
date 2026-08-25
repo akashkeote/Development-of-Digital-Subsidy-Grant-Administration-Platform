@@ -18,14 +18,13 @@ export const VleDashboard: React.FC = () => {
   const { currentRole, applications } = useApp();
   const navigate = useNavigate();
 
-  // Dummy VLE metrics for demonstration
-  // totalAssisted is calculated dynamically now based on VLE submissions
+  // We pretend the latest 5 applications in the system were assisted by this VLE for demo purposes
+  const assistedApps = applications.filter(app => app.submittedByRole === 'vle');
+  
+  const totalAssisted = assistedApps.length > 0 ? assistedApps.length : 124; // Fallback to 124 for demo if empty
   const cashbackPerApp = 50; // ₹50 per successful application
   const totalEarned = totalAssisted * cashbackPerApp;
   const pendingPayout = 1250;
-
-  // We pretend the latest 5 applications in the system were assisted by this VLE for demo purposes
-  const assistedApps = applications.filter(app => app.submittedByRole === 'vle');
   const recentAssistedApps = assistedApps.slice(0, 5);
 
   const containerVariants = {
