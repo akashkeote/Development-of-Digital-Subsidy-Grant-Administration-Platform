@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { UserRole } from '../types';
 import { ArrowRight, Shield, Lock, Eye, Users, CheckCircle2, FileText, Activity, Building, ArrowLeft, Sun, AlertCircle, Landmark } from 'lucide-react';
@@ -290,8 +290,16 @@ export const Login: React.FC = () => {
                   </button>
                   
                   <div className="text-center pt-2">
-                    <p className="text-xs font-medium text-slate-400">Demo mode — enter any value to login</p>
-                  </div>
+                      <p className="text-xs font-medium text-slate-400">Demo mode — enter any value to login</p>
+                      {selectedRole === 'citizen' && (
+                        <p className="text-xs font-medium mt-4">
+                          New beneficiary?{' '}
+                          <Link to="/register" className="text-blue-600 font-bold hover:underline">
+                            Register & Link Aadhaar
+                          </Link>
+                        </p>
+                      )}
+                    </div>
                 </form>
               </div>
             )}
