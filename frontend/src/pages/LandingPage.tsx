@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Footer } from '../components/Footer';
 import { BarChart, Target, Zap, CheckCircle, Search, ArrowRight, GraduationCap, Home as HomeIcon, MapPin, Building2, Leaf, ShieldCheck, HeartPulse, FileText, ChevronRight, Activity, Users, Database, Compass, Sun, Sprout, Landmark } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ministers = [
   { name: "Narendra Modi", role: "Prime Minister", image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/The_official_portrait_of_Shri_Narendra_Modi%2C_the_Prime_Minister_of_the_Republic_of_India.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled" },
