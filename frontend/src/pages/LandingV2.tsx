@@ -110,7 +110,7 @@ export const LandingV2: React.FC = () => {
         {/* 3D Image Sequence Canvas */}
         <canvas 
           ref={canvasRef} 
-          className="w-full h-full object-contain scale-[0.85] md:scale-100 transform-gpu origin-center mix-blend-screen"
+          className="w-full h-full object-cover transform-gpu origin-center"
         />
 
         {/* Storytelling Text Overlays (Absolute positioned inside the sticky container, driven by scroll progress) */}
