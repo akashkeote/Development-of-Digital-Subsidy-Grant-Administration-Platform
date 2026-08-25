@@ -14,7 +14,7 @@ export const ChatbotWidget: React.FC = () => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', text: 'Hello! ?? I am the **DigiGrant Assistant**. I can help you find relevant government schemes, grants, and subsidies directly from our database.\n\nJust tell me what you''re looking for (e.g., ''farmer'', ''student'', ''housing'', ''business'').', isUser: false }
+    { id: '1', text: "Hello! ?? I am the **DigiGrant Assistant**. I can help you find relevant government schemes, grants, and subsidies directly from our database.\n\nJust tell me what you're looking for (e.g., 'farmer', 'student', 'housing', 'business').", isUser: false }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +66,6 @@ export const ChatbotWidget: React.FC = () => {
 
   return (
     <>
-      {/* Modern Floating Trigger Pill */}
       {!isOpen && (
         <button 
           onClick={openBot}
@@ -81,14 +80,13 @@ export const ChatbotWidget: React.FC = () => {
         </button>
       )}
 
-      {/* Floating Chatbot Window */}
       {isOpen && (
         <div 
-          className={ixed bg-white overflow-hidden z-[9999] shadow-2xl flex flex-col border border-slate-200 transition-all duration-300 ease-in-out "$"{"{
+          className={`fixed bg-white overflow-hidden z-[9999] shadow-2xl flex flex-col border border-slate-200 transition-all duration-300 ease-in-out ${
             isMinimized 
               ? 'h-[60px] bottom-6 cursor-pointer hover:bg-slate-50 rounded-full' 
               : 'rounded-2xl'
-          }"}"}}
+          }`}
           style={!isMinimized ? {
             bottom: isMobile ? '10px' : '24px',
             right: isMobile ? '10px' : '24px',
@@ -102,13 +100,12 @@ export const ChatbotWidget: React.FC = () => {
           }}
           onClick={isMinimized ? () => setIsMinimized(false) : undefined}
         >
-          {/* Header */}
-          <div className={w-full flex justify-between items-center shrink-0 "$"{"{isMinimized ? 'h-full px-4 bg-white' : 'p-4 bg-gradient-to-r from-blue-600 to-indigo-600'}"}"}}>
+          <div className={`w-full flex justify-between items-center shrink-0 ${isMinimized ? 'h-full px-4 bg-white' : 'p-4 bg-gradient-to-r from-blue-600 to-indigo-600'}`}>
             <div className="flex items-center gap-3">
-              <div className={lex items-center justify-center bg-white text-blue-600 rounded-full "$"{"{isMinimized ? 'w-9 h-9' : 'w-8 h-8 shadow-sm'}"}"}}>
+              <div className={`flex items-center justify-center bg-white text-blue-600 rounded-full ${isMinimized ? 'w-9 h-9' : 'w-8 h-8 shadow-sm'}`}>
                 <Bot size={18} strokeWidth={2.5} />
               </div>
-              <span className={ont-bold text-[15px] "$"{"{isMinimized ? 'text-slate-800' : 'text-white'}"}"}}>
+              <span className={`font-bold text-[15px] ${isMinimized ? 'text-slate-800' : 'text-white'}`}>
                 DigiGrant Assistant
               </span>
             </div>
@@ -125,7 +122,7 @@ export const ChatbotWidget: React.FC = () => {
               )}
               <button 
                 onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} 
-                className={"$"{"{isMinimized ? 'text-slate-400 hover:text-slate-700 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/20'}"}"} p-1.5 rounded-lg transition-colors outline-none}
+                className={`${isMinimized ? 'text-slate-400 hover:text-slate-700 hover:bg-slate-100' : 'text-white/80 hover:text-white hover:bg-white/20'} p-1.5 rounded-lg transition-colors outline-none`}
                 title="Close"
               >
                 <X size={18} strokeWidth={2.5} />
@@ -133,13 +130,12 @@ export const ChatbotWidget: React.FC = () => {
             </div>
           </div>
           
-          {/* Chat Interface */}
           {!isMinimized && (
             <div className="flex-1 w-full bg-slate-50 relative flex flex-col overflow-hidden">
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map((msg) => (
-                  <div key={msg.id} className={lex "$"{"{msg.isUser ? 'justify-end' : 'justify-start'}"}"}}>
-                    <div className={max-w-[85%] rounded-2xl px-4 py-2.5 "$"{"{msg.isUser ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-bl-sm shadow-sm'}"}"}}>
+                  <div key={msg.id} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 ${msg.isUser ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-bl-sm shadow-sm'}`}>
                       {msg.isUser ? (
                         <p className="text-[15px]">{msg.text}</p>
                       ) : (
