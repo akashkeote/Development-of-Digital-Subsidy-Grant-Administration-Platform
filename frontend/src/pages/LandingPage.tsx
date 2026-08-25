@@ -361,7 +361,8 @@ export const LandingPage: React.FC = () => {
               <Link to="/how-it-works" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">How it Works</Link>
               <div className="w-px h-5 bg-slate-200"></div>
               <Link to="/login" className="text-sm font-bold text-slate-700 hover:text-blue-600 transition-colors">Sign In</Link>
-              <Link to="/register" className="btn-3d text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 px-6 py-2.5 rounded-full">Get Started</Link>
+              <Link to="/v2" className="text-sm font-bold text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-full transition-colors mr-2">Try V2 Beta</Link>
+                <Link to="/register" className="btn-3d text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 px-6 py-2.5 rounded-full">Get Started</Link>
             </div>
           </div>
         </header>

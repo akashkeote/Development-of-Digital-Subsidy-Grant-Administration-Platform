@@ -7,6 +7,7 @@ import { PageTransition } from './components/PageTransition';
 
 // Public Pages
 import { LandingPage } from './pages/LandingPage';
+import { LandingV2 } from './pages/LandingV2';
 import { Login } from './pages/Login';
 import { Registration } from './pages/Registration';
 import { SchemeListingPage } from './pages/SchemeListingPage';
@@ -79,6 +80,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
         <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
+          <Route path="/v2" element={<PageTransition><LandingV2 /></PageTransition>} />
         <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
         <Route path="/register" element={<PageTransition><Registration /></PageTransition>} />
         <Route path="/schemes" element={<PageTransition><SchemeListingPage /></PageTransition>} />
