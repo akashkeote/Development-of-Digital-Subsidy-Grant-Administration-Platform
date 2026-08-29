@@ -22,6 +22,14 @@ public class DisbursementController {
         disbursementService.releaseFunds(milestoneId);
         return ResponseEntity.ok("Funds released.");
     }
+    @PutMapping("/milestone/{id}/complete")
+    public ResponseEntity<?> completeMilestone(
+            @PathVariable Long id) {
+
+        disbursementService.completeMilestone(id);
+
+        return ResponseEntity.ok("Milestone completed.");
+    }
 
     @PutMapping("/milestone/{id}/resolve")
     public ResponseEntity<?> resolveOverdue(@PathVariable Long id, @RequestParam String reason) {

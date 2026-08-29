@@ -33,6 +33,11 @@ public class DisbursementService {
     public void releaseFunds(Long milestoneId) {
         DisbursementMilestone milestone = milestoneRepository.findById(milestoneId).orElseThrow();
         DisbursementPlan plan = milestone.getPlan();
+        if (!"COMPLETED".equals(milestone.getCompletionStatus())) {
+            throw new IllegalStateException(
+                    "Milestone must be COMPLETED before funds can be released."
+            );
+        }
 
         // Sequential Block Check
         List<DisbursementMilestone> allStages = milestoneRepository.findByPlanIdOrderByStageNumberAsc(plan.getId());
@@ -59,6 +64,53 @@ public class DisbursementService {
             .username("SYSTEM").action("DISBURSEMENT_RELEASED").entity("DisbursementMilestone")
             .entityId(milestoneId).oldStatus("PENDING").newStatus("RELEASED")
             .timestamp(LocalDateTime.now()).build();
+        auditLogRepository.save(audit);
+    }
+
+    @Transactional
+    public void completeMilestone(Long milestoneId) {
+
+        DisbursementMilestone milestone =
+                milestoneRepository.findById(milestoneId)
+                        .orElseThrow(() ->
+                                new IllegalArgumentException(
+                                        "Milestone not found: " + milestoneId
+                                )
+                        );
+
+        if ("OVERDUE".equals(milestone.getCompletionStatus())) {
+            throw new IllegalStateException(
+                    "OVERDUE milestone must be resolved before completion."
+            );
+        }
+
+        if ("RELEASED".equals(milestone.getCompletionStatus())) {
+            throw new IllegalStateException(
+                    "Milestone is already released."
+            );
+        }
+
+        if ("COMPLETED".equals(milestone.getCompletionStatus())) {
+            throw new IllegalStateException(
+                    "Milestone is already completed."
+            );
+        }
+
+        milestone.setCompletionStatus("COMPLETED");
+        milestone.setCompletedDate(LocalDateTime.now());
+
+        milestoneRepository.save(milestone);
+
+        AuditLog audit = AuditLog.builder()
+                .username("SYSTEM")
+                .action("MILESTONE_COMPLETED")
+                .entity("DisbursementMilestone")
+                .entityId(milestoneId)
+                .oldStatus("PENDING")
+                .newStatus("COMPLETED")
+                .timestamp(LocalDateTime.now())
+                .build();
+
         auditLogRepository.save(audit);
     }
 
