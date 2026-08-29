@@ -47,9 +47,15 @@ public class VerificationWorkflowService {
 
         // Notification
         Notification notif = Notification.builder()
-            .user(app.getCitizen().getUser()).message("Application status changed to " + stage)
-            .isRead(false).createdAt(LocalDateTime.now()).build();
-        notificationRepository.save(notif);
+                .user(app.getCitizen().getUser())
+                .channel("IN_APP")
+                .subject("Application Status Update")
+                .message("Application status changed to " + stage)
+                .status("PENDING")
+                .referenceType("APPLICATION")
+                .referenceId(applicationId)
+                .createdAt(LocalDateTime.now())
+                .build();
     }
 
     private void createDisbursementPlan(Application app) {
