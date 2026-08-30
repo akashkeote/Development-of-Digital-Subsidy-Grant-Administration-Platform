@@ -65,3 +65,6 @@ whatsapp-bot/.pnpm-debug.log*
 # Keys and credentials
 *firebase-adminsdk*.json
 google-services.json
+
+# Spring Boot local properties
+backend/application-local.properties

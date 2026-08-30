@@ -1,0 +1,2 @@
+ALTER TABLE schemes
+ALTER COLUMN name TYPE TEXT;
