@@ -1,114 +1,114 @@
-"C"R"E"A"T"E" "T"A"B"L"E" "u"s"e"r"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "u"s"e"r"n"a"m"e" "V"A"R"C"H"A"R"("1"0"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "e"m"a"i"l" "V"A"R"C"H"A"R"("1"5"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "m"o"b"i"l"e" "V"A"R"C"H"A"R"("1"5")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "p"a"s"s"w"o"r"d"_"h"a"s"h" "V"A"R"C"H"A"R"("2"5"5")" "N"O"T" "N"U"L"L","
-" " " " "i"s"_"a"c"t"i"v"e" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "T"R"U"E","
-" " " " "l"a"s"t"_"l"o"g"i"n"_"a"t" "T"I"M"E"S"T"A"M"P" "N"U"L"L","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
-" " " " "u"p"d"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P" "
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "r"o"l"e"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "c"o"d"e" "V"A"R"C"H"A"R"("5"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "n"a"m"e" "V"A"R"C"H"A"R"("1"0"0")" "N"O"T" "N"U"L"L","
-" " " " "i"s"_"s"y"s"t"e"m" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "T"R"U"E","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "u"s"e"r"_"r"o"l"e"_"a"s"s"i"g"n"m"e"n"t"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "u"s"e"r"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
-" " " " "r"o"l"e"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
-" " " " "a"s"s"i"g"n"e"d"_"b"y" "B"I"G"I"N"T" "N"U"L"L","
-" " " " "a"s"s"i"g"n"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
-" " " " "C"O"N"S"T"R"A"I"N"T" "u"k"_"u"s"e"r"_"r"o"l"e" "U"N"I"Q"U"E" "("u"s"e"r"_"i"d"," "r"o"l"e"_"i"d")","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"r"a"_"u"s"e"r" "F"O"R"E"I"G"N" "K"E"Y" "("u"s"e"r"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"r"a"_"r"o"l"e" "F"O"R"E"I"G"N" "K"E"Y" "("r"o"l"e"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "r"o"l"e"s"("i"d")","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"r"a"_"a"s"s"i"g"n"e"d"_"b"y" "F"O"R"E"I"G"N" "K"E"Y" "("a"s"s"i"g"n"e"d"_"b"y")" "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "d"e"p"a"r"t"m"e"n"t"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "c"o"d"e" "V"A"R"C"H"A"R"("5"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "n"a"m"e" "V"A"R"C"H"A"R"("1"5"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "i"s"_"a"c"t"i"v"e" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "T"R"U"E","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "u"s"e"r"_"d"e"p"a"r"t"m"e"n"t"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "u"s"e"r"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
-" " " " "d"e"p"a"r"t"m"e"n"t"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
-" " " " "i"s"_"p"r"i"m"a"r"y" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "F"A"L"S"E","
-" " " " "a"s"s"i"g"n"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
-" " " " "C"O"N"S"T"R"A"I"N"T" "u"k"_"u"s"e"r"_"d"e"p"a"r"t"m"e"n"t" "U"N"I"Q"U"E" "("u"s"e"r"_"i"d"," "d"e"p"a"r"t"m"e"n"t"_"i"d")","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"d"_"u"s"e"r" "F"O"R"E"I"G"N" "K"E"Y" "("u"s"e"r"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"u"d"_"d"e"p"a"r"t"m"e"n"t" "F"O"R"E"I"G"N" "K"E"Y" "("d"e"p"a"r"t"m"e"n"t"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "d"e"p"a"r"t"m"e"n"t"s"("i"d")"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "c"i"t"i"z"e"n"_"p"r"o"f"i"l"e"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "u"s"e"r"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "f"u"l"l"_"n"a"m"e" "V"A"R"C"H"A"R"("1"5"0")" "N"O"T" "N"U"L"L","
-" " " " "d"o"b" "D"A"T"E" "N"O"T" "N"U"L"L","
-" " " " "g"e"n"d"e"r" "V"A"R"C"H"A"R"("2"0")" "N"O"T" "N"U"L"L","
-" " " " "a"a"d"h"a"a"r"_"n"o" "C"H"A"R"("1"2")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "p"a"n"_"n"o" "V"A"R"C"H"A"R"("1"0")" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "e"m"a"i"l" "V"A"R"C"H"A"R"("1"5"0")" "N"O"T" "N"U"L"L","
-" " " " "m"o"b"i"l"e" "V"A"R"C"H"A"R"("1"5")" "N"O"T" "N"U"L"L","
-" " " " "a"d"d"r"e"s"s"_"l"i"n"e"1" "V"A"R"C"H"A"R"("2"5"5")" "N"O"T" "N"U"L"L","
-" " " " "a"d"d"r"e"s"s"_"l"i"n"e"2" "V"A"R"C"H"A"R"("2"5"5")" "N"U"L"L","
-" " " " "d"i"s"t"r"i"c"t" "V"A"R"C"H"A"R"("1"0"0")" "N"O"T" "N"U"L"L","
-" " " " "t"a"l"u"k" "V"A"R"C"H"A"R"("1"0"0")" "N"U"L"L","
-" " " " "v"i"l"l"a"g"e" "V"A"R"C"H"A"R"("1"0"0")" "N"U"L"L","
-" " " " "b"a"n"k"_"a"c"c"o"u"n"t"_"n"o" "V"A"R"C"H"A"R"("3"4")" "N"O"T" "N"U"L"L","
-" " " " "i"f"s"c"_"c"o"d"e" "V"A"R"C"H"A"R"("1"1")" "N"O"T" "N"U"L"L","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
-" " " " "u"p"d"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P" ","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"c"i"t"i"z"e"n"_"u"s"e"r" "F"O"R"E"I"G"N" "K"E"Y" "("u"s"e"r"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "u"s"e"r"s"("i"d")"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "s"t"a"t"u"s"_"t"y"p"e"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "c"o"d"e" "V"A"R"C"H"A"R"("5"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "n"a"m"e" "V"A"R"C"H"A"R"("1"0"0")" "N"O"T" "N"U"L"L","
-" " " " "i"s"_"a"c"t"i"v"e" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "T"R"U"E","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "s"t"a"t"u"s"e"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "s"t"a"t"u"s"_"t"y"p"e"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
-" " " " "c"o"d"e" "V"A"R"C"H"A"R"("5"0")" "N"O"T" "N"U"L"L","
-" " " " "n"a"m"e" "V"A"R"C"H"A"R"("1"0"0")" "N"O"T" "N"U"L"L","
-" " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "I"N"T" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "1","
-" " " " "i"s"_"t"e"r"m"i"n"a"l" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "F"A"L"S"E","
-" " " " "i"s"_"a"c"t"i"v"e" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "T"R"U"E","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
-" " " " "C"O"N"S"T"R"A"I"N"T" "u"k"_"s"t"a"t"u"s"_"t"y"p"e"_"c"o"d"e" "U"N"I"Q"U"E" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e")","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"s"t"a"t"u"s"e"s"_"t"y"p"e" "F"O"R"E"I"G"N" "K"E"Y" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "s"t"a"t"u"s"_"t"y"p"e"s"("i"d")"
-")";"
-"
-"C"R"E"A"T"E" "T"A"B"L"E" "s"c"h"e"m"e"s" "("
-" " " " "i"d" "B"I"G"I"N"T" "P"R"I"M"A"R"Y" "K"E"Y" "G"E"N"E"R"A"T"E"D" "B"Y" "D"E"F"A"U"L"T" "A"S" "I"D"E"N"T"I"T"Y","
-" " " " "d"e"p"a"r"t"m"e"n"t"_"i"d" "B"I"G"I"N"T" "N"O"T" "N"U"L"L","
-" " " " "c"o"d"e" "V"A"R"C"H"A"R"("5"0")" "N"O"T" "N"U"L"L" "U"N"I"Q"U"E","
-" " " " "n"a"m"e" "V"A"R"C"H"A"R"("2"0"0")" "N"O"T" "N"U"L"L","
-" " " " "d"e"s"c"r"i"p"t"i"o"n" "T"E"X"T" "N"O"T" "N"U"L"L","
-" " " " "m"a"x"_"a"m"o"u"n"t" "D"E"C"I"M"A"L"("1"5","2")" "N"O"T" "N"U"L"L","
-" " " " "i"n"s"t"a"l"l"m"e"n"t"_"r"u"l"e"_"j"s"o"n" "J"S"O"N" "N"U"L"L","
-" " " " "s"t"a"r"t"_"d"a"t"e" "D"A"T"E" "N"O"T" "N"U"L"L","
-" " " " "e"n"d"_"d"a"t"e" "D"A"T"E" "N"U"L"L","
-" " " " "i"s"_"a"c"t"i"v"e" "B"O"O"L"E"A"N" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "T"R"U"E","
-" " " " "c"r"e"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P","
-" " " " "u"p"d"a"t"e"d"_"a"t" "T"I"M"E"S"T"A"M"P" "N"O"T" "N"U"L"L" "D"E"F"A"U"L"T" "C"U"R"R"E"N"T"_"T"I"M"E"S"T"A"M"P" ","
-" " " " "C"O"N"S"T"R"A"I"N"T" "f"k"_"s"c"h"e"m"e"s"_"d"e"p"a"r"t"m"e"n"t" "F"O"R"E"I"G"N" "K"E"Y" "("d"e"p"a"r"t"m"e"n"t"_"i"d")" "R"E"F"E"R"E"N"C"E"S" "d"e"p"a"r"t"m"e"n"t"s"("i"d")"
-")";"
-"
-"-"-" "H"e"l"p"f"u"l" "i"n"d"e"x"e"s"
-"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"u"s"e"r"s"_"a"c"t"i"v"e" "O"N" "u"s"e"r"s"("i"s"_"a"c"t"i"v"e")";"
-"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"s"c"h"e"m"e"s"_"a"c"t"i"v"e"_"d"a"t"e"s" "O"N" "s"c"h"e"m"e"s"("i"s"_"a"c"t"i"v"e"," "s"t"a"r"t"_"d"a"t"e"," "e"n"d"_"d"a"t"e")";"
-"C"R"E"A"T"E" "I"N"D"E"X" "i"d"x"_"s"t"a"t"u"s"e"s"_"t"y"p"e"_"o"r"d"e"r" "O"N" "s"t"a"t"u"s"e"s"("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "d"i"s"p"l"a"y"_"o"r"d"e"r")";"
+CREATE TABLE users (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    mobile VARCHAR(15) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    last_login_at TIMESTAMP NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP 
+);
+
+CREATE TABLE roles (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    is_system BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_role_assignments (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    assigned_by BIGINT NULL,
+    assigned_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_user_role UNIQUE (user_id, role_id),
+    CONSTRAINT fk_ura_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_ura_role FOREIGN KEY (role_id) REFERENCES roles(id),
+    CONSTRAINT fk_ura_assigned_by FOREIGN KEY (assigned_by) REFERENCES users(id)
+);
+
+CREATE TABLE departments (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(150) NOT NULL UNIQUE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_departments (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    user_id BIGINT NOT NULL,
+    department_id BIGINT NOT NULL,
+    is_primary BOOLEAN NOT NULL DEFAULT FALSE,
+    assigned_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_user_department UNIQUE (user_id, department_id),
+    CONSTRAINT fk_ud_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_ud_department FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+CREATE TABLE citizen_profiles (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    user_id BIGINT NOT NULL UNIQUE,
+    full_name VARCHAR(150) NOT NULL,
+    dob DATE NOT NULL,
+    gender VARCHAR(20) NOT NULL,
+    aadhaar_no CHAR(12) NOT NULL UNIQUE,
+    pan_no VARCHAR(10) NULL UNIQUE,
+    email VARCHAR(150) NOT NULL,
+    mobile VARCHAR(15) NOT NULL,
+    address_line1 VARCHAR(255) NOT NULL,
+    address_line2 VARCHAR(255) NULL,
+    district VARCHAR(100) NOT NULL,
+    taluk VARCHAR(100) NULL,
+    village VARCHAR(100) NULL,
+    bank_account_no VARCHAR(34) NOT NULL,
+    ifsc_code VARCHAR(11) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    CONSTRAINT fk_citizen_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE status_types (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE statuses (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    status_type_id BIGINT NOT NULL,
+    code VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    display_order INT NOT NULL DEFAULT 1,
+    is_terminal BOOLEAN NOT NULL DEFAULT FALSE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_status_type_code UNIQUE (status_type_id, code),
+    CONSTRAINT fk_statuses_type FOREIGN KEY (status_type_id) REFERENCES status_types(id)
+);
+
+CREATE TABLE schemes (
+    id BIGINT PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,
+    department_id BIGINT NOT NULL,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    max_amount DECIMAL(15,2) NOT NULL,
+    installment_rule_json JSON NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+    CONSTRAINT fk_schemes_department FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+-- Helpful indexes
+CREATE INDEX idx_users_active ON users(is_active);
+CREATE INDEX idx_schemes_active_dates ON schemes(is_active, start_date, end_date);
+CREATE INDEX idx_statuses_type_order ON statuses(status_type_id, display_order);

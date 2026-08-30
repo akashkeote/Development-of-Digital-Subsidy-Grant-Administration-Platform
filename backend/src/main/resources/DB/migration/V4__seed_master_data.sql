@@ -1,213 +1,213 @@
-"-"-" "1")" "R"o"l"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "r"o"l"e"s" "("c"o"d"e"," "n"a"m"e"," "i"s"_"s"y"s"t"e"m")"
-"V"A"L"U"E"S"
-" " " " "("'"C"I"T"I"Z"E"N"'"," "'"C"i"t"i"z"e"n"'"," "T"R"U"E")","
-" " " " "("'"D"E"O"'"," "'"D"a"t"a" "E"n"t"r"y" "O"p"e"r"a"t"o"r"'"," "T"R"U"E")","
-" " " " "("'"V"E"R"I"F"I"E"R"'"," "'"V"e"r"i"f"i"e"r"'"," "T"R"U"E")","
-" " " " "("'"A"P"P"R"O"V"E"R"'"," "'"A"p"p"r"o"v"e"r"'"," "T"R"U"E")","
-" " " " "("'"F"I"N"A"N"C"E"_"O"F"F"I"C"E"R"'"," "'"F"i"n"a"n"c"e" "O"f"f"i"c"e"r"'"," "T"R"U"E")","
-" " " " "("'"D"I"S"T"R"I"C"T"_"O"F"F"I"C"E"R"'"," "'"D"i"s"t"r"i"c"t" "O"f"f"i"c"e"r"'"," "T"R"U"E")","
-" " " " "("'"G"R"I"E"V"A"N"C"E"_"O"F"F"I"C"E"R"'"," "'"G"r"i"e"v"a"n"c"e" "O"f"f"i"c"e"r"'"," "T"R"U"E")","
-" " " " "("'"A"U"D"I"T"O"R"'"," "'"A"u"d"i"t"o"r"'"," "T"R"U"E")","
-" " " " "("'"A"D"M"I"N"'"," "'"S"y"s"t"e"m" "A"d"m"i"n"i"s"t"r"a"t"o"r"'"," "T"R"U"E")"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"s"y"s"t"e"m" "=" "V"A"L"U"E"S"("i"s"_"s"y"s"t"e"m")";"
-"
-"-"-" "2")" "D"e"p"a"r"t"m"e"n"t"s"
-"I"N"S"E"R"T" "I"N"T"O" "d"e"p"a"r"t"m"e"n"t"s" "("c"o"d"e"," "n"a"m"e"," "i"s"_"a"c"t"i"v"e")"
-"V"A"L"U"E"S"
-" " " " "("'"S"O"C"_"W"E"L"'"," "'"S"o"c"i"a"l" "W"e"l"f"a"r"e" "D"e"p"a"r"t"m"e"n"t"'"," "T"R"U"E")","
-" " " " "("'"A"G"R"I"'"," "'"D"e"p"a"r"t"m"e"n"t" "o"f" "A"g"r"i"c"u"l"t"u"r"e"'"," "T"R"U"E")","
-" " " " "("'"E"D"U"'"," "'"D"e"p"a"r"t"m"e"n"t" "o"f" "E"d"u"c"a"t"i"o"n"'"," "T"R"U"E")","
-" " " " "("'"R"U"R"A"L"_"D"E"V"'"," "'"R"u"r"a"l" "D"e"v"e"l"o"p"m"e"n"t" "D"e"p"a"r"t"m"e"n"t"'"," "T"R"U"E")","
-" " " " "("'"W"C"D"'"," "'"W"o"m"e"n" "a"n"d" "C"h"i"l"d" "D"e"v"e"l"o"p"m"e"n"t" "D"e"p"a"r"t"m"e"n"t"'"," "T"R"U"E")","
-" " " " "("'"M"I"N"O"R"I"T"Y"'"," "'"M"i"n"o"r"i"t"y" "W"e"l"f"a"r"e" "D"e"p"a"r"t"m"e"n"t"'"," "T"R"U"E")"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "3")" "S"t"a"t"u"s" "T"y"p"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"_"t"y"p"e"s" "("c"o"d"e"," "n"a"m"e"," "i"s"_"a"c"t"i"v"e")"
-"V"A"L"U"E"S"
-" " " " "("'"A"P"P"L"I"C"A"T"I"O"N"'"," "'"A"p"p"l"i"c"a"t"i"o"n" "S"t"a"t"u"s"'"," "T"R"U"E")","
-" " " " "("'"A"P"P"R"O"V"A"L"'"," "'"A"p"p"r"o"v"a"l" "D"e"c"i"s"i"o"n" "S"t"a"t"u"s"'"," "T"R"U"E")","
-" " " " "("'"P"A"Y"M"E"N"T"'"," "'"P"a"y"m"e"n"t" "S"t"a"t"u"s"'"," "T"R"U"E")","
-" " " " "("'"V"E"R"I"F"I"C"A"T"I"O"N"'"," "'"V"e"r"i"f"i"c"a"t"i"o"n" "S"t"a"t"u"s"'"," "T"R"U"E")","
-" " " " "("'"G"R"I"E"V"A"N"C"E"'"," "'"G"r"i"e"v"a"n"c"e" "S"t"a"t"u"s"'"," "T"R"U"E")","
-" " " " "("'"U"T"I"L"I"Z"A"T"I"O"N"'"," "'"U"t"i"l"i"z"a"t"i"o"n" "R"e"p"o"r"t" "S"t"a"t"u"s"'"," "T"R"U"E")","
-" " " " "("'"T"A"S"K"'"," "'"W"o"r"k"f"l"o"w" "T"a"s"k" "S"t"a"t"u"s"'"," "T"R"U"E")"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "4")" "A"p"p"l"i"c"a"t"i"o"n" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T" "'"D"R"A"F"T"'" "c"o"d"e"," "'"D"r"a"f"t"'" "n"a"m"e"," "1" "d"i"s"p"l"a"y"_"o"r"d"e"r"," "F"A"L"S"E" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"S"U"B"M"I"T"T"E"D"'"," "'"S"u"b"m"i"t"t"e"d"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"U"N"D"E"R"_"S"C"R"U"T"I"N"Y"'"," "'"U"n"d"e"r" "S"c"r"u"t"i"n"y"'"," "3"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"P"E"N"D"I"N"G"_"C"L"A"R"I"F"I"C"A"T"I"O"N"'"," "'"P"e"n"d"i"n"g" "C"l"a"r"i"f"i"c"a"t"i"o"n"'"," "4"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"F"I"E"L"D"_"V"E"R"I"F"I"C"A"T"I"O"N"'"," "'"F"i"e"l"d" "V"e"r"i"f"i"c"a"t"i"o"n"'"," "5"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"C"O"M"M"E"N"D"E"D"'"," "'"R"e"c"o"m"m"e"n"d"e"d"'"," "6"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"A"P"P"R"O"V"E"D"'"," "'"A"p"p"r"o"v"e"d"'"," "7"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"J"E"C"T"E"D"'"," "'"R"e"j"e"c"t"e"d"'"," "8"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"O"N"_"H"O"L"D"'"," "'"O"n" "H"o"l"d"'"," "9"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"C"L"O"S"E"D"'"," "'"C"l"o"s"e"d"'"," "1"0"," "T"R"U"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"A"P"P"L"I"C"A"T"I"O"N"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "5")" "A"p"p"r"o"v"a"l" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T"
-" " " " " " " " "'"P"E"N"D"I"N"G"'" "A"S" "c"o"d"e","
-" " " " " " " " "'"P"e"n"d"i"n"g"'" "A"S" "n"a"m"e","
-" " " " " " " " "1" "A"S" "d"i"s"p"l"a"y"_"o"r"d"e"r","
-" " " " " " " " "F"A"L"S"E" "A"S" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"C"O"M"M"E"N"D"E"D"'"," "'"R"e"c"o"m"m"e"n"d"e"d"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"A"P"P"R"O"V"E"D"'"," "'"A"p"p"r"o"v"e"d"'"," "3"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"J"E"C"T"E"D"'"," "'"R"e"j"e"c"t"e"d"'"," "4"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"T"U"R"N"E"D"'"," "'"R"e"t"u"r"n"e"d" "f"o"r" "R"e"w"o"r"k"'"," "5"," "F"A"L"S"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"A"P"P"R"O"V"A"L"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "6")" "P"a"y"m"e"n"t" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T"
-" " " " " " " " "'"P"E"N"D"I"N"G"'" "A"S" "c"o"d"e","
-" " " " " " " " "'"P"e"n"d"i"n"g"'" "A"S" "n"a"m"e","
-" " " " " " " " "1" "A"S" "d"i"s"p"l"a"y"_"o"r"d"e"r","
-" " " " " " " " "F"A"L"S"E" "A"S" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"I"N"I"T"I"A"T"E"D"'"," "'"I"n"i"t"i"a"t"e"d"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"S"U"C"C"E"S"S"'"," "'"S"u"c"c"e"s"s"'"," "3"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"F"A"I"L"E"D"'"," "'"F"a"i"l"e"d"'"," "4"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"V"E"R"S"E"D"'"," "'"R"e"v"e"r"s"e"d"'"," "5"," "T"R"U"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"P"A"Y"M"E"N"T"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "7")" "V"e"r"i"f"i"c"a"t"i"o"n" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T"
-" " " " " " " " "'"P"E"N"D"I"N"G"'" "A"S" "c"o"d"e","
-" " " " " " " " "'"P"e"n"d"i"n"g"'" "A"S" "n"a"m"e","
-" " " " " " " " "1" "A"S" "d"i"s"p"l"a"y"_"o"r"d"e"r","
-" " " " " " " " "F"A"L"S"E" "A"S" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"I"N"_"P"R"O"G"R"E"S"S"'"," "'"I"n" "P"r"o"g"r"e"s"s"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"V"E"R"I"F"I"E"D"'"," "'"V"e"r"i"f"i"e"d"'"," "3"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"F"A"I"L"E"D"'"," "'"F"a"i"l"e"d"'"," "4"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"W"A"I"V"E"D"'"," "'"W"a"i"v"e"d"'"," "5"," "T"R"U"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"V"E"R"I"F"I"C"A"T"I"O"N"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "8")" "G"r"i"e"v"a"n"c"e" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T"
-" " " " " " " " "'"O"P"E"N"'" "A"S" "c"o"d"e","
-" " " " " " " " "'"O"p"e"n"'" "A"S" "n"a"m"e","
-" " " " " " " " "1" "A"S" "d"i"s"p"l"a"y"_"o"r"d"e"r","
-" " " " " " " " "F"A"L"S"E" "A"S" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"I"N"_"R"E"V"I"E"W"'"," "'"I"n" "R"e"v"i"e"w"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"S"O"L"V"E"D"'"," "'"R"e"s"o"l"v"e"d"'"," "3"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"O"P"E"N"E"D"'"," "'"R"e"o"p"e"n"e"d"'"," "4"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"C"L"O"S"E"D"'"," "'"C"l"o"s"e"d"'"," "5"," "T"R"U"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"G"R"I"E"V"A"N"C"E"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "9")" "U"t"i"l"i"z"a"t"i"o"n" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T"
-" " " " " " " " "'"S"U"B"M"I"T"T"E"D"'" "A"S" "c"o"d"e","
-" " " " " " " " "'"S"u"b"m"i"t"t"e"d"'" "A"S" "n"a"m"e","
-" " " " " " " " "1" "A"S" "d"i"s"p"l"a"y"_"o"r"d"e"r","
-" " " " " " " " "F"A"L"S"E" "A"S" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"U"N"D"E"R"_"R"E"V"I"E"W"'"," "'"U"n"d"e"r" "R"e"v"i"e"w"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"A"C"C"E"P"T"E"D"'"," "'"A"c"c"e"p"t"e"d"'"," "3"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"J"E"C"T"E"D"'"," "'"R"e"j"e"c"t"e"d"'"," "4"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"V"I"S"I"O"N"_"R"E"Q"U"I"R"E"D"'"," "'"R"e"v"i"s"i"o"n" "R"e"q"u"i"r"e"d"'"," "5"," "F"A"L"S"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"U"T"I"L"I"Z"A"T"I"O"N"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "1"0")" "T"a"s"k" "S"t"a"t"u"s"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "s"t"a"t"u"s"e"s" "("s"t"a"t"u"s"_"t"y"p"e"_"i"d"," "c"o"d"e"," "n"a"m"e"," "d"i"s"p"l"a"y"_"o"r"d"e"r"," "i"s"_"t"e"r"m"i"n"a"l"," "i"s"_"a"c"t"i"v"e")"
-"S"E"L"E"C"T" "s"t"."i"d"," "x"."c"o"d"e"," "x"."n"a"m"e"," "x"."d"i"s"p"l"a"y"_"o"r"d"e"r"," "x"."i"s"_"t"e"r"m"i"n"a"l"," "T"R"U"E"
-"F"R"O"M" "s"t"a"t"u"s"_"t"y"p"e"s" "s"t"
-" " " " " " " " " "J"O"I"N" "("
-" " " " "S"E"L"E"C"T"
-" " " " " " " " "'"P"E"N"D"I"N"G"'" "A"S" "c"o"d"e","
-" " " " " " " " "'"P"e"n"d"i"n"g"'" "A"S" "n"a"m"e","
-" " " " " " " " "1" "A"S" "d"i"s"p"l"a"y"_"o"r"d"e"r","
-" " " " " " " " "F"A"L"S"E" "A"S" "i"s"_"t"e"r"m"i"n"a"l"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"A"S"S"I"G"N"E"D"'"," "'"A"s"s"i"g"n"e"d"'"," "2"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"I"N"_"P"R"O"G"R"E"S"S"'"," "'"I"n" "P"r"o"g"r"e"s"s"'"," "3"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"C"O"M"P"L"E"T"E"D"'"," "'"C"o"m"p"l"e"t"e"d"'"," "4"," "T"R"U"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"R"E"A"S"S"I"G"N"E"D"'"," "'"R"e"a"s"s"i"g"n"e"d"'"," "5"," "F"A"L"S"E"
-" " " " "U"N"I"O"N" "A"L"L" "S"E"L"E"C"T" "'"C"A"N"C"E"L"L"E"D"'"," "'"C"a"n"c"e"l"l"e"d"'"," "6"," "T"R"U"E"
-")" "x"
-"W"H"E"R"E" "s"t"."c"o"d"e" "=" "'"T"A"S"K"'"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "d"i"s"p"l"a"y"_"o"r"d"e"r" "=" "V"A"L"U"E"S"("d"i"s"p"l"a"y"_"o"r"d"e"r")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"t"e"r"m"i"n"a"l" "=" "V"A"L"U"E"S"("i"s"_"t"e"r"m"i"n"a"l")","
-" " " " " " " " " " " " " " " " " " " " " "i"s"_"a"c"t"i"v"e" "=" "V"A"L"U"E"S"("i"s"_"a"c"t"i"v"e")";"
-"
-"-"-" "1"1")" "W"o"r"k"f"l"o"w" "s"t"a"g"e"s"
-"I"N"S"E"R"T" "I"N"T"O" "w"o"r"k"f"l"o"w"_"s"t"a"g"e"s" "("c"o"d"e"," "n"a"m"e"," "s"t"a"g"e"_"t"y"p"e")"
-"V"A"L"U"E"S"
-" " " " "("'"S"U"B"M"I"S"S"I"O"N"'"," "'"A"p"p"l"i"c"a"t"i"o"n" "S"u"b"m"i"s"s"i"o"n"'"," "'"S"Y"S"T"E"M"'")","
-" " " " "("'"S"C"R"U"T"I"N"Y"'"," "'"I"n"i"t"i"a"l" "S"c"r"u"t"i"n"y"'"," "'"M"A"N"U"A"L"'")","
-" " " " "("'"V"E"R"I"F"I"C"A"T"I"O"N"'"," "'"F"i"e"l"d"/"D"o"c"u"m"e"n"t" "V"e"r"i"f"i"c"a"t"i"o"n"'"," "'"M"A"N"U"A"L"'")","
-" " " " "("'"A"P"P"R"O"V"A"L"'"," "'"C"o"m"p"e"t"e"n"t" "A"u"t"h"o"r"i"t"y" "A"p"p"r"o"v"a"l"'"," "'"M"A"N"U"A"L"'")","
-" " " " "("'"S"A"N"C"T"I"O"N"'"," "'"S"a"n"c"t"i"o"n" "G"e"n"e"r"a"t"i"o"n"'"," "'"S"Y"S"T"E"M"'")","
-" " " " "("'"D"I"S"B"U"R"S"E"M"E"N"T"'"," "'"F"u"n"d" "D"i"s"b"u"r"s"e"m"e"n"t"'"," "'"S"Y"S"T"E"M"'")","
-" " " " "("'"U"T"I"L"I"Z"A"T"I"O"N"_"T"R"A"C"K"I"N"G"'"," "'"U"t"i"l"i"z"a"t"i"o"n" "T"r"a"c"k"i"n"g"'"," "'"M"A"N"U"A"L"'")","
-" " " " "("'"C"L"O"S"U"R"E"'"," "'"C"a"s"e" "C"l"o"s"u"r"e"'"," "'"S"Y"S"T"E"M"'")"
-"O"N" "D"U"P"L"I"C"A"T"E" "K"E"Y" "U"P"D"A"T"E"
-" " " " " " " " " " " " " " " " " " " " " "n"a"m"e" "=" "V"A"L"U"E"S"("n"a"m"e")","
-" " " " " " " " " " " " " " " " " " " " " "s"t"a"g"e"_"t"y"p"e" "=" "V"A"L"U"E"S"("s"t"a"g"e"_"t"y"p"e")";"
+-- 1) Roles
+INSERT INTO roles (code, name, is_system)
+VALUES
+    ('CITIZEN', 'Citizen', TRUE),
+    ('DEO', 'Data Entry Operator', TRUE),
+    ('VERIFIER', 'Verifier', TRUE),
+    ('APPROVER', 'Approver', TRUE),
+    ('FINANCE_OFFICER', 'Finance Officer', TRUE),
+    ('DISTRICT_OFFICER', 'District Officer', TRUE),
+    ('GRIEVANCE_OFFICER', 'Grievance Officer', TRUE),
+    ('AUDITOR', 'Auditor', TRUE),
+    ('ADMIN', 'System Administrator', TRUE)
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     is_system = VALUES(is_system);
+
+-- 2) Departments
+INSERT INTO departments (code, name, is_active)
+VALUES
+    ('SOC_WEL', 'Social Welfare Department', TRUE),
+    ('AGRI', 'Department of Agriculture', TRUE),
+    ('EDU', 'Department of Education', TRUE),
+    ('RURAL_DEV', 'Rural Development Department', TRUE),
+    ('WCD', 'Women and Child Development Department', TRUE),
+    ('MINORITY', 'Minority Welfare Department', TRUE)
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     is_active = VALUES(is_active);
+
+-- 3) Status Types
+INSERT INTO status_types (code, name, is_active)
+VALUES
+    ('APPLICATION', 'Application Status', TRUE),
+    ('APPROVAL', 'Approval Decision Status', TRUE),
+    ('PAYMENT', 'Payment Status', TRUE),
+    ('VERIFICATION', 'Verification Status', TRUE),
+    ('GRIEVANCE', 'Grievance Status', TRUE),
+    ('UTILIZATION', 'Utilization Report Status', TRUE),
+    ('TASK', 'Workflow Task Status', TRUE)
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     is_active = VALUES(is_active);
+
+-- 4) Application Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT 'DRAFT' code, 'Draft' name, 1 display_order, FALSE is_terminal
+    UNION ALL SELECT 'SUBMITTED', 'Submitted', 2, FALSE
+    UNION ALL SELECT 'UNDER_SCRUTINY', 'Under Scrutiny', 3, FALSE
+    UNION ALL SELECT 'PENDING_CLARIFICATION', 'Pending Clarification', 4, FALSE
+    UNION ALL SELECT 'FIELD_VERIFICATION', 'Field Verification', 5, FALSE
+    UNION ALL SELECT 'RECOMMENDED', 'Recommended', 6, FALSE
+    UNION ALL SELECT 'APPROVED', 'Approved', 7, TRUE
+    UNION ALL SELECT 'REJECTED', 'Rejected', 8, TRUE
+    UNION ALL SELECT 'ON_HOLD', 'On Hold', 9, FALSE
+    UNION ALL SELECT 'CLOSED', 'Closed', 10, TRUE
+) x
+WHERE st.code = 'APPLICATION'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 5) Approval Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT
+        'PENDING' AS code,
+        'Pending' AS name,
+        1 AS display_order,
+        FALSE AS is_terminal
+    UNION ALL SELECT 'RECOMMENDED', 'Recommended', 2, FALSE
+    UNION ALL SELECT 'APPROVED', 'Approved', 3, TRUE
+    UNION ALL SELECT 'REJECTED', 'Rejected', 4, TRUE
+    UNION ALL SELECT 'RETURNED', 'Returned for Rework', 5, FALSE
+) x
+WHERE st.code = 'APPROVAL'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 6) Payment Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT
+        'PENDING' AS code,
+        'Pending' AS name,
+        1 AS display_order,
+        FALSE AS is_terminal
+    UNION ALL SELECT 'INITIATED', 'Initiated', 2, FALSE
+    UNION ALL SELECT 'SUCCESS', 'Success', 3, TRUE
+    UNION ALL SELECT 'FAILED', 'Failed', 4, TRUE
+    UNION ALL SELECT 'REVERSED', 'Reversed', 5, TRUE
+) x
+WHERE st.code = 'PAYMENT'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 7) Verification Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT
+        'PENDING' AS code,
+        'Pending' AS name,
+        1 AS display_order,
+        FALSE AS is_terminal
+    UNION ALL SELECT 'IN_PROGRESS', 'In Progress', 2, FALSE
+    UNION ALL SELECT 'VERIFIED', 'Verified', 3, TRUE
+    UNION ALL SELECT 'FAILED', 'Failed', 4, TRUE
+    UNION ALL SELECT 'WAIVED', 'Waived', 5, TRUE
+) x
+WHERE st.code = 'VERIFICATION'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 8) Grievance Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT
+        'OPEN' AS code,
+        'Open' AS name,
+        1 AS display_order,
+        FALSE AS is_terminal
+    UNION ALL SELECT 'IN_REVIEW', 'In Review', 2, FALSE
+    UNION ALL SELECT 'RESOLVED', 'Resolved', 3, TRUE
+    UNION ALL SELECT 'REOPENED', 'Reopened', 4, FALSE
+    UNION ALL SELECT 'CLOSED', 'Closed', 5, TRUE
+) x
+WHERE st.code = 'GRIEVANCE'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 9) Utilization Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT
+        'SUBMITTED' AS code,
+        'Submitted' AS name,
+        1 AS display_order,
+        FALSE AS is_terminal
+    UNION ALL SELECT 'UNDER_REVIEW', 'Under Review', 2, FALSE
+    UNION ALL SELECT 'ACCEPTED', 'Accepted', 3, TRUE
+    UNION ALL SELECT 'REJECTED', 'Rejected', 4, TRUE
+    UNION ALL SELECT 'REVISION_REQUIRED', 'Revision Required', 5, FALSE
+) x
+WHERE st.code = 'UTILIZATION'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 10) Task Statuses
+INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+FROM status_types st
+         JOIN (
+    SELECT
+        'PENDING' AS code,
+        'Pending' AS name,
+        1 AS display_order,
+        FALSE AS is_terminal
+    UNION ALL SELECT 'ASSIGNED', 'Assigned', 2, FALSE
+    UNION ALL SELECT 'IN_PROGRESS', 'In Progress', 3, FALSE
+    UNION ALL SELECT 'COMPLETED', 'Completed', 4, TRUE
+    UNION ALL SELECT 'REASSIGNED', 'Reassigned', 5, FALSE
+    UNION ALL SELECT 'CANCELLED', 'Cancelled', 6, TRUE
+) x
+WHERE st.code = 'TASK'
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     display_order = VALUES(display_order),
+                     is_terminal = VALUES(is_terminal),
+                     is_active = VALUES(is_active);
+
+-- 11) Workflow stages
+INSERT INTO workflow_stages (code, name, stage_type)
+VALUES
+    ('SUBMISSION', 'Application Submission', 'SYSTEM'),
+    ('SCRUTINY', 'Initial Scrutiny', 'MANUAL'),
+    ('VERIFICATION', 'Field/Document Verification', 'MANUAL'),
+    ('APPROVAL', 'Competent Authority Approval', 'MANUAL'),
+    ('SANCTION', 'Sanction Generation', 'SYSTEM'),
+    ('DISBURSEMENT', 'Fund Disbursement', 'SYSTEM'),
+    ('UTILIZATION_TRACKING', 'Utilization Tracking', 'MANUAL'),
+    ('CLOSURE', 'Case Closure', 'SYSTEM')
+ON DUPLICATE KEY UPDATE
+                     name = VALUES(name),
+                     stage_type = VALUES(stage_type);
