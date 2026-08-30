@@ -22,12 +22,20 @@ public class AuthController {
             String email = body.get("email");
             String password = body.get("password");
             String aadharNumber = body.get("aadharNumber");
+            String mobile = body.get("mobile");
 
-            if (fullName == null || email == null || password == null || aadharNumber == null) {
-                return ResponseEntity.badRequest().body(Map.of("success", false, "message", "All fields are required."));
+            if (fullName == null || email == null || password == null
+                    || aadharNumber == null || mobile == null) {
+
+                return ResponseEntity.badRequest().body(
+                        Map.of(
+                                "success", false,
+                                "message", "All fields are required."
+                        )
+                );
             }
 
-            Map<String, Object> result = authService.register(fullName, email, password, aadharNumber);
+            Map<String, Object> result = authService.register(fullName, email, password, aadharNumber,mobile);
             boolean success = (boolean) result.get("success");
             return success ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
 

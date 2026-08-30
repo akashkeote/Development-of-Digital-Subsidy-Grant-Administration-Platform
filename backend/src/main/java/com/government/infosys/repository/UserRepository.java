@@ -1,42 +1,47 @@
 package com.government.infosys.repository;
 
 import com.government.infosys.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserRepository {
 
-    private final List<User> users = new ArrayList<>();
+    @Autowired
+    private UserJpaRepository jpaRepository;
 
-    public void save(User user) {
-        if (user.getId() == null) {
-            user.setId(Long.valueOf(UUID.randomUUID().toString()));
-        }
-        users.add(user);
+    public User save(User user) {
+        return jpaRepository.save(user);
     }
 
     public Optional<User> findByEmail(String email) {
-        return users.stream().filter(u -> email.equals(u.getEmail())).findFirst();
+        return jpaRepository.findByEmail(email);
     }
 
     public boolean existsByEmail(String email) {
-        return users.stream().anyMatch(u -> email.equals(u.getEmail()));
+        return jpaRepository.existsByEmail(email);
     }
 
     public Optional<User> findByAadharNumber(String aadharNumber) {
-        return users.stream().filter(u -> aadharNumber.equals(u.getAadharNumber())).findFirst();
+        return jpaRepository.findByAadharNumber(aadharNumber);
     }
 
     public boolean existsByAadharNumber(String aadharNumber) {
-        return users.stream().anyMatch(u -> aadharNumber.equals(u.getAadharNumber()));
+        return jpaRepository.existsByAadharNumber(aadharNumber);
     }
 
     public Optional<User> findById(String id) {
-        return users.stream().filter(u -> id.equals(u.getId())).findFirst();
+        try {
+            Long userId = Long.valueOf(id);
+            return jpaRepository.findById(userId);
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<User> findById(Long id) {
+        return jpaRepository.findById(id);
     }
 }

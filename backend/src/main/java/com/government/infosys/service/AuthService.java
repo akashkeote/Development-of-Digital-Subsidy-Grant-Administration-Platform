@@ -8,6 +8,8 @@ import com.government.infosys.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.government.infosys.entity.CitizenProfile;
+import com.government.infosys.repository.CitizenProfileRepository;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -18,6 +20,9 @@ public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CitizenProfileRepository citizenProfileRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -31,7 +36,8 @@ public class AuthService {
     public Map<String, Object> register(String fullName,
                                         String email,
                                         String password,
-                                        String aadharNumber) {
+                                        String aadharNumber,
+                                        String mobile) {
 
         if (userRepository.existsByEmail(email)) {
             return Map.of(
@@ -53,15 +59,20 @@ public class AuthService {
 
         User user = new User();
 
+        user.setUsername(email);
         user.setFullName(fullName);
         user.setEmail(email);
-        // Store a BCrypt hash instead of the plain-text password
-        user.setPassword(passwordEncoder.encode(password));
+        String encodedPassword = passwordEncoder.encode(password);
+
+        user.setPasswordHash(encodedPassword);
+        user.setPassword(encodedPassword);
         user.setAadharNumber(aadharNumber);
+        user.setMobile(mobile);
         user.setRole(citizenRole);
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
+
 
         return Map.of(
                 "success", true,
