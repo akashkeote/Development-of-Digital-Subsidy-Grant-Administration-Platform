@@ -5,6 +5,7 @@
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
+> **🚀 Live Demo (Frontend):** [https://digigrant.vercel.app/](https://digigrant.vercel.app/)
 > **📋 Project Tracking Sheet:** [View GitHub Repository Details for Interns](https://docs.google.com/spreadsheets/d/e/2PACX-1vSHBohJlazYE2oDzlTfXgpScqeMh673N9BKC-cZvO79n0y05wKyhPwjx4lzTWjTJGZnuYSRfJq3PeFw/pubhtml?gid=0&single=true)
 
 DigiGrant is a comprehensive, full-stack digital platform designed to modernize and streamline the disbursement of government subsidies and grants. It replaces tedious manual paperwork with a transparent, automated, and milestone-based multi-tier approval workflow, ensuring funds reach the right citizens at the right time.
