@@ -10,9 +10,11 @@ VALUES
     ('GRIEVANCE_OFFICER', 'Grievance Officer', TRUE),
     ('AUDITOR', 'Auditor', TRUE),
     ('ADMIN', 'System Administrator', TRUE)
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     is_system = VALUES(is_system);
+ON CONFLICT (code) DO UPDATE
+SET
+    name = EXCLUDED.name,
+    is_system = EXCLUDED.is_system;
+
 
 -- 2) Departments
 INSERT INTO departments (code, name, is_active)
@@ -23,9 +25,11 @@ VALUES
     ('RURAL_DEV', 'Rural Development Department', TRUE),
     ('WCD', 'Women and Child Development Department', TRUE),
     ('MINORITY', 'Minority Welfare Department', TRUE)
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     is_active = VALUES(is_active);
+ON CONFLICT (code) DO UPDATE
+SET
+    name = EXCLUDED.name,
+    is_active = EXCLUDED.is_active;
+
 
 -- 3) Status Types
 INSERT INTO status_types (code, name, is_active)
@@ -37,16 +41,25 @@ VALUES
     ('GRIEVANCE', 'Grievance Status', TRUE),
     ('UTILIZATION', 'Utilization Report Status', TRUE),
     ('TASK', 'Workflow Task Status', TRUE)
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     is_active = VALUES(is_active);
+ON CONFLICT (code) DO UPDATE
+SET
+    name = EXCLUDED.name,
+    is_active = EXCLUDED.is_active;
+
 
 -- 4) Application Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT 'DRAFT' code, 'Draft' name, 1 display_order, FALSE is_terminal
+    SELECT 'DRAFT' AS code, 'Draft' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'SUBMITTED', 'Submitted', 2, FALSE
     UNION ALL SELECT 'UNDER_SCRUTINY', 'Under Scrutiny', 3, FALSE
     UNION ALL SELECT 'PENDING_CLARIFICATION', 'Pending Clarification', 4, FALSE
@@ -57,147 +70,137 @@ FROM status_types st
     UNION ALL SELECT 'ON_HOLD', 'On Hold', 9, FALSE
     UNION ALL SELECT 'CLOSED', 'Closed', 10, TRUE
 ) x
-WHERE st.code = 'APPLICATION'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'APPLICATION';
+
 
 -- 5) Approval Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT
-        'PENDING' AS code,
-        'Pending' AS name,
-        1 AS display_order,
-        FALSE AS is_terminal
+    SELECT 'PENDING' AS code, 'Pending' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'RECOMMENDED', 'Recommended', 2, FALSE
     UNION ALL SELECT 'APPROVED', 'Approved', 3, TRUE
     UNION ALL SELECT 'REJECTED', 'Rejected', 4, TRUE
     UNION ALL SELECT 'RETURNED', 'Returned for Rework', 5, FALSE
 ) x
-WHERE st.code = 'APPROVAL'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'APPROVAL';
+
 
 -- 6) Payment Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT
-        'PENDING' AS code,
-        'Pending' AS name,
-        1 AS display_order,
-        FALSE AS is_terminal
+    SELECT 'PENDING' AS code, 'Pending' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'INITIATED', 'Initiated', 2, FALSE
     UNION ALL SELECT 'SUCCESS', 'Success', 3, TRUE
     UNION ALL SELECT 'FAILED', 'Failed', 4, TRUE
     UNION ALL SELECT 'REVERSED', 'Reversed', 5, TRUE
 ) x
-WHERE st.code = 'PAYMENT'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'PAYMENT';
+
 
 -- 7) Verification Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT
-        'PENDING' AS code,
-        'Pending' AS name,
-        1 AS display_order,
-        FALSE AS is_terminal
+    SELECT 'PENDING' AS code, 'Pending' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'IN_PROGRESS', 'In Progress', 2, FALSE
     UNION ALL SELECT 'VERIFIED', 'Verified', 3, TRUE
     UNION ALL SELECT 'FAILED', 'Failed', 4, TRUE
     UNION ALL SELECT 'WAIVED', 'Waived', 5, TRUE
 ) x
-WHERE st.code = 'VERIFICATION'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'VERIFICATION';
+
 
 -- 8) Grievance Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT
-        'OPEN' AS code,
-        'Open' AS name,
-        1 AS display_order,
-        FALSE AS is_terminal
+    SELECT 'OPEN' AS code, 'Open' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'IN_REVIEW', 'In Review', 2, FALSE
     UNION ALL SELECT 'RESOLVED', 'Resolved', 3, TRUE
     UNION ALL SELECT 'REOPENED', 'Reopened', 4, FALSE
     UNION ALL SELECT 'CLOSED', 'Closed', 5, TRUE
 ) x
-WHERE st.code = 'GRIEVANCE'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'GRIEVANCE';
+
 
 -- 9) Utilization Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT
-        'SUBMITTED' AS code,
-        'Submitted' AS name,
-        1 AS display_order,
-        FALSE AS is_terminal
+    SELECT 'SUBMITTED' AS code, 'Submitted' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'UNDER_REVIEW', 'Under Review', 2, FALSE
     UNION ALL SELECT 'ACCEPTED', 'Accepted', 3, TRUE
     UNION ALL SELECT 'REJECTED', 'Rejected', 4, TRUE
     UNION ALL SELECT 'REVISION_REQUIRED', 'Revision Required', 5, FALSE
 ) x
-WHERE st.code = 'UTILIZATION'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'UTILIZATION';
+
 
 -- 10) Task Statuses
-INSERT INTO statuses (status_type_id, code, name, display_order, is_terminal, is_active)
-SELECT st.id, x.code, x.name, x.display_order, x.is_terminal, TRUE
+INSERT INTO statuses
+(status_type_id, code, name, display_order, is_terminal, is_active)
+SELECT
+    st.id,
+    x.code,
+    x.name,
+    x.display_order,
+    x.is_terminal,
+    TRUE
 FROM status_types st
          JOIN (
-    SELECT
-        'PENDING' AS code,
-        'Pending' AS name,
-        1 AS display_order,
-        FALSE AS is_terminal
+    SELECT 'PENDING' AS code, 'Pending' AS name, 1 AS display_order, FALSE AS is_terminal
     UNION ALL SELECT 'ASSIGNED', 'Assigned', 2, FALSE
     UNION ALL SELECT 'IN_PROGRESS', 'In Progress', 3, FALSE
     UNION ALL SELECT 'COMPLETED', 'Completed', 4, TRUE
     UNION ALL SELECT 'REASSIGNED', 'Reassigned', 5, FALSE
     UNION ALL SELECT 'CANCELLED', 'Cancelled', 6, TRUE
 ) x
-WHERE st.code = 'TASK'
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     display_order = VALUES(display_order),
-                     is_terminal = VALUES(is_terminal),
-                     is_active = VALUES(is_active);
+              ON st.code = 'TASK';
 
--- 11) Workflow stages
+
+-- 11) Workflow Stages
 INSERT INTO workflow_stages (code, name, stage_type)
 VALUES
     ('SUBMISSION', 'Application Submission', 'SYSTEM'),
@@ -207,7 +210,4 @@ VALUES
     ('SANCTION', 'Sanction Generation', 'SYSTEM'),
     ('DISBURSEMENT', 'Fund Disbursement', 'SYSTEM'),
     ('UTILIZATION_TRACKING', 'Utilization Tracking', 'MANUAL'),
-    ('CLOSURE', 'Case Closure', 'SYSTEM')
-ON DUPLICATE KEY UPDATE
-                     name = VALUES(name),
-                     stage_type = VALUES(stage_type);
+    ('CLOSURE', 'Case Closure', 'SYSTEM');
