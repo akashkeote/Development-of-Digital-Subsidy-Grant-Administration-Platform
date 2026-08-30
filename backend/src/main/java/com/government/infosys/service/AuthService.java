@@ -4,7 +4,9 @@ import com.government.infosys.entity.Role;
 import com.government.infosys.entity.User;
 import com.government.infosys.repository.RoleRepository;
 import com.government.infosys.repository.UserRepository;
+import com.government.infosys.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,12 @@ public class AuthService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public Map<String, Object> register(String fullName,
                                         String email,
@@ -47,7 +55,8 @@ public class AuthService {
 
         user.setFullName(fullName);
         user.setEmail(email);
-        user.setPassword(password); // TODO: Encode password later
+        // Store a BCrypt hash instead of the plain-text password
+        user.setPassword(passwordEncoder.encode(password));
         user.setAadharNumber(aadharNumber);
         user.setRole(citizenRole);
         user.setCreatedAt(LocalDateTime.now());
@@ -79,22 +88,27 @@ public class AuthService {
 
         User user = userOpt.get();
 
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             return Map.of(
                     "success", false,
                     "message", "Incorrect password."
             );
         }
 
+        String role = user.getRole().getCode();
+        // Generate JWT containing username and role
+        String token = jwtUtil.generateToken(user.getEmail(), role);
+
         return Map.of(
                 "success", true,
                 "message", "Login successful!",
+                "token", token,
                 "user", Map.of(
                         "id", user.getId(),
                         "fullName", user.getFullName(),
                         "email", user.getEmail(),
                         "aadharNumber", user.getAadharNumber(),
-                        "role", user.getRole().getCode()
+                        "role", role
                 )
         );
     }
