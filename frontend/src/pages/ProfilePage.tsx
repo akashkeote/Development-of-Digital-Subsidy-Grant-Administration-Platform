@@ -61,19 +61,24 @@ export const ProfilePage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                 <div className="space-y-2">
-                  <label className="text-slate-500 font-bold tracking-wider text-[10px] uppercase">Full Name (Locked)</label>
-                  <div className="flex items-center space-x-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100 text-slate-800 font-medium shadow-sm">
-                    <Lock className="w-4 h-4 text-slate-400" />
-                    <span>{citizenProfile.name}</span>
-                  </div>
+                  <label className="text-slate-500 font-bold tracking-wider text-[10px] uppercase">Full Name</label>
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full bg-white p-4 rounded-xl border border-slate-200 text-slate-800 font-medium shadow-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
+                  />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-slate-500 font-bold tracking-wider text-[10px] uppercase">Aadhaar Reference (Locked)</label>
-                  <div className="flex items-center space-x-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100 text-slate-800 font-mono shadow-sm">
-                    <Lock className="w-4 h-4 text-slate-400" />
-                    <span>{citizenProfile.aadhaar}</span>
-                  </div>
+                  <label className="text-slate-500 font-bold tracking-wider text-[10px] uppercase">Aadhaar Reference</label>
+                  <input 
+                    type="text" 
+                    value={aadhaar}
+                    onChange={(e) => setAadhaar(e.target.value.replace(/[^0-9]/g, ''))}
+                    maxLength={12}
+                    className="w-full bg-white p-4 rounded-xl border border-slate-200 text-slate-800 font-mono shadow-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all"
+                  />
                 </div>
 
                 <div className="space-y-2">
