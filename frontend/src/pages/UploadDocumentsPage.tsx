@@ -198,6 +198,18 @@ export const UploadDocumentsPage: React.FC = () => {
           {/* Main upload list */}
           <div className="lg:col-span-8 space-y-6">
             
+            {scheme.requiredDocuments.length === 0 && (
+              <div className="bg-slate-50 border border-slate-200 p-8 rounded-2xl text-center shadow-sm">
+                <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">No Documents Required</h3>
+                <p className="text-slate-500 font-medium text-sm">
+                  This scheme does not require any mandatory certificates or document uploads. You can proceed directly to submit your application.
+                </p>
+              </div>
+            )}
+            
             {scheme.requiredDocuments.map((docType) => {
               const fileUpload = uploads[docType];
               const isDrag = dragActive === docType;
