@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.government.infosys.repository.UserJpaRepository;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -14,8 +16,25 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class AuthController {
     @GetMapping("/users")
-    public ResponseEntity<List<com.government.infosys.entity.User>> getAllUsers() {
-        return ResponseEntity.ok(userJpaRepository.findAll());
+    public ResponseEntity<List<Map<String, Object>>> getAllUsers() {
+        List<com.government.infosys.entity.User> users = userJpaRepository.findAll();
+        List<Map<String, Object>> response = new ArrayList<>();
+        for (com.government.infosys.entity.User u : users) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", u.getId());
+            map.put("username", u.getUsername());
+            map.put("fullName", u.getFullName());
+            map.put("email", u.getEmail());
+            map.put("mobile", u.getMobile());
+            map.put("aadharNumber", u.getAadharNumber());
+            map.put("isActive", u.getIsActive());
+            map.put("lastLoginAt", u.getLastLoginAt());
+            if (u.getRole() != null) {
+                map.put("role", Map.of("name", u.getRole().getName(), "code", u.getRole().getCode()));
+            }
+            response.add(map);
+        }
+        return ResponseEntity.ok(response);
     }
 
 
