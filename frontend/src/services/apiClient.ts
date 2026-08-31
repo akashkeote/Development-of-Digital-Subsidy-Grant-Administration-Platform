@@ -17,10 +17,10 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // In a real app, you would fetch the token from localStorage or a state management library
-    // const token = localStorage.getItem('auth_token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`;
-    // }
+    const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
