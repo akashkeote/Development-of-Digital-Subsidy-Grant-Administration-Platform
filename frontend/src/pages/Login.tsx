@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { authService } from '../services/api';
 import { UserRole } from '../types';
 import { ArrowRight, Shield, Lock, Eye, Users, CheckCircle2, FileText, Activity, Building, ArrowLeft, Sun, AlertCircle, Landmark } from 'lucide-react';
 
 export const Login: React.FC = () => {
-  const { setCurrentRole } = useApp();
+  const { setCurrentRole, setCitizenProfile } = useApp();
   const navigate = useNavigate();
   const [step, setStep] = useState<'main_selection' | 'officer_selection' | 'login_form'>('main_selection');
   const [selectedRole, setSelectedRole] = useState<UserRole>('citizen');
@@ -35,7 +36,7 @@ export const Login: React.FC = () => {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userId.trim()) {
       setError('Please enter a valid User ID');
@@ -43,16 +44,42 @@ export const Login: React.FC = () => {
     }
     
     setIsLoading(true);
-    setTimeout(() => {
-      setCurrentRole(selectedRole);
-      setIsLoading(false);
-      if (selectedRole === 'citizen') navigate('/citizen/dashboard');
-      else if (selectedRole === 'vle') navigate('/vle/dashboard');
-      else if (selectedRole === 'l1_officer') navigate('/l1-verification/dashboard');
-      else if (selectedRole === 'l2_officer') navigate('/l2-sanction/dashboard');
-      else if (selectedRole === 'l3_officer') navigate('/l3-finance/dashboard');
-      else if (selectedRole === 'admin') navigate('/admin/dashboard');
-    }, 800);
+    setError('');
+
+    if (selectedRole === 'citizen') {
+      try {
+        const data = await authService.login(userId, password);
+        if (data.token) {
+           localStorage.setItem('gov_token', data.token);
+        }
+        if (data.user) {
+          setCitizenProfile((prev: any) => ({
+            ...prev,
+            id: `CIT-${data.user.id}`,
+            name: data.user.fullName,
+            email: data.user.email,
+            aadhaar: data.user.aadharNumber || prev.aadhaar,
+          }));
+        }
+        setCurrentRole(selectedRole);
+        setIsLoading(false);
+        navigate('/citizen/dashboard');
+      } catch (err: any) {
+        setIsLoading(false);
+        setError(err.response?.data?.message || 'Invalid email or password');
+      }
+    } else {
+      // Mock logic for VLE and Officers
+      setTimeout(() => {
+        setCurrentRole(selectedRole);
+        setIsLoading(false);
+        if (selectedRole === 'vle') navigate('/vle/dashboard');
+        else if (selectedRole === 'l1_officer') navigate('/l1-verification/dashboard');
+        else if (selectedRole === 'l2_officer') navigate('/l2-sanction/dashboard');
+        else if (selectedRole === 'l3_officer') navigate('/l3-finance/dashboard');
+        else if (selectedRole === 'admin') navigate('/admin/dashboard');
+      }, 800);
+    }
   };
 
   const rolesConfig: { id: UserRole; label: string; desc: string; icon: any; color: string; bg: string }[] = [

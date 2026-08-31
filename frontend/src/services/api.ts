@@ -19,7 +19,24 @@ const setStorage = <T>(key: string, data: T) => {
 // --- USER API ---
 export const userService = {
   getUsers: async (): Promise<SystemUser[]> => {
-    await delay(300);
+    try {
+      const { data } = await apiClient.get<any[]>('/auth/users');
+      if (data && data.length > 0) {
+        return data.map((u: any) => ({
+          id: u.id ? u.id.toString() : Math.random().toString(),
+          name: u.fullName || u.username || 'Unknown User',
+          email: u.email || 'No email',
+          role: u.role?.name ? u.role.name.toLowerCase().replace('role_', '') : 'citizen',
+          status: u.isActive === false ? 'blocked' : 'active',
+          department: u.department || 'General Public',
+          lastLogin: u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleDateString() : 'Never',
+          applicationsProcessed: 0
+        }));
+      }
+    } catch (e) {
+      console.error("Failed to fetch users from real DB", e);
+    }
+    // Fallback in case backend fails or returns empty list initially
     return getStorage('mock_db_users', INITIAL_USERS);
   },
   updateUserStatus: async (userId: string, status: SystemUser['status'], role?: SystemUser['role']): Promise<SystemUser> => {
@@ -83,6 +100,19 @@ const mapSchemeToBackendSubsidy = (scheme: Partial<Scheme>) => {
     active: true,
     expired: false
   };
+};
+
+
+// --- AUTH API ---
+export const authService = {
+  login: async (email: string, password: string) => {
+    const { data } = await apiClient.post<any>('/auth/login', { email, password });
+    return data;
+  },
+  register: async (fullName: string, email: string, password: string, aadharNumber: string, mobile: string) => {
+    const { data } = await apiClient.post<any>('/auth/register', { fullName, email, password, aadharNumber, mobile });
+    return data;
+  }
 };
 
 // --- SCHEMES API ---

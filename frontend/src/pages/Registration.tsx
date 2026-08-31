@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { authService } from '../services/api';
 import { ShieldCheck, ArrowRight, ArrowLeft, Landmark, CheckCircle2, FileText, Smartphone, Sun } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -15,6 +16,7 @@ export const Registration: React.FC = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [income, setIncome] = useState<number>(150000);
   const [category, setCategory] = useState('General');
@@ -338,6 +340,19 @@ export const Registration: React.FC = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         className="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all" 
                         required
+                      />
+                    </div>
+                    
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 pl-1">Set Password</label>
+                      <input 
+                        type="password" 
+                        placeholder="Choose a strong password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all" 
+                        required
+                        minLength={6}
                       />
                     </div>
 
