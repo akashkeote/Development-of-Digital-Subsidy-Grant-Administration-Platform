@@ -5,15 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.government.infosys.repository.UserJpaRepository;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
+    @GetMapping("/users")
+    public ResponseEntity<List<com.government.infosys.entity.User>> getAllUsers() {
+        return ResponseEntity.ok(userJpaRepository.findAll());
+    }
+
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UserJpaRepository userJpaRepository;
+
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
