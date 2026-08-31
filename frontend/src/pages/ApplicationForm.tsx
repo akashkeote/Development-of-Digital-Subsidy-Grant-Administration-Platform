@@ -6,7 +6,7 @@ import { DashboardLayout } from '../components/DashboardLayout';
 
 export const ApplicationForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { schemes, citizenProfile } = useApp();
+  const { schemes, citizenProfile, applications } = useApp();
   const navigate = useNavigate();
 
   const scheme = schemes.find(s => s.id === id);
@@ -24,6 +24,18 @@ export const ApplicationForm: React.FC = () => {
   const [ifsc, setIfsc] = useState('');
 
   const [declaration, setDeclaration] = useState(false);
+
+
+  // Prevent duplicate applications
+  useEffect(() => {
+    if (id && citizenProfile && applications) {
+      const alreadyApplied = applications.some(app => app.schemeId === id && app.citizenId === citizenProfile.id);
+      if (alreadyApplied) {
+        alert("You have already applied for this scheme. Multiple applications for the same scheme are not allowed.");
+        navigate('/citizen/tracking');
+      }
+    }
+  }, [id, citizenProfile, applications, navigate]);
 
   // Sync profile details on load
   useEffect(() => {

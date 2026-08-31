@@ -68,8 +68,9 @@ export const AdminDashboard: React.FC = () => {
     setErrorMsg('');
     setIsSubmitting(true);
 
-    // Simulate Network Request
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // We no longer simulate. It relies on the actual API backend call handled by addNewScheme.
+    // The mutation takes care of the real network request.
+    
 
     addNewScheme({
       title,
