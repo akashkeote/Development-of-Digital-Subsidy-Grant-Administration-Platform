@@ -86,6 +86,47 @@ public class AuthService {
         );
     }
 
+    
+    public Map<String, Object> createUserWithRole(String fullName, String email, String password, String aadharNumber, String mobile, String roleCode) {
+        if (userRepository.existsByEmail(email)) {
+            return Map.of("success", false, "message", "Email already registered!");
+        }
+        if (userRepository.existsByAadharNumber(aadharNumber)) {
+            return Map.of("success", false, "message", "Aadhaar number already registered!");
+        }
+        Role targetRole = roleRepository.findByCode(roleCode)
+                .orElseThrow(() -> new RuntimeException("Role " + roleCode + " not found in database"));
+
+        User user = new User();
+        user.setUsername(email);
+        user.setFullName(fullName);
+        user.setEmail(email);
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPasswordHash(encodedPassword);
+        user.setPassword(encodedPassword);
+        user.setAadharNumber(aadharNumber);
+        user.setMobile(mobile);
+        user.setRole(targetRole);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setIsActive(true);
+
+        userRepository.save(user);
+
+        return Map.of(
+                "success", true,
+                "message", "User created successfully with role " + roleCode,
+                "user", Map.of("id", user.getId(), "email", user.getEmail(), "role", targetRole.getCode())
+        );
+    }
+
+    public Map<String, Object> deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            return Map.of("success", false, "message", "User not found.");
+        }
+        userRepository.deleteById(id);
+        return Map.of("success", true, "message", "User deleted successfully.");
+    }
+
     public Map<String, Object> login(String email, String password) {
 
         Optional<User> userOpt = userRepository.findByEmail(email);

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Scheme } from '../types';
+import { userService } from '../services/api';
+import { useQueryClient } from '@tanstack/react-query';
+
 import { DashboardLayout } from '../components/DashboardLayout';
 import { PlusCircle, LineChart, ShieldCheck, DollarSign, PlayCircle, Plus, Trash2, Download, FileSpreadsheet, Map, AlertTriangle, CheckCircle2, Users, Lock, Unlock, ShieldAlert } from 'lucide-react';
 
@@ -11,6 +14,43 @@ export const AdminDashboard: React.FC = () => {
   
   const [activeTab, setActiveTab] = useState<'analytics' | 'create_scheme' | 'treasury' | 'compliance' | 'access_management'>('analytics');
   const [overridingAppId, setOverridingAppId] = useState<string | null>(null);
+
+  // User Management States
+  const queryClient = useQueryClient();
+  const [showCreateUser, setShowCreateUser] = useState(false);
+  const [newUser, setNewUser] = useState({ fullName: '', email: '', password: '', aadharNumber: '', mobile: '', roleCode: 'L1_OFFICER' });
+  const [isManagingUser, setIsManagingUser] = useState(false);
+
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsManagingUser(true);
+    try {
+      await userService.createUser(newUser);
+      alert('User created successfully!');
+      setShowCreateUser(false);
+      setNewUser({ fullName: '', email: '', password: '', aadharNumber: '', mobile: '', roleCode: 'L1_OFFICER' });
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    } catch (err: any) {
+      alert(err.message || 'Failed to create user');
+    } finally {
+      setIsManagingUser(false);
+    }
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    if (!window.confirm('Are you sure you want to completely delete this user?')) return;
+    setIsManagingUser(true);
+    try {
+      await userService.deleteUser(id);
+      alert('User deleted successfully!');
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete user');
+    } finally {
+      setIsManagingUser(false);
+    }
+  };
+
 
   // Scheme Form States
   const [title, setTitle] = useState('');
@@ -737,10 +777,64 @@ export const AdminDashboard: React.FC = () => {
         {/* 5. ACCESS MANAGEMENT (USER DIRECTORY) */}
         {activeTab === 'access_management' && (
           <div className="space-y-10">
-            <div>
-              <h2 className="text-xl font-bold font-heading text-slate-800">System Users & Access Control</h2>
-              <p className="text-sm text-slate-500 mt-1">Manage system officers, monitor application throughput, and block suspicious accounts.</p>
-            </div>
+            
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-bold font-heading text-slate-800">System Users & Access Control</h2>
+                  <p className="text-sm text-slate-500 mt-1">Manage system officers, monitor application throughput, and block suspicious accounts.</p>
+                </div>
+                <button 
+                  onClick={() => setShowCreateUser(!showCreateUser)}
+                  className="btn-3d px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold flex items-center gap-2"
+                >
+                  <PlusCircle size={16} /> {showCreateUser ? 'Cancel' : 'Create New User / Officer'}
+                </button>
+              </div>
+
+              {showCreateUser && (
+                <div className="glass-card card-3d p-6 rounded-2xl border border-blue-100 bg-blue-50/30 mb-8">
+                  <h3 className="font-bold text-lg text-slate-800 mb-4">Create New Credentials</h3>
+                  <form onSubmit={handleCreateUser} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Full Name</label>
+                      <input type="text" required value={newUser.fullName} onChange={e => setNewUser({...newUser, fullName: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200" placeholder="e.g. Officer Name" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Email</label>
+                      <input type="email" required value={newUser.email} onChange={e => setNewUser({...newUser, email: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200" placeholder="officer@gov.in" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Password</label>
+                      <input type="text" required value={newUser.password} onChange={e => setNewUser({...newUser, password: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200" placeholder="Secure Password" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Aadhaar / ID Number</label>
+                      <input type="text" required value={newUser.aadharNumber} onChange={e => setNewUser({...newUser, aadharNumber: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200" placeholder="12-digit number" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Mobile Number</label>
+                      <input type="text" required value={newUser.mobile} onChange={e => setNewUser({...newUser, mobile: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200" placeholder="10-digit number" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Assign Role</label>
+                      <select value={newUser.roleCode} onChange={e => setNewUser({...newUser, roleCode: e.target.value})} className="w-full p-3 rounded-xl border border-slate-200 bg-white">
+                        <option value="CITIZEN">Citizen</option>
+                        <option value="VLE">VLE (Village Level Entrepreneur)</option>
+                        <option value="L1_OFFICER">L1 Officer (Field Verifier)</option>
+                        <option value="L2_OFFICER">L2 Officer (Sanction Officer)</option>
+                        <option value="L3_OFFICER">L3 Officer (Finance Nodal)</option>
+                        <option value="ADMIN">System Admin</option>
+                      </select>
+                    </div>
+                    <div className="md:col-span-2 mt-2">
+                      <button type="submit" disabled={isManagingUser} className="btn-3d px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl w-full">
+                        {isManagingUser ? 'Creating...' : 'Create Account'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
 
             <div className="grid gap-6">
               {users.map(user => (
@@ -758,7 +852,17 @@ export const AdminDashboard: React.FC = () => {
                             <ShieldAlert size={10} /> Suspended
                           </span>
                         )}
+
+                        <button 
+                          onClick={() => handleDeleteUser(user.id)}
+                          disabled={isManagingUser}
+                          className="btn-3d px-3 py-2 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:text-red-700 rounded-lg text-sm font-bold flex items-center gap-2 transition-all"
+                          title="Delete User"
+                        >
+                          <Trash2 size={16} /> Delete
+                        </button>
                       </div>
+
                       <p className="text-sm text-slate-500 font-medium">{user.email} • {user.department}</p>
                     </div>
                   </div>

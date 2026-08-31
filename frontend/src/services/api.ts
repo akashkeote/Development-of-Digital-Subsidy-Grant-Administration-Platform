@@ -18,6 +18,27 @@ const setStorage = <T>(key: string, data: T) => {
 
 // --- USER API ---
 export const userService = {
+
+  createUser: async (userData: any): Promise<any> => {
+    try {
+      const { data } = await apiClient.post('/auth/admin/users', userData);
+      return data;
+    } catch (e: any) {
+      console.error("Failed to create user", e);
+      throw new Error(e.response?.data?.message || 'Failed to create user');
+    }
+  },
+
+  deleteUser: async (id: string): Promise<any> => {
+    try {
+      const { data } = await apiClient.delete(`/auth/users/${id}`);
+      return data;
+    } catch (e: any) {
+      console.error("Failed to delete user", e);
+      throw new Error(e.response?.data?.message || 'Failed to delete user');
+    }
+  },
+
   getUsers: async (): Promise<SystemUser[]> => {
     try {
       const { data } = await apiClient.get<any[]>('/auth/users');

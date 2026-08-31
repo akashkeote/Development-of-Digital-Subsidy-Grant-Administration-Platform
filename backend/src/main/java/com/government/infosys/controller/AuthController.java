@@ -74,6 +74,40 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/admin/users")
+    public ResponseEntity<Map<String, Object>> createUser(@RequestBody Map<String, String> body) {
+        try {
+            String fullName = body.get("fullName");
+            String email = body.get("email");
+            String password = body.get("password");
+            String aadharNumber = body.get("aadharNumber");
+            String mobile = body.get("mobile");
+            String roleCode = body.get("roleCode");
+
+            if (fullName == null || email == null || password == null || aadharNumber == null || mobile == null || roleCode == null) {
+                return ResponseEntity.badRequest().body(Map.of("success", false, "message", "All fields are required."));
+            }
+
+            Map<String, Object> result = authService.createUserWithRole(fullName, email, password, aadharNumber, mobile, roleCode);
+            boolean success = (boolean) result.get("success");
+            return success ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("success", false, "message", "Server error: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable Long id) {
+        try {
+            Map<String, Object> result = authService.deleteUser(id);
+            boolean success = (boolean) result.get("success");
+            return success ? ResponseEntity.ok(result) : ResponseEntity.badRequest().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("success", false, "message", "Server error: " + e.getMessage()));
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> body) {
         try {
