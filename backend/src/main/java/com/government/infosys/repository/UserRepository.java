@@ -44,4 +44,12 @@ public class UserRepository {
     public Optional<User> findById(Long id) {
         return jpaRepository.findById(id);
     }
+
+    public boolean existsById(Long id) {
+        return jpaRepository.existsById(id);
+    }
+
+    public void deleteById(Long id) {
+        jpaRepository.deleteById(id);
+    }
 }
