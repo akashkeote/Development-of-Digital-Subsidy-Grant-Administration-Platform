@@ -109,17 +109,10 @@ export const schemeService = {
   },
   
   createScheme: async (schemeData: Partial<Scheme>): Promise<Scheme> => {
-    try {
-      const payload = mapSchemeToBackendSubsidy(schemeData);
-      const { data } = await apiClient.post<any>('/subsidies', payload);
-      return mapBackendSubsidyToScheme(data);
-    } catch (error) {
-      console.error("Failed to post to Render backend, saving to mock DB", error);
-      const schemes = getStorage('mock_db_schemes', INITIAL_SCHEMES);
-      const newScheme = { ...schemeData, id: `SCH-${Date.now()}` } as Scheme;
-      setStorage('mock_db_schemes', [...schemes, newScheme]);
-      return newScheme;
-    }
+    // DO NOT USE MOCK DB. Force real backend.
+    const payload = mapSchemeToBackendSubsidy(schemeData);
+    const { data } = await apiClient.post<any>('/subsidies', payload);
+    return mapBackendSubsidyToScheme(data);
   }
 };
 
