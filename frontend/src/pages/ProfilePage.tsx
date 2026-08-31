@@ -6,6 +6,8 @@ import { DashboardLayout } from '../components/DashboardLayout';
 export const ProfilePage: React.FC = () => {
   const { citizenProfile, setCitizenProfile } = useApp();
 
+  const [name, setName] = useState(citizenProfile.name);
+  const [aadhaar, setAadhaar] = useState(citizenProfile.aadhaar);
   const [email, setEmail] = useState(citizenProfile.email);
   const [phone, setPhone] = useState(citizenProfile.phone);
   const [bankName, setBankName] = useState(citizenProfile.bankName);
@@ -18,6 +20,8 @@ export const ProfilePage: React.FC = () => {
     e.preventDefault();
     setCitizenProfile(prev => ({
       ...prev,
+      name,
+      aadhaar,
       email,
       phone,
       bankName,
