@@ -130,8 +130,10 @@ export const ApplicationForm: React.FC = () => {
                   <input 
                     type="text" 
                     value={aadhaar}
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono tracking-widest text-slate-500 cursor-not-allowed" 
-                    disabled 
+                    onChange={(e) => setAadhaar(e.target.value.replace(/[^0-9]/g, ''))}
+                    maxLength={12}
+                    className="w-full p-4 bg-white border border-slate-200 focus:border-[#00599f] focus:ring-1 focus:ring-[#00599f] focus:outline-none rounded-xl font-mono tracking-widest text-slate-800 transition-colors" 
+                    required 
                   />
                 </div>
 
