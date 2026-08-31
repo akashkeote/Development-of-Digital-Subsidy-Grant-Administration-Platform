@@ -67,18 +67,27 @@ export const Registration: React.FC = () => {
     setStep(3);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
-      // Create new profile
+    try {
+      // 1. Register user in Spring Boot backend
+      await authService.register(fullName, email, password, aadhaar.replace(/\s/g, ''), phone);
+
+      // 2. Auto-login to get token
+      const loginData = await authService.login(email, password);
+      if (loginData.token) {
+        localStorage.setItem('gov_token', loginData.token);
+      }
+
+      // 3. Set citizen profile in frontend context
       const newProfile = {
-        id: `CIT-${Math.floor(1000 + Math.random() * 9000)}`,
+        id: loginData.user ? `CIT-${loginData.user.id}` : `CIT-${Math.floor(1000 + Math.random() * 9000)}`,
         name: fullName,
         email: email,
         phone: phone,
-        aadhaar: aadhaar,
+        aadhaar: aadhaar.replace(/\s/g, ''),
         pan: 'ABCPS1234D',
         income,
         category,
@@ -92,11 +101,15 @@ export const Registration: React.FC = () => {
         isAadhaarVerified: true
       };
 
-      setCitizenProfile(newProfile);
+      setCitizenProfile(newProfile as any);
       setCurrentRole('citizen');
-      setLoading(false);
       navigate('/citizen/dashboard');
-    }, 1200);
+    } catch (err: any) {
+      const msg = err?.response?.data?.message || 'Registration failed. Email or Aadhaar may already exist.';
+      alert(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

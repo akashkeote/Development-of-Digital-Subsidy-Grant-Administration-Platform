@@ -12,6 +12,14 @@ interface UploadState {
   };
 }
 
+const DEFAULT_REQUIRED_DOCS = [
+  'Aadhaar Card (Self-Attested Copy)',
+  'Income Certificate',
+  'Residence / Domicile Proof',
+  'Passport Size Photograph',
+  'Bank Passbook First Page',
+];
+
 export const UploadDocumentsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { schemes, applyToScheme } = useApp();
@@ -42,6 +50,11 @@ export const UploadDocumentsPage: React.FC = () => {
       </DashboardLayout>
     );
   }
+
+  // Use scheme's own documents if available, otherwise use standard KYC defaults
+  const docsToUpload = scheme.requiredDocuments && scheme.requiredDocuments.length > 0
+    ? scheme.requiredDocuments
+    : DEFAULT_REQUIRED_DOCS;
 
   const handleFileChange = (docType: string, file: File) => {
     if (file.type !== 'application/pdf') {
@@ -119,7 +132,7 @@ export const UploadDocumentsPage: React.FC = () => {
     e.preventDefault();
 
     // Ensure all required documents are uploaded
-    const missingDocs = scheme.requiredDocuments.filter(doc => !uploads[doc]?.uploaded);
+    const missingDocs = docsToUpload.filter(doc => !uploads[doc]?.uploaded);
     if (missingDocs.length > 0) {
       alert(`Please upload all required certificates before submitting:\n- ${missingDocs.join('\n- ')}`);
       return;
@@ -144,7 +157,7 @@ export const UploadDocumentsPage: React.FC = () => {
         ifsc: 'SBIN0001234'
       };
 
-      const filesList = scheme.requiredDocuments.map(doc => ({
+      const filesList = docsToUpload.map(doc => ({
         name: uploads[doc].name,
         type: doc,
         url: uploads[doc].dataUrl
@@ -198,19 +211,7 @@ export const UploadDocumentsPage: React.FC = () => {
           {/* Main upload list */}
           <div className="lg:col-span-8 space-y-6">
             
-            {scheme.requiredDocuments.length === 0 && (
-              <div className="bg-slate-50 border border-slate-200 p-8 rounded-2xl text-center shadow-sm">
-                <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-800 mb-2">No Documents Required</h3>
-                <p className="text-slate-500 font-medium text-sm">
-                  This scheme does not require any mandatory certificates or document uploads. You can proceed directly to submit your application.
-                </p>
-              </div>
-            )}
-            
-            {scheme.requiredDocuments.map((docType) => {
+            {docsToUpload.map((docType) => {
               const fileUpload = uploads[docType];
               const isDrag = dragActive === docType;
 

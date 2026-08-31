@@ -11,7 +11,7 @@ export const Login: React.FC = () => {
   const [step, setStep] = useState<'main_selection' | 'officer_selection' | 'login_form'>('main_selection');
   const [selectedRole, setSelectedRole] = useState<UserRole>('citizen');
   const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('password123');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,17 +22,23 @@ export const Login: React.FC = () => {
     setError('');
     
     if (role === 'citizen') {
-      setUserId('CIT-1092');
+      setUserId('');
+      setPassword('');
     } else if (role === 'vle') {
       setUserId('VLE-9901');
+      setPassword('password123');
     } else if (role === 'l1_officer') {
       setUserId('VER-4011');
+      setPassword('password123');
     } else if (role === 'l2_officer') {
       setUserId('DST-GORAKHPUR');
+      setPassword('password123');
     } else if (role === 'l3_officer') {
       setUserId('SNO-PFMS-01');
+      setPassword('password123');
     } else if (role === 'admin') {
       setUserId('ADMIN-ROOT');
+      setPassword('password123');
     }
   };
 
@@ -273,14 +279,15 @@ export const Login: React.FC = () => {
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-500 uppercase flex items-center gap-2">
-                      <Shield className="w-3.5 h-3.5" /> ID / Reference Number
+                      <Shield className="w-3.5 h-3.5" /> {selectedRole === 'citizen' ? 'Registered Email' : 'ID / Reference Number'}
                     </label>
                     <input 
-                      type="text" 
+                      type={selectedRole === 'citizen' ? 'email' : 'text'}
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
                       className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-300 placeholder:font-medium"
-                      placeholder={`Enter your ${currentRoleConfig.label} ID`}
+                      placeholder={selectedRole === 'citizen' ? 'Enter your registered email' : `Enter your ${currentRoleConfig.label} ID`}
+                      required
                     />
                   </div>
 
@@ -317,7 +324,11 @@ export const Login: React.FC = () => {
                   </button>
                   
                   <div className="text-center pt-2">
-                      <p className="text-xs font-medium text-slate-400">Demo mode — enter any value to login</p>
+                      {selectedRole === 'citizen' ? (
+                        <p className="text-xs font-medium text-slate-400">Login with your registered email and password</p>
+                      ) : (
+                        <p className="text-xs font-medium text-slate-400">Demo mode — enter any value to login</p>
+                      )}
                       {selectedRole === 'citizen' && (
                         <p className="text-xs font-medium mt-4">
                           New beneficiary?{' '}
