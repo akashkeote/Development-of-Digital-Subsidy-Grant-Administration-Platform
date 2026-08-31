@@ -26,6 +26,21 @@ export const Registration: React.FC = () => {
   const [ifsc, setIfsc] = useState('');
 
   const [loading, setLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(119);
+  const [generatedOtp, setGeneratedOtp] = useState('123456');
+
+  React.useEffect(() => {
+    if (step === 2 && timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
 
   const handleSendOtp = () => {
     if (aadhaar.length < 12) {
