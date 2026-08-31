@@ -32,8 +32,12 @@ export const Registration: React.FC = () => {
       alert('Please enter a valid 12-digit Aadhaar Number');
       return;
     }
-    setOtpSent(true);
-    setOtp('123456'); // Pre-filled simulator
+    setStep(2);
+    // Simulate slight delay before showing pre-filled OTP
+    setTimeout(() => {
+      setOtpSent(true);
+      setOtp('123456');
+    }, 800);
   };
 
   const handleVerifyOtp = () => {
@@ -177,8 +181,9 @@ export const Registration: React.FC = () => {
             <div className="p-8 lg:p-10 bg-white">
               
               {/* STEP 1: Enter Aadhaar */}
+              {/* STEP 1: Enter Aadhaar */}
               {step === 1 && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-10 py-2">
+                <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="space-y-10 py-2">
                   <div className="text-center max-w-md mx-auto">
                     <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-100">
                       <ShieldCheck size={30} strokeWidth={2.5} />
@@ -198,50 +203,76 @@ export const Registration: React.FC = () => {
                         onChange={(e) => setAadhaar(e.target.value.replace(/[^\d\s]/g, ''))}
                         className="w-full text-center tracking-widest text-lg font-bold py-3.5 px-5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-300"
                       />
-                      <p className="text-[10px] text-center text-slate-400 font-semibold flex items-center justify-center gap-1.5 pt-1.5">
-                        <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                        Encrypted end-to-end under UIDAI guidelines.
-                      </p>
+                      <div className="flex items-center justify-center gap-1.5 mt-3 text-slate-400">
+                        <ShieldCheck size={12} />
+                        <p className="text-[10px] font-medium tracking-wide">
+                          Encrypted end-to-end under UIDAI guidelines.
+                        </p>
+                      </div>
                     </div>
 
                     <button 
                       onClick={handleSendOtp}
-                      className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white text-[15px] font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 group"
+                      className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white text-[15px] font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 group cursor-pointer"
                     >
                       <span>Send OTP Verification Code</span>
                       <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
+                </motion.div>
+              )}
 
-                  {otpSent && (
-                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="border border-emerald-200 rounded-2xl p-6 max-w-md mx-auto space-y-5 bg-emerald-50">
-                      <div className="flex items-start space-x-4">
-                        <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <Smartphone className="w-5 h-5 text-emerald-600" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-emerald-900">OTP Sent successfully</p>
-                          <p className="text-xs text-emerald-700 mt-1.5 leading-relaxed">A 6-digit mock code was triggered to your registered mobile ending in ******43210. Use code <span className="font-bold bg-emerald-200 px-1.5 py-0.5 rounded text-emerald-900">123456</span> to proceed.</p>
-                        </div>
+              {/* STEP 2: OTP Verification */}
+              {step === 2 && (
+                <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-10 py-2">
+                  <div className="text-center max-w-md mx-auto">
+                    <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-blue-100 relative">
+                      <Smartphone size={30} strokeWidth={2.5} />
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
+                    </div>
+                    <h2 className="text-2xl font-heading font-extrabold text-slate-800 tracking-tight">Enter Verification Code</h2>
+                    <p className="text-sm text-slate-500 mt-2 font-medium leading-relaxed">
+                      A 6-digit secure code has been dispatched to your Aadhaar-linked mobile ending in <span className="font-bold text-slate-700">******43210</span>.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6 max-w-sm mx-auto">
+                    <div className="space-y-2">
+                      <input 
+                        type="text" 
+                        placeholder="------"
+                        maxLength={6}
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                        className="w-full text-center tracking-[0.5em] text-3xl font-extrabold py-4 px-5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-200 text-slate-800"
+                      />
+                      <div className="flex justify-between items-center mt-4 px-1">
+                          <span className="text-xs font-bold text-slate-400">01:59 remaining</span>
+                          <button 
+                            onClick={() => { setOtp(''); setTimeout(() => setOtp('123456'), 500); }} 
+                            className="text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer bg-transparent border-none"
+                          >
+                            Resend Code
+                          </button>
                       </div>
-                      <div className="flex gap-3 pt-2">
-                        <input 
-                          type="text" 
-                          placeholder="Enter 6-digit OTP"
-                          maxLength={6}
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                          className="flex-1 text-center font-bold text-lg tracking-widest bg-white border border-emerald-200 rounded-xl py-3 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500"
-                        />
-                        <button 
-                          onClick={handleVerifyOtp}
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-emerald-600/20"
-                        >
-                          Verify
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <button 
+                        onClick={() => setStep(1)}
+                        className="py-4 px-5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl transition-all cursor-pointer"
+                      >
+                        <ArrowLeft size={18} />
+                      </button>
+                      <button 
+                        onClick={handleVerifyOtp}
+                        className="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white text-[15px] font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 group cursor-pointer"
+                      >
+                        <span>Verify & Proceed</span>
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
                 </motion.div>
               )}
 
