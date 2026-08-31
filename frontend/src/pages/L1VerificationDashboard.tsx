@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { DocumentPreviewModal } from '../components/DocumentPreviewModal';
+
 import { ShieldCheck, FileText, CheckCircle2, XCircle, Clock, Check, Users, ArrowUpCircle, RefreshCcw, Landmark } from 'lucide-react';
 export const L1VerificationDashboard: React.FC = () => {
   const { applications, verifyApplication } = useApp();
   const [selectedAppId, setSelectedAppId] = useState<string>('');
   const [comment, setComment] = useState('');
+  const [previewDoc, setPreviewDoc] = useState<{name: string, url: string} | null>(null);
   
   const [grantAmount, setGrantAmount] = useState<number>(0);
   
@@ -249,7 +252,7 @@ export const L1VerificationDashboard: React.FC = () => {
                             <div className="leading-none text-left min-w-0 overflow-hidden">
                               <p className="text-base font-bold text-slate-800 font-heading truncate">{doc.type}</p>
                               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-2 font-mono truncate">File: {doc.name}</p>
-{doc.url !== '#' && <a href={doc.url} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-blue-600 hover:underline mt-1 inline-block">View Document</a>}
+{doc.url !== '#' && <button onClick={() => setPreviewDoc({name: doc.name, url: doc.url})} type="button" className="text-xs font-bold text-blue-600 hover:underline mt-1 inline-block cursor-pointer bg-transparent border-none p-0 text-left">Preview Document</button>}
                             </div>
                           </div>
 
@@ -354,6 +357,12 @@ export const L1VerificationDashboard: React.FC = () => {
 
           </div>
         )}
+        {/* Preview Modal */}
+        <DocumentPreviewModal 
+          url={previewDoc?.url || null} 
+          name={previewDoc?.name || ''} 
+          onClose={() => setPreviewDoc(null)} 
+        />
       </div>
     </DashboardLayout>
   );

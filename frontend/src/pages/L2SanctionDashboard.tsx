@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Landmark, FileText, CheckCircle2, Bookmark, Compass, DollarSign, AlertTriangle } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
+import { DocumentPreviewModal } from '../components/DocumentPreviewModal';
+
 
 export const L2SanctionDashboard: React.FC = () => {
   const { applications, approveApplication } = useApp();
   const [selectedAppId, setSelectedAppId] = useState<string>('');
   const [comment, setComment] = useState('');
+  const [previewDoc, setPreviewDoc] = useState<{name: string, url: string} | null>(null);
 
   // Gather applications waiting for district sanction approval
   const queue = applications.filter(app => app.status === 'documents_verified');
@@ -150,7 +153,32 @@ export const L2SanctionDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Verifier Officer Remarks */}
+                              {/* Documents Section */}
+                <div className="glass-card bg-white/80 p-8 rounded-2xl border border-white/50 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-xl">
+                  <h3 className="text-sm font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-4 flex items-center font-heading uppercase">
+                    <FileText className="w-5 h-5 mr-3 text-blue-600" /> Verified Documents
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {activeApp.documents && activeApp.documents.map((doc, idx) => (
+                      <div key={idx} className="bg-slate-50 border border-slate-200 p-4 rounded-xl flex justify-between items-center">
+                        <div className="min-w-0 overflow-hidden pr-3">
+                          <p className="text-sm font-bold text-slate-800 truncate">{doc.type}</p>
+                          <p className="text-[10px] text-slate-500 font-mono truncate mt-1">{doc.name}</p>
+                        </div>
+                        {doc.url !== '#' && (
+                          <button onClick={() => setPreviewDoc({name: doc.name, url: doc.url})} className="shrink-0 bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors">
+                            Preview
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    {(!activeApp.documents || activeApp.documents.length === 0) && (
+                      <p className="text-sm text-slate-500 italic col-span-2">No documents attached.</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Verifier Officer Remarks */}
               <div className="glass-card bg-blue-50/60 border border-blue-100/60 p-8 rounded-2xl shadow-xl space-y-6 relative overflow-hidden backdrop-blur-xl">
                 <p className="text-xs font-bold text-blue-700 tracking-widest flex items-center uppercase">
                   <CheckCircle2 className="w-5 h-5 mr-3" /> Verification Audit Log
@@ -220,6 +248,12 @@ export const L2SanctionDashboard: React.FC = () => {
 
           </div>
         )}
+        {/* Preview Modal */}
+        <DocumentPreviewModal 
+          url={previewDoc?.url || null} 
+          name={previewDoc?.name || ''} 
+          onClose={() => setPreviewDoc(null)} 
+        />
       </div>
     </DashboardLayout>
   );

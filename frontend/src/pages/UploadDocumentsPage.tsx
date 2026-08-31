@@ -44,6 +44,15 @@ export const UploadDocumentsPage: React.FC = () => {
   }
 
   const handleFileChange = (docType: string, file: File) => {
+    if (file.type !== 'application/pdf') {
+      alert("Only PDF files are allowed!");
+      return;
+    }
+    if (file.size > 200 * 1024) {
+      alert("File size must be strictly under 200KB!");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const dataUrl = event.target?.result as string;
