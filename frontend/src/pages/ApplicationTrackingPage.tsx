@@ -143,6 +143,11 @@ export const ApplicationTrackingPage: React.FC = () => {
                         <StatusIcon size={12} strokeWidth={2.5} /> {statusConf.label}
                       </span>
                     </div>
+                      {app.submittedByRole === 'vle' && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100 uppercase tracking-wider absolute top-4 right-4 sm:relative sm:top-0 sm:right-0">
+                          Assisted by VLE
+                        </span>
+                      )}
                     <h3 className="text-[15px] font-bold text-slate-900 mb-1.5 truncate pr-2">{app.schemeTitle}</h3>
                     
                     <div className="flex flex-wrap gap-3.5 text-xs text-slate-500 mb-2.5">

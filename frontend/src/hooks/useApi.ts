@@ -26,6 +26,7 @@ export const useSchemes = () => {
   return useQuery({
     queryKey: ['schemes'],
     queryFn: schemeService.getAllSchemes,
+      refetchInterval: 5000,
   });
 };
 
@@ -44,6 +45,7 @@ export const useApplications = () => {
   return useQuery({
     queryKey: ['applications'],
     queryFn: applicationService.getApplications,
+      refetchInterval: 3000, // Live updates
   });
 };
 
