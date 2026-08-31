@@ -279,13 +279,7 @@ export const Registration: React.FC = () => {
               {/* STEP 3: Demographics & Bank Registration */}
               {step === 3 && (
                 <motion.form initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} onSubmit={handleSubmit} className="space-y-6">
-                  <div className="border border-emerald-200 rounded-2xl p-4 flex items-center space-x-4 bg-emerald-50">
-                    <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
-                    <div>
-                      <p className="text-sm font-bold text-emerald-900">Demographic Records Authenticated</p>
-                      <p className="text-xs text-emerald-700 mt-1">Retrieved Name: <span className="font-semibold bg-emerald-100 px-1.5 py-0.5 rounded">{fullName}</span> | Mobile: <span className="font-semibold">{phone}</span></p>
-                    </div>
-                  </div>
+
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {/* Personal Section */}
@@ -299,9 +293,24 @@ export const Registration: React.FC = () => {
                       <label className="text-xs font-bold text-slate-700 pl-1">Full Name (As in Aadhaar)</label>
                       <input 
                         type="text" 
-                        value={fullName} 
-                        disabled 
-                        className="w-full p-3.5 bg-slate-50 border border-slate-200 text-slate-500 rounded-xl text-sm font-bold focus:outline-none cursor-not-allowed" 
+                        placeholder="e.g. Rahul Sharma"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        className="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all" 
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-slate-700 pl-1">Mobile Number</label>
+                      <input 
+                        type="tel" 
+                        placeholder="e.g. 9876543210"
+                        maxLength={10}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                        className="w-full p-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all" 
+                        required
                       />
                     </div>
 
