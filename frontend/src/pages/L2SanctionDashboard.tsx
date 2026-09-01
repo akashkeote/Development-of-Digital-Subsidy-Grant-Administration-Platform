@@ -68,7 +68,7 @@ export const L2SanctionDashboard: React.FC = () => {
         {/* Content Section */}
         {queue.length === 0 ? (
           <div className="glass-card bg-white/80 text-center py-24 px-8 border border-white/50 rounded-2xl max-w-2xl mx-auto space-y-6 shadow-2xl backdrop-blur-xl">
-            <div className="w-24 h-24 mx-auto bg-blue-50/80 rounded-2xl flex items-center justify-center mb-6 border border-blue-100/50 card-3d">
+            <div className="w-24 h-24 mx-auto bg-blue-50/80 rounded-2xl flex items-center justify-center mb-6 border border-blue-100/50">
               <CheckCircle2 className="w-12 h-12 text-blue-600" />
             </div>
             <h3 className="text-2xl text-slate-800 font-bold font-heading">Sanction Desk Empty</h3>
@@ -183,7 +183,7 @@ export const L2SanctionDashboard: React.FC = () => {
                 <p className="text-xs font-bold text-blue-700 tracking-widest flex items-center uppercase">
                   <CheckCircle2 className="w-5 h-5 mr-3" /> Verification Audit Log
                 </p>
-                <div className="bg-white/80 p-8 rounded-xl border border-white/60 shadow-inner card-3d">
+                <div className="bg-white/80 p-8 rounded-xl border border-white/60 shadow-inner">
                   <p className="text-base text-slate-700 leading-relaxed font-medium italic font-heading border-l-4 border-blue-400 pl-5">
                     "{activeApp.verifierComment || 'No verifier comment logged.'}"
                   </p>
@@ -207,7 +207,7 @@ export const L2SanctionDashboard: React.FC = () => {
                         setComment(e.target.value);
                         if (errorMsg) setErrorMsg('');
                       }}
-                      className={`input-3d w-full p-6 bg-slate-50/50 border focus:ring-4 transition-all text-base text-slate-800 font-medium placeholder:text-slate-400 resize-none shadow-inner ${
+                      className={`w-full p-6 bg-slate-50/50 border focus:ring-4 transition-all text-base text-slate-800 font-medium placeholder:text-slate-400 resize-none shadow-inner ${
                         errorMsg 
                           ? 'border-red-400 focus:border-red-500 focus:ring-red-500/10 bg-red-50/10' 
                           : 'border-slate-200/60 focus:border-blue-500 focus:ring-blue-500/20'

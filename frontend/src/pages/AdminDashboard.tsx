@@ -285,7 +285,7 @@ export const AdminDashboard: React.FC = () => {
             {/* Visualizations Panel */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
-              <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
+              <div className="glass-card p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
                 <h3 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 flex items-center font-heading">
                   <LineChart className="w-5 h-5 mr-3 text-blue-600" />
                   Ministry Allocation Proportions (FY 26-27)
@@ -483,7 +483,7 @@ export const AdminDashboard: React.FC = () => {
 
         {/* 2. DIRECT TRANSFERS (TREASURY) RELEASE VIEW */}
         {activeTab === 'treasury' && (
-          <div className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
+          <div className="glass-card p-8 rounded-3xl border border-white/60 bg-white/40 space-y-8">
             <h2 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 font-heading">
               Treasury Pending Disbursements Queue
             </h2>
@@ -555,7 +555,7 @@ export const AdminDashboard: React.FC = () => {
 
         {/* 3. NEW SCHEME CONFIGURATOR */}
         {activeTab === 'create_scheme' && (
-          <form onSubmit={handleCreateSchemeSubmit} className="glass-card card-3d p-8 rounded-3xl border border-white/60 bg-white/40 space-y-10">
+          <form onSubmit={handleCreateSchemeSubmit} className="glass-card p-8 rounded-3xl border border-white/60 bg-white/40 space-y-10">
             <h2 className="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-white pb-4 font-heading">
               Configure New Grant / Subsidy Scheme
             </h2>
@@ -569,7 +569,7 @@ export const AdminDashboard: React.FC = () => {
                   value={title}
                   placeholder="e.g. PM Suryodaya Yojana"
                   onChange={(e) => setTitle(e.target.value)}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
                   required
                 />
               </div>
@@ -581,7 +581,7 @@ export const AdminDashboard: React.FC = () => {
                   value={department}
                   placeholder="e.g. Department of Energy"
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
                   required
                 />
               </div>
@@ -593,7 +593,7 @@ export const AdminDashboard: React.FC = () => {
                   value={ministry}
                   placeholder="e.g. Ministry of New & Renewable Energy"
                   onChange={(e) => setMinistry(e.target.value)}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner"
                   required
                 />
               </div>
@@ -603,7 +603,7 @@ export const AdminDashboard: React.FC = () => {
                 <select 
                   value={category}
                   onChange={(e) => setCategory(e.target.value as Scheme['category'])}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234F46E5%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-[position:right_1.25rem_center] bg-no-repeat cursor-pointer"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234F46E5%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-[position:right_1.25rem_center] bg-no-repeat cursor-pointer"
                 >
                   <option value="agriculture">Agriculture</option>
                   <option value="education">Education</option>
@@ -619,7 +619,7 @@ export const AdminDashboard: React.FC = () => {
                   type="number" 
                   value={totalAllocation}
                   onChange={(e) => setTotalAllocation(Number(e.target.value))}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
                   required
                 />
               </div>
@@ -630,7 +630,7 @@ export const AdminDashboard: React.FC = () => {
                   type="number" 
                   value={subsidyAmount}
                   onChange={(e) => setSubsidyAmount(Number(e.target.value))}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
                   required
                 />
               </div>
@@ -643,7 +643,7 @@ export const AdminDashboard: React.FC = () => {
                   max={12}
                   value={installmentCount}
                   onChange={(e) => setInstallmentCount(Number(e.target.value))}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner"
                   required
                 />
               </div>
@@ -654,7 +654,7 @@ export const AdminDashboard: React.FC = () => {
                   value={description}
                   placeholder="Input detailed background, targets and context..."
                   onChange={(e) => setDescription(e.target.value)}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner resize-none"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner resize-none"
                   rows={4}
                   required
                 />
@@ -666,7 +666,7 @@ export const AdminDashboard: React.FC = () => {
                   value={benefits}
                   placeholder="Input distribution timeline details (e.g. ₹6000 per year paid in 3 installments)..."
                   onChange={(e) => setBenefits(e.target.value)}
-                  className="input-3d w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner resize-none"
+                  className="w-full p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium placeholder:text-slate-400 shadow-inner resize-none"
                   rows={2}
                   required
                 />
@@ -694,7 +694,7 @@ export const AdminDashboard: React.FC = () => {
                         value={crit}
                         placeholder="e.g. Household annual family income must not exceed ₹2.5 Lakhs"
                         onChange={(e) => handleCriteriaChange(idx, e.target.value)}
-                        className="input-3d flex-1 p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner placeholder:text-slate-400"
+                        className="flex-1 p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner placeholder:text-slate-400"
                         required
                       />
                       {eligibilityCriteria.length > 1 && (
@@ -733,7 +733,7 @@ export const AdminDashboard: React.FC = () => {
                         value={doc}
                         placeholder="e.g. Income Certificate issued by competent Revenue Authority"
                         onChange={(e) => handleDocChange(idx, e.target.value)}
-                        className="input-3d flex-1 p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner placeholder:text-slate-400"
+                        className="flex-1 p-4 rounded-xl bg-white/60 border border-white/60 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 font-medium shadow-inner placeholder:text-slate-400"
                         required
                       />
                       {requiredDocuments.length > 1 && (
@@ -792,7 +792,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {showCreateUser && (
-                <div className="glass-card card-3d p-6 rounded-2xl border border-blue-100 bg-blue-50/30 mb-8">
+                <div className="glass-card p-6 rounded-2xl border border-blue-100 bg-blue-50/30 mb-8">
                   <h3 className="font-bold text-lg text-slate-800 mb-4">Create New Credentials</h3>
                   <form onSubmit={handleCreateUser} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>

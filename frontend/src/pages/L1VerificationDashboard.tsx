@@ -103,7 +103,7 @@ export const L1VerificationDashboard: React.FC = () => {
 
         {/* Core Review Workspace */}
         {queue.length === 0 ? (
-          <div className="glass-card card-3d bg-white/70 text-center py-24 px-8 border border-white/50 rounded-3xl max-w-2xl mx-auto space-y-8 shadow-xl backdrop-blur-xl">
+          <div className="glass-card bg-white/70 text-center py-24 px-8 border border-white/50 rounded-3xl max-w-2xl mx-auto space-y-8 shadow-xl backdrop-blur-xl">
             <div className="w-24 h-24 mx-auto bg-green-50/80 rounded-3xl flex items-center justify-center shadow-inner border border-green-100/50">
               <CheckCircle2 className="w-12 h-12 text-green-600" />
             </div>
@@ -114,14 +114,14 @@ export const L1VerificationDashboard: React.FC = () => {
             </div>
           </div>
         ) : !activeApp ? (
-          <div className="text-center py-24 glass-card card-3d bg-white/70 rounded-3xl border border-white/50 shadow-xl backdrop-blur-xl">
+          <div className="text-center py-24 glass-card bg-white/70 rounded-3xl border border-white/50 shadow-xl backdrop-blur-xl">
             <p className="text-slate-500 font-bold tracking-widest text-base">Please select an application from the queue to review.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             
             {/* Left Column: Applications Queue Picker */}
-            <div className="lg:col-span-4 glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-6 h-fit backdrop-blur-xl">
+            <div className="lg:col-span-4 glass-card bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-6 h-fit backdrop-blur-xl">
               <h3 className="text-sm font-bold text-slate-500 tracking-widest border-b border-slate-200/50 pb-5 font-heading uppercase">
                 Pending Queue ({queue.length})
               </h3>
@@ -161,7 +161,7 @@ export const L1VerificationDashboard: React.FC = () => {
             <div className="lg:col-span-8 space-y-10">
               
               {/* How Eligibility Scoring Works Reference Table */}
-              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-6 backdrop-blur-xl">
+              <div className="glass-card bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-6 backdrop-blur-xl">
                 <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase text-blue-700">
                   <FileText className="w-5 h-5 mr-3 text-blue-600" />
                   How Eligibility Scoring Works (Example)
@@ -197,7 +197,7 @@ export const L1VerificationDashboard: React.FC = () => {
               </div>
 
               {/* Applicant Demographic Specs */}
-              <div className="glass-card card-3d bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
+              <div className="glass-card bg-white/70 p-8 rounded-3xl border border-white/50 shadow-xl space-y-8 backdrop-blur-xl">
                 <h3 className="text-base font-bold text-slate-800 tracking-widest border-b border-slate-200/50 pb-5 flex items-center font-heading uppercase">
                   <FileText className="w-5 h-5 mr-3 text-blue-600" />
                   Applicant Dossier
@@ -313,7 +313,7 @@ export const L1VerificationDashboard: React.FC = () => {
                       rows={4}
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
-                      className="w-full p-5 bg-white/80 border border-slate-200/50 focus:border-blue-400 rounded-2xl text-base text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 resize-none input-3d shadow-inner"
+                      className="w-full p-5 bg-white/80 border border-slate-200/50 focus:border-blue-400 rounded-2xl text-base text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400 resize-none shadow-inner"
                     />
                   </div>
 
