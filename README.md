@@ -98,7 +98,7 @@ The relational schema is managed entirely via **Flyway Migrations** and includes
 cd backend
 # Compile the project
 ./mvnw clean compile
-# Run the server (starts on http://localhost:8080)
+# Run the server (starts on http://localhost:8082)
 ./mvnw spring-boot:run
 ```
 
